@@ -22,6 +22,9 @@ pnpm check:boundaries   # boundary canary: forbidden imports must fail, allowed 
 pnpm check              # everything CI runs
 ```
 
+CI also scans the full git history for secrets with gitleaks (`.gitleaks.toml`, which adds a rule
+for Stellar secret seeds). Run it locally with `gitleaks git --config .gitleaks.toml .`.
+
 Tasks run through Nx (`nx run-many`). There is no Nx Cloud; the cache is local.
 
 ## Layout

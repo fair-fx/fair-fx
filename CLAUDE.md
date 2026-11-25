@@ -13,6 +13,8 @@ and use its routing table to find the doc for a task. This file only covers how 
 - TypeScript is pinned to 6.0.x: `typescript-eslint` 8.74 accepts TypeScript `<6.1` only.
 - New dependencies must be older than pnpm's minimum release age; do not add
   `minimumReleaseAgeExclude` entries.
+- Never commit a Stellar secret seed (`S...`), an RPC API key or a database password. They go in `.env`
+  or GitHub Secrets. A leaked key is rotated, not just deleted: the repo is public.
 - Commit messages are conventional commits. No em dashes in code, comments or docs.
 
 ## Before saying done
