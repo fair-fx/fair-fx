@@ -1,4 +1,4 @@
-name: template-pnpm
+name: pnpm
 
 on:
   workflow_call:

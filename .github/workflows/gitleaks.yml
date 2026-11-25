@@ -1,4 +1,4 @@
-name: template-gitleaks
+name: gitleaks
 
 on:
   workflow_call:

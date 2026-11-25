@@ -14,10 +14,10 @@ concurrency:
 
 jobs:
   secrets:
-    uses: ./.github/workflows/template-gitleaks.yml
+    uses: ./.github/workflows/gitleaks.yml
 
   typescript:
-    uses: ./.github/workflows/template-pnpm.yml
+    uses: ./.github/workflows/pnpm.yml
     with:
       run: pnpm check
       timeout-minutes: 15
