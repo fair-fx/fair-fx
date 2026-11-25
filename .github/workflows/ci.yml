@@ -56,6 +56,6 @@ jobs:
           fetch-depth: 0
 
       - name: scan full history
-        uses: docker://ghcr.io/gitleaks/gitleaks:v8.30.1
-        with:
-          args: git --config .gitleaks.toml --redact --no-banner --exit-code 1 .
+        run: >-
+          docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.30.1
+          git /repo --config /repo/.gitleaks.toml --redact --no-banner --exit-code 1
