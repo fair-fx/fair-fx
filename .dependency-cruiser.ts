@@ -60,11 +60,18 @@ const config: IConfiguration = {
       to: { dependencyTypes: ['core'] },
     },
     {
-      name: 'testing-only-in-tests',
-      comment: 'Test factories (src/testing, for example @fair-fx/core/testing) are for test files only',
+      name: 'core-module-barrel-only',
+      comment: 'Inside core, import a module folder (asset, pair, ...) through its index.ts',
       severity: 'error',
-      from: { path: '^(packages|apps)/', pathNot: ['\\.test\\.ts$', '/src/testing/'] },
-      to: { path: '^(packages|apps)/[^/]+/src/testing/' },
+      from: { path: '^(packages/core/src/[^/]+)' },
+      to: { path: '^packages/core/src/[^/]+/', pathNot: ['^$1/', '/index\\.ts$', '\\.factory\\.ts$'] },
+    },
+    {
+      name: 'factories-only-in-tests',
+      comment: 'Test factories (*.factory.ts, src/testing) are for test files and other factories only',
+      severity: 'error',
+      from: { path: '^(packages|apps)/', pathNot: ['\\.test\\.ts$', '\\.factory\\.ts$', '/src/testing/'] },
+      to: { path: '(\\.factory\\.ts$|^(packages|apps)/[^/]+/src/testing/)' },
     },
     {
       name: 'dashboard-no-core-node',

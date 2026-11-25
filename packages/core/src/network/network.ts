@@ -1,7 +1,11 @@
 import { z } from 'zod';
-import { Network } from '../network.ts';
-import { accountId, contractId, httpsUrl } from './fields.ts';
-import { entryFor, parseOrThrow } from './parse.ts';
+import { accountId, contractId, entryFor, httpsUrl, parseOrThrow } from '../shared/index.ts';
+
+/** Stellar network a config entry belongs to. Contract IDs differ per network. */
+export enum Network {
+  Mainnet = 'mainnet',
+  Testnet = 'testnet',
+}
 
 const networkSchema = z.strictObject({
   passphrase: z.string().min(1),

@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import type { Network } from '../network.ts';
 
 /** A config file has the wrong shape. The message lists each problem with its field path. */
 export class ConfigError extends Error {
@@ -14,10 +13,11 @@ export function parseOrThrow<Schema extends z.ZodType>(schema: Schema, json: unk
   return result.data;
 }
 
-export function entryFor<T>(byNetwork: Partial<Record<Network, T>>, network: Network): T {
-  const entry = byNetwork[network];
+/** Returns `byKey[key]`, or throws ConfigError when the file has no entry for it. */
+export function entryFor<K extends string, T>(byKey: Partial<Record<K, T>>, key: K): T {
+  const entry = byKey[key];
   if (entry === undefined) {
-    throw new ConfigError(`no entry for ${network}`);
+    throw new ConfigError(`no entry for ${key}`);
   }
   return entry;
 }

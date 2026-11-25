@@ -1,20 +1,9 @@
 import { z } from 'zod';
-import { Fiat } from '../fiat.ts';
-import { Network } from '../network.ts';
-import { accountId, contractId } from './fields.ts';
-import { entryFor, parseOrThrow } from './parse.ts';
+import { pinnedAssetSchema } from '../asset/index.ts';
+import { Network } from '../network/index.ts';
+import { entryFor, parseOrThrow } from '../shared/index.ts';
 
 const LADDER_RUNGS = 10;
-// Soroban token amounts are i128, which has at most 38 full decimal digits.
-const MAX_DECIMALS = 38;
-
-const pinnedAssetSchema = z.strictObject({
-  contract: contractId,
-  code: z.string().regex(/^[A-Za-z0-9]{1,12}$/, 'expected an asset code of 1 to 12 letters or digits'),
-  issuer: accountId,
-  fiat: z.enum(Fiat),
-  decimals: z.int().min(0).max(MAX_DECIMALS),
-});
 
 const pairSchema = z
   .strictObject({ base: pinnedAssetSchema, quote: pinnedAssetSchema })
@@ -32,9 +21,6 @@ const pairsFileSchema = z.strictObject({
   ladder: ladderSchema,
   pairs: z.partialRecord(z.enum(Network), z.array(pairSchema)),
 });
-
-/** A token FairFX quotes, pinned by contract ID and by code plus issuer. */
-export type PinnedAsset = Readonly<z.infer<typeof pinnedAssetSchema>>;
 
 /** Two pinned assets. `id` is `BASE/QUOTE`, for example `USDC/EURC`. */
 export type Pair = Readonly<z.infer<typeof pairSchema>>;
