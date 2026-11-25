@@ -47,4 +47,4 @@ typecheck and test need no prior build. `dist/` is only for publishing.
 
 ## License
 
-Not chosen yet (TDD Q-1). Packages are marked `UNLICENSED` until then.
+Apache-2.0. See [LICENSE](LICENSE).

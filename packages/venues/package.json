@@ -2,7 +2,7 @@
   "name": "@fairfx/venues",
   "version": "0.0.0",
   "description": "One quote adapter per venue, behind VenueAdapter.",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "type": "module",
   "sideEffects": false,
   "exports": {

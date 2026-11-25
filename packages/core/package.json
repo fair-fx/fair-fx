@@ -2,7 +2,7 @@
   "name": "@fairfx/core",
   "version": "0.0.0",
   "description": "Pairs, fixed point math, formatting and freshness. Main entry has no I/O; /node holds the Node-only readers.",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "type": "module",
   "sideEffects": false,
   "exports": {
