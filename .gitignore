@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.nx/cache/
+.nx/workspace-data/
+target/
+.env
+.env.*
+.DS_Store
