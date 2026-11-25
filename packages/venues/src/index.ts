@@ -1,10 +1,9 @@
-import { type Direction, isDirection } from '@fairfx/core';
+import { GuardMode, VenueId } from '@fairfx/core';
 
-export type VenueId = 'horizon' | 'soroswap' | 'aquarius';
-
-export function parseDirection(value: string): Direction {
-  if (!isDirection(value)) {
-    throw new RangeError(`unknown direction: ${value}`);
-  }
-  return value;
-}
+/** Soroban venues can be wrapped by the guard contract. SDEX cannot: a contract cannot call it. */
+export const GUARD_MODE: Readonly<Record<VenueId, GuardMode>> = {
+  [VenueId.Sdex]: GuardMode.B,
+  [VenueId.Soroswap]: GuardMode.A,
+  [VenueId.Aquarius]: GuardMode.A,
+  [VenueId.Curve]: GuardMode.A,
+};

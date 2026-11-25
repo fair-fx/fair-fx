@@ -1,12 +1,13 @@
+import { GuardMode, VenueId } from '@fairfx/core';
 import { describe, expect, it } from 'vitest';
-import { parseDirection } from './index.js';
+import { GUARD_MODE } from './index.js';
 
-describe('parseDirection', () => {
-  it('passes a known direction through core', () => {
-    expect(parseDirection('quote_to_base')).toBe('quote_to_base');
+describe('GUARD_MODE', () => {
+  it('has a mode for every venue', () => {
+    expect(Object.keys(GUARD_MODE).sort()).toEqual(Object.values(VenueId).sort());
   });
 
-  it('rejects an unknown direction', () => {
-    expect(() => parseDirection('sideways')).toThrow(RangeError);
+  it('never claims the contract can wrap SDEX', () => {
+    expect(GUARD_MODE[VenueId.Sdex]).toBe(GuardMode.B);
   });
 });
