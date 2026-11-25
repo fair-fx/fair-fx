@@ -1,0 +1,10 @@
+title = "fairfx secret scan"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "stellar-secret-seed"
+description = "Stellar secret seed (StrKey with S prefix). Public keys start with G and are fine to commit."
+regex = '''\bS[A-Z2-7]{55}\b'''
+entropy = 3.5

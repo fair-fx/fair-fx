@@ -1,0 +1,27 @@
+{
+  "name": "@fairfx/venues",
+  "version": "0.0.0",
+  "description": "One quote adapter per venue, behind VenueAdapter.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "@fairfx/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "lint": "eslint .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fairfx/core": "workspace:*"
+  },
+  "nx": {
+    "tags": ["layer:venues", "scope:public"]
+  }
+}

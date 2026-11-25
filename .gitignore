@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+.nx/cache/
+.nx/workspace-data/
+target/
+.env
+.env.*
+.DS_Store
+
+# local agent notes, not published
+CLAUDE.md
+.claude/
