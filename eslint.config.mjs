@@ -3,10 +3,8 @@ import nx from '@nx/eslint-plugin';
 
 const nodeBuiltins = [...builtinModules, ...builtinModules.map((name) => `node:${name}`)];
 
-// Dependency direction from architecture.md §1 (D-17, D-25, D-26): one allowed edge per
-// arrow of the repo-structure diagram, direct imports only. Tags live in each package.json
-// under "nx.tags". Constraints for packages that do not exist yet are declared now so a new
-// package is bound from its first commit.
+// Which package may import which. Tags are set in each package.json under "nx.tags".
+// Rules for packages not created yet are already here.
 export const depConstraints = [
   { sourceTag: 'scope:public', onlyDependOnLibsWithTags: ['scope:public'] },
   { sourceTag: 'scope:private', onlyDependOnLibsWithTags: ['scope:public', 'scope:private'] },
@@ -44,7 +42,7 @@ export default [
     },
   },
   {
-    // D-20: the main entry of core does no I/O and runs in the browser.
+    // core main entry must run in the browser: no Node built-ins.
     files: ['packages/core/src/**/*.ts'],
     ignores: ['packages/core/src/node/**', 'packages/core/src/**/*.test.ts'],
     rules: {
@@ -53,20 +51,20 @@ export default [
         {
           paths: nodeBuiltins.map((name) => ({
             name,
-            message: 'The main entry of @fairfx/core has no I/O (D-20). Put Node code under src/node.',
+            message: 'core main entry runs in the browser. Put Node code under src/node.',
           })),
         },
       ],
     },
   },
   {
-    // D-20: the dashboard imports only the browser-safe entry of core.
+    // dashboard runs in the browser: no Node entry of core.
     files: ['apps/dashboard/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',
         {
-          paths: [{ name: '@fairfx/core/node', message: 'The dashboard imports only the browser entry of core (D-20).' }],
+          paths: [{ name: '@fairfx/core/node', message: 'The dashboard may only import the browser entry of core.' }],
         },
       ],
     },

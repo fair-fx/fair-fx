@@ -8,3 +8,7 @@ target/
 .env
 .env.*
 .DS_Store
+
+# local agent notes, not published
+CLAUDE.md
+.claude/
