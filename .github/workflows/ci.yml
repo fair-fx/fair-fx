@@ -12,14 +12,15 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-# Stage 1: two jobs in parallel. Later stages (build, deploy) add `needs: [secrets, check]`.
-# The steps live in the template-*.yml workflows.
+# Stage 1: two jobs in parallel. Later stages (build, deploy) add `needs: [secrets, typescript]`.
+# The steps live in the template-*.yml workflows. Checks show as `<job> / <tool>`,
+# for example `typescript / pnpm check`.
 jobs:
   secrets:
     uses: ./.github/workflows/template-gitleaks.yml
 
   # Same command as local: audit, lint, typecheck, deps, test. One install for all of them.
-  check:
+  typescript:
     uses: ./.github/workflows/template-pnpm.yml
     with:
       run: pnpm check
