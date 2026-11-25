@@ -1,16 +1,17 @@
-export { ConfigError } from './config-error.ts';
-export { Direction } from './direction.ts';
-export { isEnumValue, parseEnumValue } from './enum.ts';
-export { Fiat } from './fiat.ts';
-export { Network } from './network.ts';
-export { parseNetworkConfig, type NetworkConfig } from './network-config.ts';
 export {
+  ConfigError,
+  parseNetworkConfig,
   parsePairsConfig,
   requirePinnedAsset,
   UnpinnedAssetError,
   type AssetRef,
+  type NetworkConfig,
   type Pair,
   type PairsConfig,
   type PinnedAsset,
-} from './pairs-config.ts';
+} from './config.ts';
+export { Direction } from './direction.ts';
+export { isEnumValue, parseEnumValue } from './enum.ts';
+export { Fiat } from './fiat.ts';
+export { Network } from './network.ts';
 export { GuardMode, VenueId } from './venue.ts';

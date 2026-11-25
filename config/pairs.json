@@ -1,21 +1,23 @@
 {
   "ladder": [100, 250, 500, 1000, 2500, 5000, 10000, 25000, 50000, 100000],
   "pairs": {
-    "mainnet": {
-      "USDC/EURC": {
+    "mainnet": [
+      {
         "base": {
           "contract": "CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75",
-          "classic": "USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
+          "code": "USDC",
+          "issuer": "GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN",
           "fiat": "USD",
           "decimals": 7
         },
         "quote": {
           "contract": "CDTKPWPLOURQA2SGTKTUQOWRCBZEORB4BWBOMJ3D3ZTQQSGE5F6JBQLV",
-          "classic": "EURC:GDHU6WRG4IEQXM5NZ4BMPKOXHW76MZM4Y2IEMFDVXBSDP6SJY4ITNPP2",
+          "code": "EURC",
+          "issuer": "GDHU6WRG4IEQXM5NZ4BMPKOXHW76MZM4Y2IEMFDVXBSDP6SJY4ITNPP2",
           "fiat": "EUR",
           "decimals": 7
         }
       }
-    }
+    ]
   }
 }

@@ -1,8 +1,7 @@
 # config
 
 `pairs.json` is the only place a token is named. Code looks assets up by contract ID or by code and
-issuer, never by code alone. Load both files with `loadNetworkConfig` and `loadPairsConfig` from
-`@fair-fx/core/node`.
+issuer, never by code alone. Load both files with `loadConfig(dir, network)` from `@fair-fx/core/node`.
 
 The ladder is in whole units of the input token, the same for every pair and both directions.
 

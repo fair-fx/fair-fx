@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises';
+import { join } from 'node:path';
 import {
   ConfigError,
   parseNetworkConfig,
@@ -8,21 +9,25 @@ import {
   type PairsConfig,
 } from '../index.ts';
 
-/** Reads `config/networks.json` at `path` and returns the entry for `network`. */
-export async function loadNetworkConfig(path: string | URL, network: Network): Promise<NetworkConfig> {
-  return parseNetworkConfig(await readJson(path), network);
+/** Everything FairFX reads from `config/` for one network. */
+export interface Config extends PairsConfig {
+  readonly endpoints: NetworkConfig;
 }
 
-/** Reads `config/pairs.json` at `path` and returns the pairs of `network`. */
-export async function loadPairsConfig(path: string | URL, network: Network): Promise<PairsConfig> {
-  return parsePairsConfig(await readJson(path), network);
+/** Reads `networks.json` and `pairs.json` from `dir` (the repo's `config/` folder). Throws ConfigError. */
+export async function loadConfig(dir: string, network: Network): Promise<Config> {
+  const [endpoints, pairs] = await Promise.all([
+    loadFile(join(dir, 'networks.json'), (json) => parseNetworkConfig(json, network)),
+    loadFile(join(dir, 'pairs.json'), (json) => parsePairsConfig(json, network)),
+  ]);
+  return { ...pairs, endpoints };
 }
 
-async function readJson(path: string | URL): Promise<unknown> {
-  const text = await readFile(path, 'utf8');
+async function loadFile<T>(path: string, parse: (json: unknown) => T): Promise<T> {
   try {
-    return JSON.parse(text) as unknown;
+    return parse(JSON.parse(await readFile(path, 'utf8')));
   } catch (error) {
-    throw new ConfigError(`${String(path)}: not valid JSON`, { cause: error });
+    const reason = error instanceof Error ? error.message : String(error);
+    throw new ConfigError(`${path}: ${reason}`, { cause: error });
   }
 }
