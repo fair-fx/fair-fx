@@ -12,37 +12,15 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-# Stage 1 (checks) runs in parallel. Stage 2 (test) starts when every check passed.
+# Stage 1: two jobs in parallel. Later stages (build, deploy) add `needs: [secrets, check]`.
 # The steps live in the template-*.yml workflows.
 jobs:
-  # Stage 1: checks
   secrets:
     uses: ./.github/workflows/template-gitleaks.yml
 
-  audit:
+  # Same command as local: audit, lint, typecheck, deps, test. One install for all of them.
+  check:
     uses: ./.github/workflows/template-pnpm.yml
     with:
-      run: pnpm audit --audit-level high
-
-  lint:
-    uses: ./.github/workflows/template-pnpm.yml
-    with:
-      run: pnpm lint
-
-  typecheck:
-    uses: ./.github/workflows/template-pnpm.yml
-    with:
-      run: pnpm typecheck
-
-  deps:
-    uses: ./.github/workflows/template-pnpm.yml
-    with:
-      run: pnpm deps
-
-  # Stage 2: test
-  test:
-    needs: [secrets, audit, lint, typecheck, deps]
-    uses: ./.github/workflows/template-pnpm.yml
-    with:
-      run: pnpm test
+      run: pnpm check
       timeout-minutes: 15
