@@ -11,7 +11,7 @@ pnpm install
 pnpm check
 ```
 
-`pnpm check` runs audit, lint, typecheck, unit tests and the boundary tests.
+`pnpm check` runs audit, lint, typecheck, unit tests and the dependency rules.
 
 ## Layout
 
@@ -19,11 +19,10 @@ pnpm check
 packages/core       math, formatting, freshness (browser-safe), plus a Node-only entry
 packages/venues     one quote adapter per venue
 contracts/          Soroban contracts (empty for now)
-tools/boundaries    tests that forbidden imports fail lint
 ```
 
-Packages may only import in the allowed direction. Lint fails otherwise; the rules are in
-`eslint.config.mjs`.
+Packages may only import in the allowed direction. The rules are in `.dependency-cruiser.ts`
+(`pnpm deps`).
 
 ## License
 

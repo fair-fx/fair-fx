@@ -1,4 +1,4 @@
-import { GuardMode, VenueId } from '@fairfx/core';
+import { GuardMode, VenueId } from '@fair-fx/core';
 
 /** Soroban venues can be wrapped by the guard contract. SDEX cannot: a contract cannot call it. */
 export const GUARD_MODE: Readonly<Record<VenueId, GuardMode>> = {

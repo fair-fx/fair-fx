@@ -1,6 +1,4 @@
-import { describe, expect, it } from 'vitest';
-import { Direction } from './direction.js';
-import { isEnumValue, parseEnumValue } from './enum.js';
+import { Direction, isEnumValue, parseEnumValue } from '@fair-fx/core';
 
 describe('isEnumValue', () => {
   it('accepts enum values and rejects enum keys', () => {

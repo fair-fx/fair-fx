@@ -1,29 +1,25 @@
 {
-  "name": "@fairfx/core",
-  "version": "0.0.0",
+  "name": "@fair-fx/core",
+  "version": "0.0.1",
   "description": "Pairs, fixed point math, formatting and freshness. Main entry has no I/O; /node holds the Node-only readers.",
   "license": "Apache-2.0",
   "type": "module",
   "sideEffects": false,
   "exports": {
     ".": {
-      "@fairfx/source": "./src/index.ts",
+      "@fair-fx/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./node": {
-      "@fairfx/source": "./src/node/index.ts",
+      "@fair-fx/source": "./src/node/index.ts",
       "types": "./dist/node/index.d.ts",
       "default": "./dist/node/index.js"
     }
   },
   "files": ["dist"],
   "scripts": {
-    "lint": "eslint .",
-    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.spec.json --noEmit",
     "test": "vitest run"
-  },
-  "nx": {
-    "tags": ["layer:core", "scope:public"]
   }
 }
