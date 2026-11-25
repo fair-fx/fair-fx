@@ -60,6 +60,13 @@ const config: IConfiguration = {
       to: { dependencyTypes: ['core'] },
     },
     {
+      name: 'testing-only-in-tests',
+      comment: 'Test factories (src/testing, for example @fair-fx/core/testing) are for test files only',
+      severity: 'error',
+      from: { path: '^(packages|apps)/', pathNot: ['\\.test\\.ts$', '/src/testing/'] },
+      to: { path: '^(packages|apps)/[^/]+/src/testing/' },
+    },
+    {
       name: 'dashboard-no-core-node',
       comment: 'The dashboard may only import the browser entry of core',
       severity: 'error',

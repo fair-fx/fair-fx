@@ -17,7 +17,7 @@ pnpm check
 
 ```
 config/             networks and pinned pairs, read by @fair-fx/core/node
-packages/core       math, formatting, freshness (browser-safe), plus a Node-only entry
+packages/core       math, formatting, freshness (browser-safe), a Node-only entry, test factories
 packages/venues     one quote adapter per venue
 contracts/          Soroban contracts (empty for now)
 ```
