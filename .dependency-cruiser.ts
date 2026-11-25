@@ -1,5 +1,7 @@
+import type { IConfiguration, IForbiddenRuleType } from 'dependency-cruiser';
+
 // Which package may import which other package. A package not listed here may import none.
-const allowed = {
+const allowed: Record<string, string[]> = {
   'packages/core': [],
   'packages/venues': ['packages/core'],
   'packages/db': ['packages/core'],
@@ -12,27 +14,37 @@ const allowed = {
   'apps/dashboard': ['packages/api-schema', 'packages/core', 'packages/ui'],
 };
 
-const anyPackage = '^(packages|apps)/';
-const known = Object.keys(allowed).join('|');
+// Not published to npm ("private": true in their package.json). A published package never imports
+// one of these, even if someone adds it to `allowed` by mistake.
+const privatePackages = ['packages/db', 'packages/ui', 'apps/collector', 'apps/api', 'apps/dashboard'];
 
-const directionRules = Object.entries(allowed).map(([from, targets]) => ({
+const anyPackage = '^(packages|apps)/';
+const oneOf = (paths: string[]): string => `^(${paths.join('|')})/`;
+
+const directionRules: IForbiddenRuleType[] = Object.entries(allowed).map(([from, targets]) => ({
   name: `${from.replace('/', '-')}-direction`,
   comment: targets.length ? `${from} may only import ${targets.join(', ')}` : `${from} may not import other packages`,
   severity: 'error',
   from: { path: `^${from}/` },
-  to: { path: anyPackage, pathNot: `^(${[from, ...targets].join('|')})/` },
+  to: { path: anyPackage, pathNot: oneOf([from, ...targets]) },
 }));
 
-/** @type {import('dependency-cruiser').IConfiguration} */
-module.exports = {
+const config: IConfiguration = {
   forbidden: [
     ...directionRules,
     {
       name: 'unlisted-package',
-      comment: 'Add the package to `allowed` in .dependency-cruiser.cjs before it imports another package',
+      comment: 'Add the package to `allowed` in .dependency-cruiser.ts before it imports another package',
       severity: 'error',
-      from: { path: '^((packages|apps)/[^/]+)/', pathNot: `^(${known})/` },
+      from: { path: '^((packages|apps)/[^/]+)/', pathNot: oneOf(Object.keys(allowed)) },
       to: { path: anyPackage, pathNot: '^$1/' },
+    },
+    {
+      name: 'published-no-private',
+      comment: 'A package published to npm may not import a private package',
+      severity: 'error',
+      from: { path: anyPackage, pathNot: oneOf(privatePackages) },
+      to: { path: oneOf(privatePackages) },
     },
     {
       name: 'core-main-no-node',
@@ -64,7 +76,7 @@ module.exports = {
   ],
   options: {
     doNotFollow: { path: 'node_modules' },
-    exclude: { path: '(^|/)(dist|coverage|\\.nx)/' },
+    exclude: { path: '(^|/)(dist|coverage)/' },
     tsPreCompilationDeps: true,
     tsConfig: { fileName: 'tsconfig.base.json' },
     enhancedResolveOptions: {
@@ -73,3 +85,5 @@ module.exports = {
     },
   },
 };
+
+export default config;

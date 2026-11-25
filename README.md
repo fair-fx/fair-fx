@@ -21,8 +21,8 @@ packages/venues     one quote adapter per venue
 contracts/          Soroban contracts (empty for now)
 ```
 
-Packages may only import in the allowed direction. The rules are in `.dependency-cruiser.cjs`
-(`pnpm deps`) and `eslint.config.mjs` (`pnpm lint`).
+Packages may only import in the allowed direction. The rules are in `.dependency-cruiser.ts`
+(`pnpm deps`).
 
 ## License
 

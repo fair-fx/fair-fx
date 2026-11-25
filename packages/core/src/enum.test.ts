@@ -1,5 +1,5 @@
-import { Direction } from './direction.js';
-import { isEnumValue, parseEnumValue } from './enum.js';
+import { Direction } from './direction.ts';
+import { isEnumValue, parseEnumValue } from './enum.ts';
 
 describe('isEnumValue', () => {
   it('accepts enum values and rejects enum keys', () => {

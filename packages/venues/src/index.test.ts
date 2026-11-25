@@ -1,5 +1,5 @@
 import { GuardMode, VenueId } from '@fairfx/core';
-import { GUARD_MODE } from './index.js';
+import { GUARD_MODE } from './index.ts';
 
 describe('GUARD_MODE', () => {
   it('has a mode for every venue', () => {

@@ -5,6 +5,7 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "customConditions": ["@fairfx/source"],
+    "rewriteRelativeImportExtensions": true,
     "types": [],
     "strict": true,
     "noUncheckedIndexedAccess": true,
