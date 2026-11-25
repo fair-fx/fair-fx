@@ -40,6 +40,13 @@ const config: IConfiguration = {
       to: { path: anyPackage, pathNot: '^$1/' },
     },
     {
+      name: 'barrel-only',
+      comment: 'Import another package through its barrel (for example @fairfx/core), not a file inside it',
+      severity: 'error',
+      from: { path: '^((packages|apps)/[^/]+)/' },
+      to: { path: anyPackage, pathNot: ['^$1/', '/index\\.ts$'] },
+    },
+    {
       name: 'published-no-private',
       comment: 'A package published to npm may not import a private package',
       severity: 'error',

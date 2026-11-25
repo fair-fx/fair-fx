@@ -1,0 +1,35 @@
+name: template-pnpm
+
+# Template: install the repo with pnpm, then run one command.
+on:
+  workflow_call:
+    inputs:
+      run:
+        description: Command to run after install
+        required: true
+        type: string
+      timeout-minutes:
+        required: false
+        type: number
+        default: 10
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: ${{ inputs.run }}

@@ -12,62 +12,37 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
-# Stage 1 (checks) runs in parallel. Stage 2 (test) starts only when every check passed.
-# Each job runs the same setup from .github/actions/setup.
+# Stage 1 (checks) runs in parallel. Stage 2 (test) starts when every check passed.
+# The steps live in the template-*.yml workflows.
 jobs:
   # Stage 1: checks
-
   secrets:
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-      - name: scan full history
-        run: >-
-          docker run --rm -v "$PWD:/repo" ghcr.io/gitleaks/gitleaks:v8.30.1
-          git /repo --config /repo/.gitleaks.toml --redact --no-banner --exit-code 1
+    uses: ./.github/workflows/template-gitleaks.yml
 
   audit:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup
-      - run: pnpm audit --audit-level high
+    uses: ./.github/workflows/template-pnpm.yml
+    with:
+      run: pnpm audit --audit-level high
 
   lint:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup
-      - run: pnpm lint
+    uses: ./.github/workflows/template-pnpm.yml
+    with:
+      run: pnpm lint
 
   typecheck:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup
-      - run: pnpm typecheck
+    uses: ./.github/workflows/template-pnpm.yml
+    with:
+      run: pnpm typecheck
 
   deps:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup
-      - run: pnpm deps
+    uses: ./.github/workflows/template-pnpm.yml
+    with:
+      run: pnpm deps
 
   # Stage 2: test
-
   test:
     needs: [secrets, audit, lint, typecheck, deps]
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-    steps:
-      - uses: actions/checkout@v7
-      - uses: ./.github/actions/setup
-      - run: pnpm test
+    uses: ./.github/workflows/template-pnpm.yml
+    with:
+      run: pnpm test
+      timeout-minutes: 15

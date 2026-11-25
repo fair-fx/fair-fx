@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.tools.json && pnpm -r run typecheck",
     "test": "pnpm -r run test",
-    "deps": "depcruise packages",
+    "deps": "depcruise '{packages,apps}/*/src'",
     "check": "pnpm audit --audit-level high && pnpm lint && pnpm typecheck && pnpm deps && pnpm test"
   },
   "devDependencies": {

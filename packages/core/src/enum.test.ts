@@ -1,5 +1,4 @@
-import { Direction } from './direction.ts';
-import { isEnumValue, parseEnumValue } from './enum.ts';
+import { Direction, isEnumValue, parseEnumValue } from '@fairfx/core';
 
 describe('isEnumValue', () => {
   it('accepts enum values and rejects enum keys', () => {
