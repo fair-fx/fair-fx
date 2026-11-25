@@ -1,5 +1,5 @@
 {
-  "name": "@fairfx/core",
+  "name": "@fair-fx/core",
   "version": "0.0.1",
   "description": "Pairs, fixed point math, formatting and freshness. Main entry has no I/O; /node holds the Node-only readers.",
   "license": "Apache-2.0",
@@ -7,12 +7,12 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "@fairfx/source": "./src/index.ts",
+      "@fair-fx/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
     "./node": {
-      "@fairfx/source": "./src/node/index.ts",
+      "@fair-fx/source": "./src/node/index.ts",
       "types": "./dist/node/index.d.ts",
       "default": "./dist/node/index.js"
     }

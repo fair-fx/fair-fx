@@ -1,5 +1,5 @@
 {
-  "name": "@fairfx/venues",
+  "name": "@fair-fx/venues",
   "version": "0.0.1",
   "description": "One quote adapter per venue, behind VenueAdapter.",
   "license": "Apache-2.0",
@@ -7,7 +7,7 @@
   "sideEffects": false,
   "exports": {
     ".": {
-      "@fairfx/source": "./src/index.ts",
+      "@fair-fx/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     }
@@ -18,6 +18,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@fairfx/core": "workspace:*"
+    "@fair-fx/core": "workspace:*"
   }
 }

@@ -41,7 +41,7 @@ const config: IConfiguration = {
     },
     {
       name: 'barrel-only',
-      comment: 'Import another package through its barrel (for example @fairfx/core), not a file inside it',
+      comment: 'Import another package through its barrel (for example @fair-fx/core), not a file inside it',
       severity: 'error',
       from: { path: '^((packages|apps)/[^/]+)/' },
       to: { path: anyPackage, pathNot: ['^$1/', '/index\\.ts$'] },
@@ -88,7 +88,7 @@ const config: IConfiguration = {
     tsConfig: { fileName: 'tsconfig.base.json' },
     enhancedResolveOptions: {
       exportsFields: ['exports'],
-      conditionNames: ['@fairfx/source', 'import', 'node', 'default'],
+      conditionNames: ['@fair-fx/source', 'import', 'node', 'default'],
     },
   },
 };

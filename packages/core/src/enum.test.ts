@@ -1,4 +1,4 @@
-import { Direction, isEnumValue, parseEnumValue } from '@fairfx/core';
+import { Direction, isEnumValue, parseEnumValue } from '@fair-fx/core';
 
 describe('isEnumValue', () => {
   it('accepts enum values and rejects enum keys', () => {

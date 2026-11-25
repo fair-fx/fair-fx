@@ -4,7 +4,7 @@
     "lib": ["ES2024"],
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "customConditions": ["@fairfx/source"],
+    "customConditions": ["@fair-fx/source"],
     "rewriteRelativeImportExtensions": true,
     "types": [],
     "strict": true,

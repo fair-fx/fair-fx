@@ -1,5 +1,5 @@
-import { GuardMode, VenueId } from '@fairfx/core';
-import { GUARD_MODE } from '@fairfx/venues';
+import { GuardMode, VenueId } from '@fair-fx/core';
+import { GUARD_MODE } from '@fair-fx/venues';
 
 describe('GUARD_MODE', () => {
   it('has a mode for every venue', () => {

@@ -13,7 +13,7 @@ export default defineConfig(
     rules: {
       'no-restricted-imports': [
         'error',
-        { patterns: [{ regex: '^\\.', message: 'Import from the package barrel, e.g. @fairfx/core.' }] },
+        { patterns: [{ regex: '^\\.', message: 'Import from the package barrel, e.g. @fair-fx/core.' }] },
       ],
     },
   },

@@ -217,7 +217,7 @@ importers:
 
   packages/venues:
     dependencies:
-      '@fairfx/core':
+      '@fair-fx/core':
         specifier: workspace:*
         version: link:../core
 
