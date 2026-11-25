@@ -60,6 +60,27 @@ const config: IConfiguration = {
       to: { dependencyTypes: ['core'] },
     },
     {
+      name: 'core-module-barrel-only',
+      comment: 'Inside core, import a module folder (asset, pair, ...) through its index.ts',
+      severity: 'error',
+      from: { path: '^(packages/core/src/[^/]+)' },
+      to: { path: '^packages/core/src/[^/]+/', pathNot: ['^$1/', '/index\\.ts$', '\\.factory\\.ts$'] },
+    },
+    {
+      name: 'factories-only-in-tests',
+      comment: 'Test factories (*.factory.ts, src/testing) are for test files and other factories only',
+      severity: 'error',
+      from: { path: '^(packages|apps)/', pathNot: ['\\.test\\.ts$', '\\.factory\\.ts$', '/src/testing/'] },
+      to: { path: '(\\.factory\\.ts$|^(packages|apps)/[^/]+/src/testing/)' },
+    },
+    {
+      name: 'types-no-schema',
+      comment: 'A *.types.ts file holds plain TypeScript types: no zod, no *.schema.ts',
+      severity: 'error',
+      from: { path: '\\.types\\.ts$' },
+      to: { path: ['\\.schema\\.ts$', '/node_modules/zod/'] },
+    },
+    {
       name: 'dashboard-no-core-node',
       comment: 'The dashboard may only import the browser entry of core',
       severity: 'error',
