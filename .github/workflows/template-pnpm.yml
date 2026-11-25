@@ -1,6 +1,5 @@
 name: template-pnpm
 
-# Template: install the repo with pnpm, then run one command.
 on:
   workflow_call:
     inputs:

@@ -14,8 +14,7 @@ const allowed: Record<string, string[]> = {
   'apps/dashboard': ['packages/api-schema', 'packages/core', 'packages/ui'],
 };
 
-// Not published to npm ("private": true in their package.json). A published package never imports
-// one of these, even if someone adds it to `allowed` by mistake.
+// Packages with "private": true. A published package may not import them.
 const privatePackages = ['packages/db', 'packages/ui', 'apps/collector', 'apps/api', 'apps/dashboard'];
 
 const anyPackage = '^(packages|apps)/';

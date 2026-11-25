@@ -1,6 +1,5 @@
 name: template-gitleaks
 
-# Template: scan the full git history for secrets with the official gitleaks image.
 on:
   workflow_call:
 
