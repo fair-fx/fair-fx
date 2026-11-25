@@ -10,6 +10,6 @@
   "targetDefaults": {
     "lint": { "cache": true, "inputs": ["default", "sharedLint", "^default"] },
     "typecheck": { "cache": true, "inputs": ["default", "sharedTs", "^default"] },
-    "test": { "cache": true, "inputs": ["default", "sharedTs", "^default"] }
+    "test": { "cache": true, "inputs": ["default", "sharedTs", "{workspaceRoot}/vitest.shared.ts", "^default"] }
   }
 }

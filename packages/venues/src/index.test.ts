@@ -1,5 +1,4 @@
 import { GuardMode, VenueId } from '@fairfx/core';
-import { describe, expect, it } from 'vitest';
 import { GUARD_MODE } from './index.js';
 
 describe('GUARD_MODE', () => {

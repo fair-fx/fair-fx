@@ -29,7 +29,7 @@ export default [
     ignores: ['**/dist/**', '**/node_modules/**', '**/coverage/**', 'contracts/**', '.nx/**'],
   },
   {
-    files: ['**/*.ts', '**/*.mts', '**/*.js', '**/*.mjs'],
+    files: ['{packages,apps}/*/src/**/*.{ts,tsx,mts,js,mjs}'],
     rules: {
       '@nx/enforce-module-boundaries': [
         'error',
