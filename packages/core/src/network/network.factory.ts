@@ -1,4 +1,4 @@
-import { Network, type NetworkConfig } from './network.ts';
+import { Network, type NetworkConfig } from './network.types.ts';
 
 export function buildNetworkConfig(overrides: Partial<NetworkConfig> = {}): NetworkConfig {
   return {
@@ -13,10 +13,10 @@ export function buildNetworkConfig(overrides: Partial<NetworkConfig> = {}): Netw
   };
 }
 
-// Spread over a valid default and loosely typed, so a test can write values the schema refuses.
-type Patch = Readonly<Record<string, unknown>>;
-
-/** Raw `networks.json` with one mainnet entry, `mainnet` patched. */
-export function buildNetworksFile(mainnet: Patch = {}): unknown {
+/**
+ * Raw `networks.json` with one mainnet entry, `mainnet` spread over a valid default.
+ * `mainnet` is loosely typed so a test can write values the schema refuses.
+ */
+export function buildNetworksFile(mainnet: object = {}): unknown {
   return { [Network.Mainnet]: { ...buildNetworkConfig(), ...mainnet } };
 }

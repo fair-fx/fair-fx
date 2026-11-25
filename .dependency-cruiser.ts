@@ -74,6 +74,13 @@ const config: IConfiguration = {
       to: { path: '(\\.factory\\.ts$|^(packages|apps)/[^/]+/src/testing/)' },
     },
     {
+      name: 'types-no-schema',
+      comment: 'A *.types.ts file holds plain TypeScript types: no zod, no *.schema.ts',
+      severity: 'error',
+      from: { path: '\\.types\\.ts$' },
+      to: { path: ['\\.schema\\.ts$', '/node_modules/zod/'] },
+    },
+    {
       name: 'dashboard-no-core-node',
       comment: 'The dashboard may only import the browser entry of core',
       severity: 'error',

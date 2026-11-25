@@ -1,1 +1,1 @@
-export { GuardMode, VenueId } from './venue.ts';
+export { GuardMode, VenueId } from './venue.types.ts';

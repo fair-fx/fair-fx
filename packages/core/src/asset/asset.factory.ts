@@ -1,4 +1,4 @@
-import { Fiat, type PinnedAsset } from './asset.ts';
+import { Fiat, type PinnedAsset } from './asset.types.ts';
 
 export const USDC: PinnedAsset = {
   contract: 'CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75',

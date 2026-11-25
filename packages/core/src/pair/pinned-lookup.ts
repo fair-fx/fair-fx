@@ -1,6 +1,6 @@
 import type { AssetRef, PinnedAsset } from '../asset/index.ts';
 import type { Network } from '../network/index.ts';
-import type { PairsConfig } from './pair.ts';
+import type { PairsConfig } from './pair.types.ts';
 
 /** A lookup named an asset that is not in `config/pairs.json` for this network. */
 export class UnpinnedAssetError extends Error {
