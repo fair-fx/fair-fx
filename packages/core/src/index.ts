@@ -4,9 +4,11 @@ export {
   Direction,
   parsePairsConfig,
   requirePinnedAsset,
+  swapAssets,
   UnpinnedAssetError,
   type Pair,
   type PairsConfig,
+  type SwapAssets,
 } from './pair/index.ts';
 export {
   floorOut,
@@ -25,5 +27,12 @@ export {
   type ReferencePrice,
   type ReferenceReading,
 } from './reference/index.ts';
-export { ConfigError, isEnumValue, parseEnumValue } from './shared/index.ts';
-export { GuardMode, VenueId } from './venue/index.ts';
+export {
+  ConfigError,
+  errorMessageWithCause,
+  formatDecimalAmount,
+  isEnumValue,
+  parseDecimalAmount,
+  parseEnumValue,
+} from './shared/index.ts';
+export { GuardMode, QuoteStatus, VenueId, type Quote, type VenueAdapter } from './venue/index.ts';
