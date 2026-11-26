@@ -38,16 +38,18 @@ pnpm install
 pnpm check
 ```
 
-`pnpm check` runs audit, lint, typecheck, the dependency rules and the tests. CI runs it on every pull
-request, next to a scan for secrets. The tests of `packages/db` start a Postgres server in a container,
-so Docker has to be running.
+`pnpm check` runs audit, lint, typecheck, the dependency rules and the tests. CI runs the same on every
+pull request, split into one job for the checks of the whole repo and one test job per package, next to
+a scan for secrets. The tests of `packages/db` start a Postgres server in a container, so Docker has to
+be running.
 
 ## Commands
 
 Run from the repo root.
 
 ```sh
-pnpm check                                     # audit, then lint, typecheck, deps and test
+pnpm check                                     # check:repo, then test
+pnpm check:repo                                # audit, lint, typecheck and deps: no tests
 pnpm lint                                      # ESLint
 pnpm typecheck                                 # tsc on every package
 pnpm deps                                      # which package may import which
@@ -81,7 +83,7 @@ fair-fx/
 ├── tests/
 │   └── fixtures/            answers recorded from the real venues, replayed by the unit tests
 └── .github/
-    └── workflows/           CI: pnpm check and a scan for secrets on every pull request
+    └── workflows/           CI: repo checks, one test job per package and a scan for secrets
 ```
 
 Packages may only import in the allowed direction: `venues` and `db` use `core`, and `core` uses

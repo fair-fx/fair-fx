@@ -1,0 +1,24 @@
+name: gate
+
+on:
+  workflow_call:
+    inputs:
+      results:
+        description: The `needs` of the calling job, as JSON
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  run:
+    name: all green
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: every job before this one succeeded
+        env:
+          RESULTS: ${{ inputs.results }}
+        run: |
+          jq -r 'to_entries[] | "\(.value.result)\t\(.key)"' <<< "$RESULTS"
+          jq -e 'length > 0 and all(.[]; .result == "success")' <<< "$RESULTS" > /dev/null
