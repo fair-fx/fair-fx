@@ -1,4 +1,4 @@
-export { GUARD_MODE } from './guard-mode.ts';
+export { GUARD_MODE } from './guard-mode.constants.ts';
 export {
   sdexAdapter,
   strictSendUrl,
