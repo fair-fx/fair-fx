@@ -10,6 +10,7 @@ export function parseOrThrow<Schema extends z.ZodType>(schema: Schema, json: unk
   if (!result.success) {
     throw new ConfigError(z.prettifyError(result.error), { cause: result.error });
   }
+
   return result.data;
 }
 
@@ -19,5 +20,6 @@ export function entryFor<K extends string, T>(byKey: Partial<Record<K, T>>, key:
   if (entry === undefined) {
     throw new ConfigError(`no entry for ${key}`);
   }
+
   return entry;
 }

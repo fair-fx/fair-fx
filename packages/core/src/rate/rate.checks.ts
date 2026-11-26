@@ -10,6 +10,7 @@ export function powerOfTen(exponent: number): bigint {
   if (exponent > LARGEST_EXPONENT_OF_TEN_IN_I128) {
     throw overflowError();
   }
+
   return 10n ** BigInt(exponent);
 }
 
@@ -19,6 +20,7 @@ export function withinI128(value: bigint): bigint {
   if (!fitsI128(value)) {
     throw overflowError();
   }
+
   return value;
 }
 

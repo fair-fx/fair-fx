@@ -12,5 +12,6 @@ export function fitsI128(value: bigint): boolean {
 /** `/` truncates toward zero, which is already the ceiling of a negative quotient. */
 export function divideRoundingUp(dividend: bigint, positiveDivisor: bigint): bigint {
   const quotient = dividend / positiveDivisor;
+
   return dividend % positiveDivisor > 0n ? quotient + 1n : quotient;
 }

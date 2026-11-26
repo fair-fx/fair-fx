@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
 import { defineConfig } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
@@ -8,7 +9,13 @@ export default defineConfig(
   tseslint.configs.recommended,
   {
     files: ['{packages,apps}/*/src/**/*.ts'],
+    plugins: { '@stylistic': stylistic },
     rules: {
+      '@stylistic/padding-line-between-statements': [
+        'error',
+        { blankLine: 'always', prev: 'block-like', next: '*' },
+        { blankLine: 'always', prev: '*', next: 'return' },
+      ],
       'no-restricted-syntax': [
         'error',
         {

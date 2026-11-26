@@ -5,6 +5,7 @@ export function matchesRef(asset: PinnedAsset, ref: AssetRef): boolean {
   if ('contract' in ref) {
     return asset.contract === ref.contract;
   }
+
   return asset.code === ref.code && asset.issuer === ref.issuer;
 }
 
