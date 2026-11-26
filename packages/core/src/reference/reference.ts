@@ -16,18 +16,24 @@ export function baseReference(): ReferencePrice {
   };
 }
 
-/** Turns what the feed returned for `decimals()` and `lastprice(fiat)` into a reading. Never throws. */
-export function toReferenceReading(fiat: Fiat, feedDecimals: unknown, lastPrice: unknown): ReferenceReading {
-  const decimals = feedDecimalsSchema.safeParse(feedDecimals);
+/**
+ * Checks what the feed returned for `decimals()` and `lastprice(fiat)` and turns it into a reading.
+ * Never throws.
+ *
+ * Expected: `rawDecimals` is 14, and `rawLastPrice` is a `FeedPrice`, or `null` when the feed has no
+ * price. Anything else gives `invalid`.
+ */
+export function toReferenceReading(fiat: Fiat, rawDecimals: unknown, rawLastPrice: unknown): ReferenceReading {
+  const decimals = feedDecimalsSchema.safeParse(rawDecimals);
   if (!decimals.success) {
     return { status: ReferenceStatus.Invalid, fiat, reason: `feed decimals: ${z.prettifyError(decimals.error)}` };
   }
 
-  if (lastPrice === null) {
+  if (rawLastPrice === null) {
     return { status: ReferenceStatus.Missing, fiat };
   }
 
-  const feedPrice = feedPriceSchema.safeParse(lastPrice);
+  const feedPrice = feedPriceSchema.safeParse(rawLastPrice);
   if (!feedPrice.success) {
     return { status: ReferenceStatus.Invalid, fiat, reason: `feed price: ${z.prettifyError(feedPrice.error)}` };
   }
