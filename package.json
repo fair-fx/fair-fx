@@ -15,7 +15,8 @@
     "test:smoke": "FAIRFX_SMOKE=1 pnpm --filter @fair-fx/core --filter @fair-fx/venues run test smoke",
     "db:migrate": "pnpm --filter @fair-fx/db run migrate",
     "deps": "depcruise '{packages,apps}/*/src'",
-    "check": "pnpm audit --audit-level high && pnpm lint && pnpm typecheck && pnpm deps && pnpm test"
+    "check:repo": "pnpm audit --audit-level high && pnpm lint && pnpm typecheck && pnpm deps",
+    "check": "pnpm check:repo && pnpm test"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

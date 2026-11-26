@@ -16,8 +16,24 @@ jobs:
   secrets:
     uses: ./.github/workflows/gitleaks.yml
 
-  typescript:
+  repo:
     uses: ./.github/workflows/pnpm.yml
     with:
-      run: pnpm check
-      timeout-minutes: 15
+      run: pnpm check:repo
+
+  test:
+    name: ${{ matrix.package }}
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [core, venues, db]
+    uses: ./.github/workflows/pnpm.yml
+    with:
+      run: pnpm --filter @fair-fx/${{ matrix.package }} test
+
+  ci:
+    if: always()
+    needs: [secrets, repo, test]
+    uses: ./.github/workflows/gate.yml
+    with:
+      results: ${{ toJSON(needs) }}
