@@ -35,4 +35,11 @@ export {
   parseDecimalAmount,
   parseEnumValue,
 } from './shared/index.ts';
-export { GuardMode, QuoteStatus, VenueId, type Quote, type VenueAdapter } from './venue/index.ts';
+export {
+  GuardMode,
+  QuoteStatus,
+  VenueId,
+  type Quote,
+  type QuoteError,
+  type VenueAdapter,
+} from './venue/index.ts';

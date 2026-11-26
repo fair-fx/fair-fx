@@ -3,7 +3,9 @@ import type { Mock } from 'vitest';
 import type { Fetch } from '../shared/index.ts';
 
 const FIXTURES = new URL('../../../../tests/fixtures/horizon/', import.meta.url);
-const HTTP_OK = 200;
+
+// Written out, not imported from the code under test: a wrong constant there must fail a test.
+const RECORDED_STATUS = 200;
 
 interface RecordedWith {
   readonly status?: number;
@@ -13,7 +15,7 @@ interface RecordedWith {
 
 /** A `fetch` that answers with `tests/fixtures/horizon/<name>.json`, a body Horizon really sent. */
 export async function horizonAnswering(name: string, recordedWith: RecordedWith = {}): Promise<Mock<Fetch>> {
-  const { status = HTTP_OK, latestLedger } = recordedWith;
+  const { status = RECORDED_STATUS, latestLedger } = recordedWith;
   const headers = latestLedger === undefined ? {} : { 'Latest-Ledger': String(latestLedger) };
   const body = await readFile(new URL(`${name}.json`, FIXTURES), 'utf8');
 

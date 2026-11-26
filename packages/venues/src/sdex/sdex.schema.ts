@@ -1,9 +1,7 @@
 import { parseDecimalAmount } from '@fair-fx/core';
 import { z } from 'zod';
+import { CLASSIC_DECIMALS } from './sdex.constants.ts';
 import type { SdexHop, SdexPath } from './sdex.types.ts';
-
-/** Horizon writes every classic amount as a decimal string with 7 decimals. */
-export const CLASSIC_DECIMALS = 7;
 
 const amountSchema: z.ZodType<bigint> = z
   .string()

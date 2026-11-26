@@ -1,16 +1,14 @@
 import { formatDecimalAmount, QuoteStatus, type Quote, type SwapAssets } from '@fair-fx/core';
 import { z } from 'zod';
-import type { JsonResponse } from '../shared/index.ts';
+import { errorQuote, HTTP_OK, urlUnder, type JsonResponse } from '../shared/index.ts';
 import { bestPath, horizonAssetType, horizonFailure, latestLedger } from './horizon.ts';
-import { CLASSIC_DECIMALS, strictSendPathsSchema } from './sdex.schema.ts';
+import { CLASSIC_DECIMALS, STRICT_SEND_PATH } from './sdex.constants.ts';
+import { strictSendPathsSchema } from './sdex.schema.ts';
 import type { SdexRoute } from './sdex.types.ts';
-
-const STRICT_SEND = 'paths/strict-send';
-const HTTP_OK = 200;
 
 /** The Horizon request for "what would `amountIn` of `swap.input` pay in `swap.output`". */
 export function strictSendUrl(horizonUrl: string, swap: SwapAssets, amountIn: bigint): URL {
-  const url = new URL(STRICT_SEND, horizonUrl.endsWith('/') ? horizonUrl : `${horizonUrl}/`);
+  const url = urlUnder(horizonUrl, STRICT_SEND_PATH);
   url.search = new URLSearchParams({
     source_asset_type: horizonAssetType(swap.input.code),
     source_asset_code: swap.input.code,
@@ -30,12 +28,12 @@ export function strictSendUrl(horizonUrl: string, swap: SwapAssets, amountIn: bi
  */
 export function toSdexQuote(response: JsonResponse): Quote<SdexRoute> {
   if (response.status !== HTTP_OK) {
-    return { status: QuoteStatus.Error, reason: horizonFailure(response) };
+    return errorQuote(horizonFailure(response));
   }
 
   const paths = strictSendPathsSchema.safeParse(response.body);
   if (!paths.success) {
-    return { status: QuoteStatus.Error, reason: `horizon response: ${z.prettifyError(paths.error)}` };
+    return errorQuote(`horizon response: ${z.prettifyError(paths.error)}`);
   }
 
   const best = bestPath(paths.data);

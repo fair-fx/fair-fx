@@ -1,9 +1,7 @@
 import type { JsonResponse } from '../shared/index.ts';
+import { LATEST_LEDGER_HEADER, LONGEST_ALPHANUM4_CODE } from './sdex.constants.ts';
 import { horizonProblemSchema } from './sdex.schema.ts';
 import type { SdexPath } from './sdex.types.ts';
-
-const LONGEST_ALPHANUM4_CODE = 4;
-const LATEST_LEDGER_HEADER = 'latest-ledger';
 
 /** Horizon names a classic asset by the length of its code. */
 export function horizonAssetType(code: string): 'credit_alphanum4' | 'credit_alphanum12' {
