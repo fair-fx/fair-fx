@@ -34,6 +34,30 @@ export enum NoRouteCause {
   PaysNothing = 'pays_nothing',
 }
 
+/**
+ * Why there is no usable answer from a venue. Read from the transport and the HTTP status, not from what
+ * the venue meant.
+ */
+export enum QuoteErrorCause {
+  /** The caller asked for what no venue quotes: an amount in of zero or less. The venue was not asked. */
+  BadRequest = 'bad_request',
+  /** The venue did not answer within the timeout. */
+  Timeout = 'timeout',
+  /** The request failed before any answer came back: DNS, a refused connection. */
+  Network = 'network',
+  /** The venue cannot answer now: HTTP 429 or 5xx. The same request may work later. */
+  Unavailable = 'unavailable',
+  /**
+   * The venue refused this request: any other HTTP error, a JSON-RPC error, a failed simulation, or no
+   * router at the configured address. Waiting is not expected to help.
+   */
+  Rejected = 'rejected',
+  /** The venue answered and the answer cannot be read: not JSON, or another shape. */
+  BadAnswer = 'bad_answer',
+  /** A failure the adapter does not recognise. */
+  Unknown = 'unknown',
+}
+
 export interface QuoteOk<Route> {
   readonly status: QuoteStatus.Ok;
   /** In the smallest unit of the output token. Always above zero. */
@@ -54,9 +78,10 @@ export interface QuoteNoRoute {
   readonly cause: NoRouteCause;
 }
 
-/** The venue gave no usable answer: a timeout, an HTTP error that is not a `no_route`, or a response of the wrong shape. */
+/** There is no usable answer from the venue. `cause` is the kind of failure, `reason` the detail as text. */
 export interface QuoteError {
   readonly status: QuoteStatus.Error;
+  readonly cause: QuoteErrorCause;
   readonly reason: string;
 }
 

@@ -13,3 +13,6 @@ export const MISSING_CONTRACT = 'Error(Storage, MissingValue)';
 
 /** The router's `LibraryInsufficientLiquidity`: the pair exists and one of its reserves is empty. */
 export const EMPTY_POOL = 'Error(Contract, #511)';
+
+/** The `code` the SDK's HTTP client, axios, gives a request it gave up on because the timeout passed. */
+export const REQUEST_TIMED_OUT = 'ECONNABORTED';

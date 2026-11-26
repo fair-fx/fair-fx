@@ -1,4 +1,4 @@
-import { NoRouteCause, QuoteStatus, type Quote } from '@fair-fx/core';
+import { NoRouteCause, type Quote, QuoteErrorCause, QuoteStatus } from '@fair-fx/core';
 import type { SimulatedRead } from '@fair-fx/core/node';
 import { Address, Contract, nativeToScVal, xdr } from '@stellar/stellar-sdk';
 import { z } from 'zod';
@@ -28,7 +28,7 @@ export function getAmountsOutCall(router: string, amountIn: bigint, path: readon
 export function toSoroswapQuote(read: SimulatedRead, path: readonly string[]): Quote<SoroswapRoute> {
   const amounts = directAmountsSchema.safeParse(read.value);
   if (!amounts.success) {
-    return errorQuote(`soroswap answer: ${z.prettifyError(amounts.error)}`);
+    return errorQuote(QuoteErrorCause.BadAnswer, `soroswap answer: ${z.prettifyError(amounts.error)}`);
   }
 
   const { amountOut } = amounts.data;

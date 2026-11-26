@@ -5,6 +5,7 @@ import { GUARD_MODE } from '../guard-mode.constants.ts';
 import { quoteOrError } from '../shared/index.ts';
 import { noRouteOrThrow } from './no-route.ts';
 import { swapPath } from './router.ts';
+import { rpcFailure } from './rpc-failure.ts';
 import { getAmountsOutCall, toSoroswapQuote } from './soroswap.ts';
 import type { SoroswapNetwork, SoroswapOptions, SoroswapRoute } from './soroswap.types.ts';
 
@@ -21,7 +22,7 @@ export function soroswapAdapter(network: SoroswapNetwork, options: SoroswapOptio
     mode: GUARD_MODE[VenueId.Soroswap],
 
     quote(pair, direction, amountIn) {
-      return quoteOrError(amountIn, timeoutMs, async () => {
+      return quoteOrError(amountIn, rpcFailure, async () => {
         const path = swapPath(swapAssets(pair, direction));
         const call = getAmountsOutCall(network.soroswapRouter, amountIn, path);
 

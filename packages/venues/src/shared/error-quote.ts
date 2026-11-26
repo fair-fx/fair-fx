@@ -1,5 +1,5 @@
-import { QuoteStatus, type QuoteError } from '@fair-fx/core';
+import { type QuoteError, type QuoteErrorCause, QuoteStatus } from '@fair-fx/core';
 
-export function errorQuote(reason: string): QuoteError {
-  return { status: QuoteStatus.Error, reason };
+export function errorQuote(cause: QuoteErrorCause, reason: string): QuoteError {
+  return { status: QuoteStatus.Error, cause, reason };
 }

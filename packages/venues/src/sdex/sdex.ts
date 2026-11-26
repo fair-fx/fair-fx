@@ -1,6 +1,13 @@
-import { formatDecimalAmount, NoRouteCause, QuoteStatus, type Quote, type SwapAssets } from '@fair-fx/core';
+import {
+  formatDecimalAmount,
+  NoRouteCause,
+  type Quote,
+  QuoteErrorCause,
+  QuoteStatus,
+  type SwapAssets,
+} from '@fair-fx/core';
 import { z } from 'zod';
-import { errorQuote, HTTP_OK, noRouteQuote, urlUnder, type JsonResponse } from '../shared/index.ts';
+import { errorQuote, HTTP_OK, httpErrorCause, noRouteQuote, urlUnder, type JsonResponse } from '../shared/index.ts';
 import { bestPath, horizonAssetType, horizonFailure, latestLedger } from './horizon.ts';
 import { CLASSIC_DECIMALS, STRICT_SEND_PATH } from './sdex.constants.ts';
 import { strictSendPathsSchema } from './sdex.schema.ts';
@@ -29,12 +36,12 @@ export function strictSendUrl(horizonUrl: string, swap: SwapAssets, amountIn: bi
  */
 export function toSdexQuote(response: JsonResponse): Quote<SdexRoute> {
   if (response.status !== HTTP_OK) {
-    return errorQuote(horizonFailure(response));
+    return errorQuote(httpErrorCause(response.status), horizonFailure(response));
   }
 
   const paths = strictSendPathsSchema.safeParse(response.body);
   if (!paths.success) {
-    return errorQuote(`horizon response: ${z.prettifyError(paths.error)}`);
+    return errorQuote(QuoteErrorCause.BadAnswer, `horizon response: ${z.prettifyError(paths.error)}`);
   }
 
   const best = bestPath(paths.data);

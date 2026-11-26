@@ -1,4 +1,4 @@
-import { NoRouteCause, QuoteStatus } from '@fair-fx/core';
+import { NoRouteCause, QuoteErrorCause, QuoteStatus } from '@fair-fx/core';
 import { EURC, USDC } from '@fair-fx/core/testing';
 import { strictSendUrl, toSdexQuote } from '@fair-fx/venues';
 import { buildStrictSendRecord, buildStrictSendResponse } from '@fair-fx/venues/testing';
@@ -87,31 +87,36 @@ describe('toSdexQuote', () => {
     {
       what: 'an amount that is not a decimal number',
       response: buildStrictSendResponse([buildStrictSendRecord({ destination_amount: '9.1e1' })]),
+      cause: QuoteErrorCause.BadAnswer,
       reason: /^horizon response: .*expected a decimal amount/s,
     },
     {
       what: 'a body without records',
       response: buildStrictSendResponse([], { body: { _embedded: {} } }),
+      cause: QuoteErrorCause.BadAnswer,
       reason: /^horizon response: /,
     },
     {
       what: 'a body that is not JSON',
       response: buildStrictSendResponse([], { body: null }),
+      cause: QuoteErrorCause.BadAnswer,
       reason: /^horizon response: /,
     },
     {
       what: 'an HTTP error that names its cause',
       response: buildStrictSendResponse([], { status: 429, body: { title: 'Rate Limit Exceeded' } }),
+      cause: QuoteErrorCause.Unavailable,
       reason: /^horizon answered 429: Rate Limit Exceeded$/,
     },
     {
       what: 'an HTTP error with no Horizon body',
       response: buildStrictSendResponse([], { status: 503, body: null }),
+      cause: QuoteErrorCause.Unavailable,
       reason: /^horizon answered 503$/,
     },
-  ])('reports $what as an error', ({ response, reason }) => {
+  ])('reports $what as an error and says which kind', ({ response, cause, reason }) => {
     const quote = toSdexQuote(response);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: expect.stringMatching(reason) });
+    expect(quote).toEqual({ status: QuoteStatus.Error, cause, reason: expect.stringMatching(reason) });
   });
 });

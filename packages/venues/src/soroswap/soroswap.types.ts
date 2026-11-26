@@ -18,3 +18,9 @@ export interface DirectAmounts {
 export type SoroswapNetwork = SimulationNetwork & Pick<NetworkConfig, 'rpcUrl' | 'soroswapRouter'>;
 
 export type SoroswapOptions = Pick<HttpOptions, 'timeoutMs'>;
+
+/** What the adapter reads of a request the SDK's HTTP client gave up on. */
+export interface FailedRequest {
+  readonly code?: string | undefined;
+  readonly response?: { readonly status: number } | undefined;
+}

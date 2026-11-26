@@ -1,4 +1,4 @@
-import { NoRouteCause, QuoteStatus } from '@fair-fx/core';
+import { NoRouteCause, QuoteErrorCause, QuoteStatus } from '@fair-fx/core';
 import { toAquariusQuote } from '@fair-fx/venues';
 import { buildFindPathResponse, buildFoundPath } from '@fair-fx/venues/testing';
 
@@ -79,7 +79,11 @@ describe('toAquariusQuote', () => {
 
     const quote = toAquariusQuote(response);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: expect.stringContaining(names) });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.BadAnswer,
+      reason: expect.stringContaining(names),
+    });
   });
 
   it('returns an error for a body that is not JSON', () => {
@@ -87,7 +91,11 @@ describe('toAquariusQuote', () => {
 
     const quote = toAquariusQuote(response);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: expect.stringMatching(/^aquarius response: /) });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.BadAnswer,
+      reason: expect.stringMatching(/^aquarius response: /),
+    });
   });
 
   it.each([
@@ -95,9 +103,16 @@ describe('toAquariusQuote', () => {
       what: 'one reason as text, as Aquarius answers a GET',
       status: 405,
       body: { detail: 'Method "GET" not allowed.' },
+      cause: QuoteErrorCause.Rejected,
       reason: 'aquarius answered 405: detail: Method "GET" not allowed.',
     },
-    { what: 'no reason at all', status: 500, body: {}, reason: 'aquarius answered 500' },
+    {
+      what: 'no reason at all',
+      status: 500,
+      body: {},
+      cause: QuoteErrorCause.Unavailable,
+      reason: 'aquarius answered 500',
+    },
     {
       what: 'a token it does not list and one more reason, as it answers an amount of "abc"',
       status: 400,
@@ -105,14 +120,15 @@ describe('toAquariusQuote', () => {
         token_out_address: ['Object with address=CBKGPWGKSKZF52CFHMTRR23TBWTPMRDIYZ4O2P5VS65BMHYH4DXMCJZC does not exist.'],
         amount: ['A valid number is required.'],
       },
+      cause: QuoteErrorCause.Rejected,
       reason:
         'aquarius answered 400: token_out_address: Object with address=CBKGPWGKSKZF52CFHMTRR23TBWTPMRDIYZ4O2P5VS65BMHYH4DXMCJZC does not exist., amount: A valid number is required.',
     },
-  ])('returns an error for an HTTP error with $what', ({ status, body, reason }) => {
+  ])('returns an error for an HTTP error with $what', ({ status, body, cause, reason }) => {
     const response = buildFindPathResponse(body, { status });
 
     const quote = toAquariusQuote(response);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason });
+    expect(quote).toEqual({ status: QuoteStatus.Error, cause, reason });
   });
 });

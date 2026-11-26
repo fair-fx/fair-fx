@@ -1,4 +1,4 @@
-import { Direction, NoRouteCause, QuoteStatus } from '@fair-fx/core';
+import { Direction, NoRouteCause, QuoteErrorCause, QuoteStatus } from '@fair-fx/core';
 import { buildNetworkConfig, buildPair } from '@fair-fx/core/testing';
 import { sdexAdapter, type Fetch } from '@fair-fx/venues';
 import { fetchThatNeverAnswers, horizonAnswering } from '@fair-fx/venues/testing';
@@ -79,6 +79,7 @@ describe('sdexAdapter', () => {
 
     expect(quote).toEqual({
       status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Rejected,
       reason: 'horizon answered 400: Bad Request (Amount must be positive)',
     });
   });
@@ -88,7 +89,11 @@ describe('sdexAdapter', () => {
 
     const quote = await sdex.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'timed out after 1 ms' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Timeout,
+      reason: 'timed out after 1 ms',
+    });
   });
 
   it('returns an error with the cause when the request fails', async () => {
@@ -100,8 +105,18 @@ describe('sdexAdapter', () => {
 
     expect(quote).toEqual({
       status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Network,
       reason: 'fetch failed: getaddrinfo ENOTFOUND horizon.invalid',
     });
+  });
+
+  it('returns an error of an unknown kind when fetch rejects with something that is not a TypeError', async () => {
+    const fetch = vi.fn<Fetch>().mockRejectedValue(new Error('socket hang up'));
+    const sdex = sdexAdapter(NETWORK, { fetch });
+
+    const quote = await sdex.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
+
+    expect(quote).toEqual({ status: QuoteStatus.Error, cause: QuoteErrorCause.Unknown, reason: 'socket hang up' });
   });
 
   it('returns an error for an HTML error page', async () => {
@@ -110,7 +125,11 @@ describe('sdexAdapter', () => {
 
     const quote = await sdex.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'horizon answered 502' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Unavailable,
+      reason: 'horizon answered 502',
+    });
   });
 
   it('refuses an amount of zero without calling Horizon', async () => {
@@ -119,7 +138,11 @@ describe('sdexAdapter', () => {
 
     const quote = await sdex.quote(PAIR, Direction.BaseToQuote, 0n);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'expected an amount in above zero, got 0' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.BadRequest,
+      reason: 'expected an amount in above zero, got 0',
+    });
     expect(fetch).not.toHaveBeenCalled();
   });
 });
