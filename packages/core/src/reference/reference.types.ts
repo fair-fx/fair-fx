@@ -11,6 +11,22 @@ export enum ReferenceStatus {
   Unavailable = 'unavailable',
 }
 
+/** What a run could say about its reference price when it was written. */
+export enum ReferenceState {
+  /** A price was read and it is recent enough to compare a quote against. */
+  Fresh = 'fresh',
+  /** The market the price comes from is closed. */
+  Closed = 'closed',
+  /** There is no usable price: not read, or too old. */
+  Unknown = 'unknown',
+}
+
+/** Where a reference price was read from. */
+export enum ReferenceSource {
+  /** The Reflector fiat feed: a fiat FX rate, not the price of a token. */
+  ReflectorFx = 'reflector_fx',
+}
+
 export interface ReferencePrice {
   readonly status: ReferenceStatus.Ok;
   readonly fiat: Fiat;
