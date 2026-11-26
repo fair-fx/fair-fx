@@ -81,16 +81,24 @@ describe('aquariusAdapter', () => {
     expect(quote).toEqual({ status: QuoteStatus.NoRoute });
   });
 
-  it('returns an error with what Aquarius said in a recorded 400 for a token it does not know', async () => {
+  it('returns no_route from a recorded 400 that says Aquarius lists no such token', async () => {
     const fetch = await aquariusAnswering('find-path.unknown-token', { status: 400 });
+    const aquarius = aquariusAdapter(NETWORK, { fetch });
+
+    const quote = await aquarius.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
+
+    expect(quote).toEqual({ status: QuoteStatus.NoRoute });
+  });
+
+  it('returns an error with what Aquarius said in a recorded 400 for a request that names one token', async () => {
+    const fetch = await aquariusAnswering('find-path.missing-token', { status: 400 });
     const aquarius = aquariusAdapter(NETWORK, { fetch });
 
     const quote = await aquarius.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
     expect(quote).toEqual({
       status: QuoteStatus.Error,
-      reason:
-        'aquarius answered 400: token_out_address: Object with address=CBKGPWGKSKZF52CFHMTRR23TBWTPMRDIYZ4O2P5VS65BMHYH4DXMCJZC does not exist.',
+      reason: 'aquarius answered 400: token_out_address: This field is required.',
     });
   });
 
