@@ -70,20 +70,19 @@ describe('toSdexQuote', () => {
     expect(quote).toMatchObject({ status: QuoteStatus.Ok, ledger: null });
   });
 
-  it('returns no_route when Horizon lists no path', () => {
-    const response = buildStrictSendResponse([]);
-
+  it.each([
+    { what: 'Horizon lists no path', response: buildStrictSendResponse([]) },
+    {
+      what: 'the only path pays nothing',
+      response: buildStrictSendResponse([buildStrictSendRecord({ destination_amount: '0.0000000' })]),
+    },
+  ])('returns no_route when $what', ({ response }) => {
     const quote = toSdexQuote(response);
 
     expect(quote).toEqual({ status: QuoteStatus.NoRoute });
   });
 
   it.each([
-    {
-      what: 'a path that pays zero',
-      response: buildStrictSendResponse([buildStrictSendRecord({ destination_amount: '0.0000000' })]),
-      reason: /^horizon response: .*expected an amount above zero/s,
-    },
     {
       what: 'an amount that is not a decimal number',
       response: buildStrictSendResponse([buildStrictSendRecord({ destination_amount: '9.1e1' })]),

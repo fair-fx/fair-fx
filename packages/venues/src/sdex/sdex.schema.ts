@@ -6,7 +6,7 @@ import type { SdexHop, SdexPath } from './sdex.types.ts';
 const amountSchema: z.ZodType<bigint> = z
   .string()
   .transform((text) => parseDecimalAmount(text, CLASSIC_DECIMALS))
-  .pipe(z.bigint('expected a decimal amount').positive('expected an amount above zero'));
+  .pipe(z.bigint('expected a decimal amount'));
 
 const hopSchema: z.ZodType<SdexHop> = z.union([
   z.object({ asset_type: z.literal('native') }).transform(() => 'native' as const),

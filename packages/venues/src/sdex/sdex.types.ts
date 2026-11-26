@@ -10,6 +10,7 @@ export interface SdexRoute {
 
 /** One way Horizon found to make the swap. */
 export interface SdexPath {
+  /** In stroops of the token paid out. Zero or more. */
   readonly amountOut: bigint;
   readonly route: SdexRoute;
 }

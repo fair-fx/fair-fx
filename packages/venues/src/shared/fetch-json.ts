@@ -1,5 +1,5 @@
 import type { Fetch, JsonResponse } from './http.types.ts';
-import { parseJsonOrNull } from './json.ts';
+import { toJsonResponse } from './json-response.ts';
 
 /**
  * GETs `url` and reads the body as JSON, whatever the HTTP status. Rejects when the request fails
@@ -11,5 +11,5 @@ export async function fetchJson(fetchFn: Fetch, url: URL, timeoutMs: number): Pr
     signal: AbortSignal.timeout(timeoutMs),
   });
 
-  return { status: response.status, headers: response.headers, body: parseJsonOrNull(await response.text()) };
+  return toJsonResponse(response);
 }

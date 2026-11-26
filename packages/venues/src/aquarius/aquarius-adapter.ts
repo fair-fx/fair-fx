@@ -1,0 +1,24 @@
+import { DEFAULT_TIMEOUT_MS, swapAssets, VenueId, type VenueAdapter } from '@fair-fx/core';
+import { GUARD_MODE } from '../guard-mode.constants.ts';
+import { postJson, quoteOrError, type HttpOptions } from '../shared/index.ts';
+import { findPathRequest, toAquariusQuote } from './aquarius.ts';
+import type { AquariusNetwork, AquariusRoute } from './aquarius.types.ts';
+
+/** Quotes the best path through the Aquarius pools, as its find-path API finds it. */
+export function aquariusAdapter(network: AquariusNetwork, options: HttpOptions = {}): VenueAdapter<AquariusRoute> {
+  const { fetch: fetchFn = fetch, timeoutMs = DEFAULT_TIMEOUT_MS } = options;
+
+  return {
+    id: VenueId.Aquarius,
+    mode: GUARD_MODE[VenueId.Aquarius],
+
+    quote(pair, direction, amountIn) {
+      return quoteOrError(amountIn, timeoutMs, async () => {
+        const url = new URL(network.aquariusFindPathUrl);
+        const request = findPathRequest(swapAssets(pair, direction), amountIn);
+
+        return toAquariusQuote(await postJson(fetchFn, url, request, timeoutMs));
+      });
+    },
+  };
+}

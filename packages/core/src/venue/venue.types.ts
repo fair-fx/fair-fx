@@ -31,12 +31,15 @@ export interface QuoteOk<Route> {
   readonly ledger: number | null;
 }
 
-/** The venue answered and has no way to make this swap. */
+/**
+ * The venue answered and has no way to make this swap: no path, no pool for the pair, a token it does
+ * not list, or a path that pays nothing. Every venue reports these the same way.
+ */
 export interface QuoteNoRoute {
   readonly status: QuoteStatus.NoRoute;
 }
 
-/** The venue gave no usable answer: timeout, HTTP error, or a response of the wrong shape. */
+/** The venue gave no usable answer: a timeout, an HTTP error that is not a `no_route`, or a response of the wrong shape. */
 export interface QuoteError {
   readonly status: QuoteStatus.Error;
   readonly reason: string;

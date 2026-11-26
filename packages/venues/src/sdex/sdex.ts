@@ -23,8 +23,9 @@ export function strictSendUrl(horizonUrl: string, swap: SwapAssets, amountIn: bi
 /**
  * Turns Horizon's answer to a strict-send request into a quote. Never throws.
  *
- * An empty list of paths is `no_route`. Several paths give the one that pays the most. An HTTP error
- * or a body of another shape is `error`.
+ * Several paths give the one that pays the most, and only a path that pays more than zero is an `ok`
+ * quote. An empty list of paths, or a best path that pays nothing, is `no_route`. An HTTP error or a
+ * body of another shape is `error`.
  */
 export function toSdexQuote(response: JsonResponse): Quote<SdexRoute> {
   if (response.status !== HTTP_OK) {
@@ -37,14 +38,8 @@ export function toSdexQuote(response: JsonResponse): Quote<SdexRoute> {
   }
 
   const best = bestPath(paths.data);
-  if (best === undefined) {
-    return { status: QuoteStatus.NoRoute };
-  }
 
-  return {
-    status: QuoteStatus.Ok,
-    amountOut: best.amountOut,
-    route: best.route,
-    ledger: latestLedger(response.headers),
-  };
+  return best !== undefined && best.amountOut > 0n
+    ? { status: QuoteStatus.Ok, amountOut: best.amountOut, route: best.route, ledger: latestLedger(response.headers) }
+    : { status: QuoteStatus.NoRoute };
 }
