@@ -21,9 +21,13 @@ export {
 export {
   baseReference,
   referenceAgeSeconds,
+  ReferenceSource,
+  ReferenceState,
   ReferenceStatus,
   toReferenceReading,
+  type ReferenceFailure,
   type ReferenceFeed,
+  type ReferenceMissing,
   type ReferencePrice,
   type ReferenceReading,
 } from './reference/index.ts';
@@ -45,5 +49,6 @@ export {
   type Quote,
   type QuoteError,
   type QuoteNoRoute,
+  type QuoteOk,
   type VenueAdapter,
 } from './venue/index.ts';

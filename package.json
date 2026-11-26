@@ -12,6 +12,8 @@
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.tools.json && pnpm -r run typecheck",
     "test": "pnpm -r run test",
+    "test:smoke": "FAIRFX_SMOKE=1 pnpm --filter @fair-fx/core --filter @fair-fx/venues run test smoke",
+    "db:migrate": "pnpm --filter @fair-fx/db run migrate",
     "deps": "depcruise '{packages,apps}/*/src'",
     "check": "pnpm audit --audit-level high && pnpm lint && pnpm typecheck && pnpm deps && pnpm test"
   },
