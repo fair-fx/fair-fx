@@ -64,16 +64,25 @@ third-party endpoints, so one failure can mean an endpoint is down: run them aga
 
 ## Layout
 
-| Path | What it is responsible for |
-| --- | --- |
-| `config/` | Which networks, endpoints, contracts and pairs FairFX uses. Code takes every address from here. |
-| `packages/core` | The shared types and the rate math. The main entry does no I/O. `@fair-fx/core/node` adds the config loader and the reference reader. |
-| `packages/venues` | One quote adapter per venue. Each answers `ok`, `no_route` or `error`, and says why when it is not `ok`. |
-| `packages/db` | All Postgres access: the migrations and the write of one collector run. Private, not published. |
-| `contracts/` | Soroban contracts. An empty Cargo workspace for now. |
-| `spec/vectors/` | Rate math cases with their expected results, read by the TypeScript tests and later by the Rust tests, so both give the same numbers. |
-| `tests/fixtures/` | Answers recorded from the real venues. The unit tests replay them, so they need no network. |
-| `.github/workflows/` | CI: `pnpm check` and a scan for secrets on every pull request. |
+```text
+fair-fx/
+├── config/                  networks, endpoints, contracts and pairs: code reads addresses from here
+├── packages/
+│   ├── core/                shared types and the rate math, no I/O in the main entry
+│   │   └── src/node/        Node-only entry: the config loader and the reference reader
+│   ├── venues/              one quote adapter per venue: ok, no_route or error, with the cause
+│   │   └── src/             sdex/, soroswap/, aquarius/
+│   └── db/                  all Postgres access, private and not published
+│       ├── migrations/      the schema, as SQL files
+│       └── src/writes/      the write of one collector run
+├── contracts/               Soroban contracts, an empty Cargo workspace for now
+├── spec/
+│   └── vectors/             rate math cases with expected results, for TypeScript and later Rust
+├── tests/
+│   └── fixtures/            answers recorded from the real venues, replayed by the unit tests
+└── .github/
+    └── workflows/           CI: pnpm check and a scan for secrets on every pull request
+```
 
 Packages may only import in the allowed direction: `venues` and `db` use `core`, and `core` uses
 neither. The rules are in `.dependency-cruiser.ts` (`pnpm deps`).
