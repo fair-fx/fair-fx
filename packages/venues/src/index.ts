@@ -8,3 +8,11 @@ export {
   type SdexRoute,
 } from './sdex/index.ts';
 export type { Fetch, HttpOptions, JsonResponse } from './shared/index.ts';
+export {
+  getAmountsOutCall,
+  soroswapAdapter,
+  toSoroswapQuote,
+  type SoroswapNetwork,
+  type SoroswapOptions,
+  type SoroswapRoute,
+} from './soroswap/index.ts';
