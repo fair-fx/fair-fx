@@ -51,8 +51,7 @@ export interface QuoteOk<Route> {
  */
 export interface QuoteNoRoute {
   readonly status: QuoteStatus.NoRoute;
-  /** Absent when the adapter does not say. */
-  readonly cause?: NoRouteCause;
+  readonly cause: NoRouteCause;
 }
 
 /** The venue gave no usable answer: a timeout, an HTTP error that is not a `no_route`, or a response of the wrong shape. */
