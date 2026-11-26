@@ -1,0 +1,38 @@
+{
+  "name": "@fair-fx/db",
+  "version": "0.0.1",
+  "description": "All Postgres access: the migrations and what a collector run writes.",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "@fair-fx/source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./writes": {
+      "@fair-fx/source": "./src/writes/index.ts",
+      "types": "./dist/writes/index.d.ts",
+      "default": "./dist/writes/index.js"
+    },
+    "./testing": {
+      "@fair-fx/source": "./src/testing/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.spec.json --noEmit",
+    "test": "vitest run",
+    "migrate": "node-pg-migrate up --migrations-dir migrations"
+  },
+  "dependencies": {
+    "@fair-fx/core": "workspace:*",
+    "node-pg-migrate": "9.0.0",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {
+    "@testcontainers/postgresql": "12.2.2",
+    "@types/pg": "8.23.1"
+  }
+}
