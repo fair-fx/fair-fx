@@ -15,6 +15,12 @@ export interface Pair {
   readonly quote: PinnedAsset;
 }
 
+/** The token a swap spends and the token it receives. */
+export interface SwapAssets {
+  readonly input: PinnedAsset;
+  readonly output: PinnedAsset;
+}
+
 /** The pairs of one network and the shared ladder, from `config/pairs.json`. */
 export interface PairsConfig {
   readonly network: Network;
