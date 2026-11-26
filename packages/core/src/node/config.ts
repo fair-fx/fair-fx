@@ -1,13 +1,12 @@
-import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import {
-  ConfigError,
   parseNetworkConfig,
   parsePairsConfig,
   type Network,
   type NetworkConfig,
   type PairsConfig,
 } from '../index.ts';
+import { loadFile } from './load-file.ts';
 
 /** Everything FairFX reads from `config/` for one network. */
 export interface Config extends PairsConfig {
@@ -21,13 +20,4 @@ export async function loadConfig(dir: string, network: Network): Promise<Config>
     loadFile(join(dir, 'pairs.json'), (json) => parsePairsConfig(json, network)),
   ]);
   return { ...pairs, endpoints };
-}
-
-async function loadFile<T>(path: string, parse: (json: unknown) => T): Promise<T> {
-  try {
-    return parse(JSON.parse(await readFile(path, 'utf8')));
-  } catch (error) {
-    const reason = error instanceof Error ? error.message : String(error);
-    throw new ConfigError(`${path}: ${reason}`, { cause: error });
-  }
 }

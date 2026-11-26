@@ -1,19 +1,9 @@
-import { divideRoundingUp, fitsI128, LARGEST_EXPONENT_OF_TEN_IN_I128 } from '../shared/index.ts';
+import { divideRoundingUp } from '../shared/index.ts';
+import { isTokenDecimals, powerOfTen, withinI128 } from './rate.checks.ts';
+import { RateMathError } from './rate.error.ts';
 import { RateMathErrorCode, type RateLeg } from './rate.types.ts';
 
 const BPS = 10_000n;
-
-/** The rate math refused an input. `code` says why. */
-export class RateMathError extends Error {
-  override readonly name = 'RateMathError';
-
-  constructor(
-    readonly code: RateMathErrorCode,
-    detail: string,
-  ) {
-    super(`${code}: ${detail}`);
-  }
-}
 
 /**
  * What `amountIn` is worth in the output token at the reference prices, rounded down.
@@ -63,28 +53,4 @@ export function floorOut(reference: bigint, maxShortfallBps: bigint): bigint {
   }
   const kept = withinI128(reference * (BPS - maxShortfallBps));
   return divideRoundingUp(kept, BPS);
-}
-
-function isTokenDecimals(decimals: number): boolean {
-  return Number.isInteger(decimals) && decimals >= 0;
-}
-
-function powerOfTen(exponent: number): bigint {
-  if (exponent > LARGEST_EXPONENT_OF_TEN_IN_I128) {
-    throw overflow();
-  }
-  return 10n ** BigInt(exponent);
-}
-
-// The contract computes in i128. Every step here is held to the same range, so an amount the
-// contract refuses with MathOverflow is refused here too.
-function withinI128(value: bigint): bigint {
-  if (!fitsI128(value)) {
-    throw overflow();
-  }
-  return value;
-}
-
-function overflow(): RateMathError {
-  return new RateMathError(RateMathErrorCode.MathOverflow, 'a step of the calculation does not fit in i128');
 }

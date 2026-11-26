@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { pinnedAssetSchema } from '../asset/index.ts';
 import { Network } from '../network/index.ts';
+import { isStrictlyIncreasing } from '../shared/index.ts';
 import type { Pair } from './pair.types.ts';
 
 const LADDER_RUNGS = 10;
@@ -20,7 +21,3 @@ export const pairsFileSchema = z.strictObject({
   ladder: ladderSchema,
   pairs: z.partialRecord(z.enum(Network), z.array(pairSchema)),
 });
-
-function isStrictlyIncreasing(values: readonly number[]): boolean {
-  return values.every((value, i) => i === 0 || value > values[i - 1]!);
-}
