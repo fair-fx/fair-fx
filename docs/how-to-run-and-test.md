@@ -3,6 +3,9 @@
 Work delivered on 2026-11-25 and 2026-11-26. The output below was recorded on 2026-11-26 from the `dev`
 branch. Counts grow as tests are added, and times differ from one machine to the next.
 
+This guide is on the branch `wip/run-and-test-guide`. The code on that branch is the code of `dev`: the
+branch adds only the files in `docs/` and the links to them.
+
 Two more files go with this guide, for reading without running anything:
 
 - [`test-output.md`](test-output.md): every test, by name, with its result.
@@ -29,14 +32,18 @@ start on your own machine.
 
 ## 2. Setup
 
+Needs Node 26 or later, pnpm 12 and Docker.
+
 ```sh
-git clone https://github.com/fair-fx/fair-fx.git
+git clone --branch wip/run-and-test-guide https://github.com/fair-fx/fair-fx.git
 cd fair-fx
 pnpm install
 ```
 
-Docker has to be running for steps 3 and 6. The database tests start a Postgres server in a container
-and remove it when they end.
+- `--branch wip/run-and-test-guide` checks out the branch that holds this guide. Without it you get
+  `dev`: the same code, without `docs/`.
+- Docker has to be running for steps 3 and 6. The database tests start a Postgres server in a container
+  and remove it when they end.
 
 ## 3. Run every check
 
