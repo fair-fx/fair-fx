@@ -7,4 +7,4 @@ export {
   type SdexNetwork,
   type SdexRoute,
 } from './sdex/index.ts';
-export { DEFAULT_TIMEOUT_MS, type Fetch, type HttpOptions, type JsonResponse } from './shared/index.ts';
+export type { Fetch, HttpOptions, JsonResponse } from './shared/index.ts';

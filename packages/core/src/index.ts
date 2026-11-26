@@ -29,6 +29,7 @@ export {
 } from './reference/index.ts';
 export {
   ConfigError,
+  DEFAULT_TIMEOUT_MS,
   errorMessageWithCause,
   formatDecimalAmount,
   isEnumValue,
