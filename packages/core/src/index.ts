@@ -16,5 +16,14 @@ export {
   shortfallBps,
   type RateLeg,
 } from './rate/index.ts';
+export {
+  baseReference,
+  referenceAgeSeconds,
+  ReferenceStatus,
+  toReferenceReading,
+  type ReferenceFeed,
+  type ReferencePrice,
+  type ReferenceReading,
+} from './reference/index.ts';
 export { ConfigError, isEnumValue, parseEnumValue } from './shared/index.ts';
 export { GuardMode, VenueId } from './venue/index.ts';
