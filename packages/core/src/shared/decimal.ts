@@ -1,4 +1,4 @@
-const DECIMAL_NUMBER = /^(\d+)(?:\.(\d+))?$/;
+import { DECIMAL_NUMBER } from './decimal.constants.ts';
 
 /**
  * Reads a decimal string such as `"91.8214628"` as an integer with `decimals` decimal places.

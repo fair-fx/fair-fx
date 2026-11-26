@@ -1,10 +1,8 @@
 import { z } from 'zod';
-import { Fiat } from '../asset/index.ts';
-import { feedDecimalsSchema, feedPriceSchema, REFERENCE_PRICE_DECIMALS } from './reference.schema.ts';
+import type { Fiat } from '../asset/index.ts';
+import { REFERENCE_BASE, REFERENCE_PRICE_DECIMALS } from './reference.constants.ts';
+import { feedDecimalsSchema, feedPriceSchema } from './reference.schema.ts';
 import { ReferenceStatus, type ReferencePrice, type ReferenceReading } from './reference.types.ts';
-
-/** The feed prices every currency in USD, so it has no entry for USD itself. */
-export const REFERENCE_BASE = Fiat.Usd;
 
 export function baseReference(): ReferencePrice {
   return {

@@ -2,9 +2,8 @@ import { z } from 'zod';
 import { pinnedAssetSchema } from '../asset/index.ts';
 import { Network } from '../network/index.ts';
 import { isStrictlyIncreasing } from '../shared/index.ts';
+import { LADDER_RUNGS } from './pair.constants.ts';
 import type { Pair } from './pair.types.ts';
-
-const LADDER_RUNGS = 10;
 
 const pairSchema: z.ZodType<Pair> = z
   .strictObject({ base: pinnedAssetSchema, quote: pinnedAssetSchema })

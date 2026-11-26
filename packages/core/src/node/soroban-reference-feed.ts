@@ -1,8 +1,7 @@
 import { Contract, rpc, xdr } from '@stellar/stellar-sdk';
 import type { NetworkConfig, ReferenceFeed } from '../index.ts';
 import { simulateRead, type SimulationNetwork } from './simulate-read.ts';
-
-const RPC_TIMEOUT_MS = 10_000;
+import { RPC_TIMEOUT_MS } from './soroban.constants.ts';
 
 export type ReferenceFeedNetwork = SimulationNetwork & Pick<NetworkConfig, 'rpcUrl' | 'reflectorFiatFeed'>;
 

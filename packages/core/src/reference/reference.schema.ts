@@ -1,8 +1,6 @@
 import { z } from 'zod';
+import { REFERENCE_PRICE_DECIMALS } from './reference.constants.ts';
 import type { FeedPrice } from './reference.types.ts';
-
-/** Decimals of every price of the Reflector fiat feed. The contract refuses a feed with any other. */
-export const REFERENCE_PRICE_DECIMALS = 14;
 
 export const feedDecimalsSchema: z.ZodType<number> = z.literal(REFERENCE_PRICE_DECIMALS);
 
