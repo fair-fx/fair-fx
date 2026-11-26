@@ -11,9 +11,9 @@ describe('readReference', () => {
     expect(reading).toEqual({
       status: ReferenceStatus.Ok,
       fiat: Fiat.Eur,
-      price: 109_531_321_156_430n,
+      price: 109_531_321_156_430n, // 1.0953 USD
       decimals: 14,
-      oracleTime: 1_795_683_300,
+      oracleTime: 1_795_683_300, // Unix seconds: 2026-11-26 08:55:00 UTC
     });
   });
 
@@ -46,7 +46,7 @@ describe('readReference', () => {
 
     const reading = await readReference({ decimals, lastPrice }, Fiat.Usd);
 
-    expect(reading).toMatchObject({ status: ReferenceStatus.Ok, fiat: Fiat.Usd, price: 100_000_000_000_000n });
+    expect(reading).toMatchObject({ status: ReferenceStatus.Ok, fiat: Fiat.Usd, price: 100_000_000_000_000n }); // 1 USD
     expect(decimals).not.toHaveBeenCalled();
     expect(lastPrice).not.toHaveBeenCalled();
   });
