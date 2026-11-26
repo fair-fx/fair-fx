@@ -20,6 +20,7 @@ config/             networks and pinned pairs, read by @fair-fx/core/node
 packages/core       math, formatting, freshness (browser-safe), a Node-only entry, test factories
 packages/venues     one quote adapter per venue
 contracts/          Soroban contracts (empty for now)
+spec/vectors/       rate math cases, read by the TypeScript tests and later by the Rust tests
 ```
 
 Packages may only import in the allowed direction. The rules are in `.dependency-cruiser.ts`

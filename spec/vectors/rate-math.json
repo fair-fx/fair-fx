@@ -1,0 +1,87 @@
+{
+  "ref_out": {
+    "returns": [
+      {"name": "100 EURC to USDC, equal decimals", "amount_in": "1000000000", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "expected": "1116814000"},
+      {"name": "100 USDC to EURC rounds down", "amount_in": "1000000000", "price_in": "100000000000000", "decimals_in": 7, "price_out": "111681400000000", "decimals_out": 7, "expected": "895404248"},
+      {"name": "output token has more decimals", "amount_in": "1000000000", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 9, "expected": "111681400000"},
+      {"name": "output token has fewer decimals", "amount_in": "1000000000", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 6, "expected": "111681400"},
+      {"name": "fiat with a very small USD price (KRW)", "amount_in": "1000000000", "price_in": "100000000000000", "decimals_in": 7, "price_out": "70000000000", "decimals_out": 7, "expected": "1428571428571"},
+      {"name": "largest KRW amount worth less than one output unit", "amount_in": "1428", "price_in": "70000000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "expected": "0"},
+      {"name": "smallest KRW amount worth one output unit", "amount_in": "1429", "price_in": "70000000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "expected": "1"},
+      {"name": "zero amount", "amount_in": "0", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "expected": "0"},
+      {"name": "negative amount truncates toward zero", "amount_in": "-1000000000", "price_in": "100000000000000", "decimals_in": 7, "price_out": "111681400000000", "decimals_out": 7, "expected": "-895404248"},
+      {"name": "largest amount whose product with the price fits i128", "amount_in": "1523451384567790444350512", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "expected": "1701411834604692317316872"},
+      {"name": "product is exactly the i128 maximum", "amount_in": "170141183460469231731687303715884105727", "price_in": "1", "decimals_in": 7, "price_out": "1", "decimals_out": 7, "expected": "170141183460469231731687303715884105727"},
+      {"name": "product is exactly the i128 minimum", "amount_in": "-85070591730234615865843651857942052864", "price_in": "2", "decimals_in": 7, "price_out": "1", "decimals_out": 7, "expected": "-170141183460469231731687303715884105728"},
+      {"name": "largest power of ten that fits i128", "amount_in": "1", "price_in": "1", "decimals_in": 0, "price_out": "1", "decimals_out": 38, "expected": "100000000000000000000000000000000000000"}
+    ],
+    "refuses": [
+      {"name": "zero input price", "amount_in": "1", "price_in": "0", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "error": "OracleInvalid"},
+      {"name": "zero output price", "amount_in": "1", "price_in": "100000000000000", "decimals_in": 7, "price_out": "0", "decimals_out": 7, "error": "OracleInvalid"},
+      {"name": "negative input price", "amount_in": "1", "price_in": "-1", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "error": "OracleInvalid"},
+      {"name": "negative output price", "amount_in": "1", "price_in": "100000000000000", "decimals_in": 7, "price_out": "-1", "decimals_out": 7, "error": "OracleInvalid"},
+      {"name": "invalid output price is reported before the overflow of the input side", "amount_in": "170141183460469231731687303715884105727", "price_in": "111681400000000", "decimals_in": 7, "price_out": "0", "decimals_out": 7, "error": "OracleInvalid"},
+      {"name": "one unit above the largest amount", "amount_in": "1523451384567790444350513", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "error": "MathOverflow"},
+      {"name": "i128 maximum amount", "amount_in": "170141183460469231731687303715884105727", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "error": "MathOverflow"},
+      {"name": "product is one above the i128 maximum", "amount_in": "85070591730234615865843651857942052864", "price_in": "2", "decimals_in": 7, "price_out": "1", "decimals_out": 7, "error": "MathOverflow"},
+      {"name": "product is one below the i128 minimum", "amount_in": "-56713727820156410577229101238628035243", "price_in": "3", "decimals_in": 7, "price_out": "1", "decimals_out": 7, "error": "MathOverflow"},
+      {"name": "input side overflows when the output token has fewer decimals", "amount_in": "170141183460469231731687303715884105727", "price_in": "2", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 6, "error": "MathOverflow"},
+      {"name": "scaled numerator overflows though the result would fit", "amount_in": "20000000000000", "price_in": "100000000000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 18, "error": "MathOverflow"},
+      {"name": "scaled denominator overflows", "amount_in": "1000000000", "price_in": "100000000000000", "decimals_in": 32, "price_out": "100000000000000", "decimals_out": 7, "error": "MathOverflow"},
+      {"name": "power of ten for the decimals gap overflows", "amount_in": "1000000000", "price_in": "100000000000000", "decimals_in": 39, "price_out": "100000000000000", "decimals_out": 0, "error": "MathOverflow"},
+      {"name": "power of ten overflows even when the amount is zero", "amount_in": "0", "price_in": "100000000000000", "decimals_in": 0, "price_out": "100000000000000", "decimals_out": 39, "error": "MathOverflow"}
+    ]
+  },
+  "shortfall_bps": {
+    "returns": [
+      {"name": "100 EURC to USDC receiving 110.011 USDC", "ref_out": "1116814000", "actual_out": "1100110000", "expected": "150"},
+      {"name": "exact division adds nothing", "ref_out": "1000000000", "actual_out": "990000000", "expected": "100"},
+      {"name": "received equals the reference", "ref_out": "1116814000", "actual_out": "1116814000", "expected": "0"},
+      {"name": "one unit under the reference rounds up to 1", "ref_out": "1116814000", "actual_out": "1116813999", "expected": "1"},
+      {"name": "one unit above the reference rounds up to 0", "ref_out": "1116814000", "actual_out": "1116814001", "expected": "0"},
+      {"name": "2 percent above the reference, exact", "ref_out": "1000000000", "actual_out": "1020000000", "expected": "-200"},
+      {"name": "above the reference, not exact, rounds toward zero", "ref_out": "895404248155", "actual_out": "897570500000", "expected": "-24"},
+      {"name": "three times the reference", "ref_out": "1000000000", "actual_out": "3000000000", "expected": "-20000"},
+      {"name": "received nothing", "ref_out": "1000000000", "actual_out": "0", "expected": "10000"},
+      {"name": "received exactly the floor for a 100 bps limit", "ref_out": "895404248", "actual_out": "886450206", "expected": "100"},
+      {"name": "received one unit under the floor for a 100 bps limit", "ref_out": "895404248", "actual_out": "886450205", "expected": "101"},
+      {"name": "received exactly the floor for a 1 bps limit", "ref_out": "1116814000", "actual_out": "1116702319", "expected": "1"},
+      {"name": "received one unit under the floor for a 1 bps limit", "ref_out": "1116814000", "actual_out": "1116702318", "expected": "2"},
+      {"name": "received exactly the floor for a 9999 bps limit", "ref_out": "895404248", "actual_out": "89541", "expected": "9999"},
+      {"name": "received one unit under the floor for a 9999 bps limit", "ref_out": "895404248", "actual_out": "89540", "expected": "10000"},
+      {"name": "reference of 3 units, one unit short", "ref_out": "3", "actual_out": "2", "expected": "3334"}
+    ],
+    "refuses": [
+      {"name": "zero reference, received nothing", "ref_out": "0", "actual_out": "0", "error": "AmountOutOfRange"},
+      {"name": "zero reference, received one unit", "ref_out": "0", "actual_out": "1", "error": "AmountOutOfRange"},
+      {"name": "negative reference", "ref_out": "-1", "actual_out": "0", "error": "AmountOutOfRange"},
+      {"name": "difference times 10000 overflows", "ref_out": "170141183460469231731687303715884105727", "actual_out": "0", "error": "MathOverflow"},
+      {"name": "difference overflows", "ref_out": "1", "actual_out": "-170141183460469231731687303715884105728", "error": "MathOverflow"}
+    ]
+  },
+  "floor": {
+    "returns": [
+      {"name": "100 EURC to USDC at 100 bps, exact", "ref_out": "1116814000", "max_shortfall_bps": "100", "expected": "1105645860"},
+      {"name": "100 USDC to EURC at 100 bps rounds up", "ref_out": "895404248", "max_shortfall_bps": "100", "expected": "886450206"},
+      {"name": "1 bps limit rounds up", "ref_out": "1116814000", "max_shortfall_bps": "1", "expected": "1116702319"},
+      {"name": "9999 bps limit rounds up", "ref_out": "895404248", "max_shortfall_bps": "9999", "expected": "89541"},
+      {"name": "limit of 0 bps is the reference", "ref_out": "895404248", "max_shortfall_bps": "0", "expected": "895404248"},
+      {"name": "limit of 10000 bps is zero", "ref_out": "895404248", "max_shortfall_bps": "10000", "expected": "0"},
+      {"name": "reference of 3 units at 100 bps is the reference", "ref_out": "3", "max_shortfall_bps": "100", "expected": "3"},
+      {"name": "reference of 1 unit at 9999 bps rounds up to 1", "ref_out": "1", "max_shortfall_bps": "9999", "expected": "1"},
+      {"name": "zero reference", "ref_out": "0", "max_shortfall_bps": "100", "expected": "0"}
+    ],
+    "refuses": [
+      {"name": "limit above 10000 bps", "ref_out": "1000000000", "max_shortfall_bps": "10001", "error": "InvalidPolicy"},
+      {"name": "reference times the multiplier overflows", "ref_out": "170141183460469231731687303715884105727", "max_shortfall_bps": "0", "error": "MathOverflow"}
+    ]
+  },
+  "snapshot_2026_11_09": [
+    {"name": "100,000 USDC to EURC on sdex, measured -24.2", "amount_in": "1000000000000", "price_in": "100000000000000", "decimals_in": 7, "price_out": "111681400000000", "decimals_out": 7, "actual_out": "897570500000", "ref_out": "895404248155", "shortfall_bps": "-24"},
+    {"name": "100,000 USDC to EURC on soroswap, measured 2604.2", "amount_in": "1000000000000", "price_in": "100000000000000", "decimals_in": 7, "price_out": "111681400000000", "decimals_out": 7, "actual_out": "662225700000", "ref_out": "895404248155", "shortfall_bps": "2605"},
+    {"name": "100,000 USDC to EURC on aquarius, measured 1898.9", "amount_in": "1000000000000", "price_in": "100000000000000", "decimals_in": 7, "price_out": "111681400000000", "decimals_out": 7, "actual_out": "725374800000", "ref_out": "895404248155", "shortfall_bps": "1899"},
+    {"name": "100,000 EURC to USDC on sdex, measured 187.5", "amount_in": "1000000000000", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "actual_out": "1095868600000", "ref_out": "1116814000000", "shortfall_bps": "188"},
+    {"name": "100,000 EURC to USDC on soroswap, measured 2957.1", "amount_in": "1000000000000", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "actual_out": "786561400000", "ref_out": "1116814000000", "shortfall_bps": "2958"},
+    {"name": "100,000 EURC to USDC on aquarius, measured 7314.8", "amount_in": "1000000000000", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "actual_out": "299886100000", "ref_out": "1116814000000", "shortfall_bps": "7315"}
+  ]
+}

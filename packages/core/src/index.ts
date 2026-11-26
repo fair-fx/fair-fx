@@ -8,5 +8,13 @@ export {
   type Pair,
   type PairsConfig,
 } from './pair/index.ts';
+export {
+  floorOut,
+  RateMathError,
+  RateMathErrorCode,
+  refOut,
+  shortfallBps,
+  type RateLeg,
+} from './rate/index.ts';
 export { ConfigError, isEnumValue, parseEnumValue } from './shared/index.ts';
 export { GuardMode, VenueId } from './venue/index.ts';
