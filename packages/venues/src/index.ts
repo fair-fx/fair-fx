@@ -7,4 +7,12 @@ export {
   type SdexNetwork,
   type SdexRoute,
 } from './sdex/index.ts';
-export { DEFAULT_TIMEOUT_MS, type Fetch, type HttpOptions, type JsonResponse } from './shared/index.ts';
+export type { Fetch, HttpOptions, JsonResponse } from './shared/index.ts';
+export {
+  getAmountsOutCall,
+  soroswapAdapter,
+  toSoroswapQuote,
+  type SoroswapNetwork,
+  type SoroswapOptions,
+  type SoroswapRoute,
+} from './soroswap/index.ts';

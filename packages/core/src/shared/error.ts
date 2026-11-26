@@ -1,6 +1,14 @@
+import { thrownWithMessageSchema } from './error.schema.ts';
+
 /** The message of a thrown value, whatever was thrown. */
 export function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
+  if (error instanceof Error) {
+    return error.message;
+  }
+
+  const thrown = thrownWithMessageSchema.safeParse(error);
+
+  return thrown.success ? thrown.data.message : String(error);
 }
 
 /**
