@@ -25,10 +25,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.spec.json --noEmit",
     "test": "vitest run"
   },
-  "devDependencies": {
-    "@stellar/stellar-sdk": "17.4.0"
-  },
   "dependencies": {
+    "@stellar/stellar-sdk": "17.4.0",
     "zod": "4.6.7"
   }
 }

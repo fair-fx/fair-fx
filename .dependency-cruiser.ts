@@ -60,6 +60,13 @@ const config: IConfiguration = {
       to: { dependencyTypes: ['core'] },
     },
     {
+      name: 'core-main-no-rpc',
+      comment: 'core main entry reads no network. Put RPC code under packages/core/src/node',
+      severity: 'error',
+      from: { path: '^packages/core/src/', pathNot: ['^packages/core/src/node/', '\\.test\\.ts$'] },
+      to: { path: '/node_modules/@stellar/stellar-sdk/' },
+    },
+    {
       name: 'core-module-barrel-only',
       comment: 'Inside core, import a module folder (asset, pair, ...) through its index.ts',
       severity: 'error',
