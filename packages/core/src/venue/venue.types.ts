@@ -21,6 +21,19 @@ export enum QuoteStatus {
   Error = 'error',
 }
 
+/**
+ * Why a venue has no way to make a swap, as far as the venue says. A venue that cannot tell reports
+ * `no_path`, so `no_path` does not rule out the other two.
+ */
+export enum NoRouteCause {
+  /** No path, or no pool for the pair. */
+  NoPath = 'no_path',
+  /** The venue lists no such token. */
+  UnlistedToken = 'unlisted_token',
+  /** The venue found a path and it pays zero: the amount in is too small for it. */
+  PaysNothing = 'pays_nothing',
+}
+
 export interface QuoteOk<Route> {
   readonly status: QuoteStatus.Ok;
   /** In the smallest unit of the output token. Always above zero. */
@@ -33,10 +46,13 @@ export interface QuoteOk<Route> {
 
 /**
  * The venue answered and has no way to make this swap: no path, no pool for the pair, a token it does
- * not list, or a path that pays nothing. Every venue reports these the same way.
+ * not list, or a path that pays nothing. Every venue gives these the status `no_route`. The cause is
+ * only as exact as the venue's answer.
  */
 export interface QuoteNoRoute {
   readonly status: QuoteStatus.NoRoute;
+  /** Absent when the adapter does not say. */
+  readonly cause?: NoRouteCause;
 }
 
 /** The venue gave no usable answer: a timeout, an HTTP error that is not a `no_route`, or a response of the wrong shape. */
