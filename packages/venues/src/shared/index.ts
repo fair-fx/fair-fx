@@ -1,5 +1,7 @@
 export { errorQuote } from './error-quote.ts';
+export { fetchFailure } from './fetch-failure.ts';
 export { fetchJson } from './fetch-json.ts';
+export { httpErrorCause } from './http-error-cause.ts';
 export { HTTP_OK } from './http.constants.ts';
 export type { Fetch, HttpOptions, JsonResponse } from './http.types.ts';
 export { noRouteQuote } from './no-route-quote.ts';

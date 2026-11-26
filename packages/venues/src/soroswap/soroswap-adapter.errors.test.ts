@@ -1,4 +1,4 @@
-import { Direction, QuoteStatus } from '@fair-fx/core';
+import { Direction, QuoteErrorCause, QuoteStatus } from '@fair-fx/core';
 import { buildNetworkConfig, buildPair } from '@fair-fx/core/testing';
 import { soroswapAdapter, type Fetch } from '@fair-fx/venues';
 import { fetchThatNeverAnswers, sorobanRpcAnswering, sorobanRpcSaying } from '@fair-fx/venues/testing';
@@ -26,6 +26,7 @@ describe('soroswapAdapter, when the quote cannot be read', () => {
 
     expect(quote).toEqual({
       status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Rejected,
       reason: `no Soroswap router answers at ${notDeployed}: HostError: Error(Storage, MissingValue)`,
     });
   });
@@ -38,7 +39,11 @@ describe('soroswapAdapter, when the quote cannot be read', () => {
 
     const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'Request failed with status code 502' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Unavailable,
+      reason: 'Request failed with status code 502',
+    });
   });
 
   it('returns an error from a recorded answer to an amount too large for the pool arithmetic', async () => {
@@ -47,7 +52,11 @@ describe('soroswapAdapter, when the quote cannot be read', () => {
 
     const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, 10n ** 30n);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'HostError: Error(WasmVm, InvalidAction)' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Rejected,
+      reason: 'HostError: Error(WasmVm, InvalidAction)',
+    });
   });
 
   it('returns an error, and does not throw, when the RPC node takes longer than the timeout', async () => {
@@ -56,7 +65,11 @@ describe('soroswapAdapter, when the quote cannot be read', () => {
 
     const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'timeout of 1 ms exceeded' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Timeout,
+      reason: 'timeout of 1 ms exceeded',
+    });
   });
 
   it('returns an error with the message of a JSON-RPC error', async () => {
@@ -66,7 +79,7 @@ describe('soroswapAdapter, when the quote cannot be read', () => {
 
     const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'invalid parameters' });
+    expect(quote).toEqual({ status: QuoteStatus.Error, cause: QuoteErrorCause.Rejected, reason: 'invalid parameters' });
   });
 
   it('returns an error for an HTML error page', async () => {
@@ -75,7 +88,43 @@ describe('soroswapAdapter, when the quote cannot be read', () => {
 
     const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'Request failed with status code 502' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Unavailable,
+      reason: 'Request failed with status code 502',
+    });
+  });
+
+  it('returns an error as rejected when the RPC node answers 401, as a node that wants a key does', async () => {
+    vi.stubGlobal('fetch', vi.fn<Fetch>().mockResolvedValue(new Response('Unauthorized', { status: 401 })));
+    const soroswap = soroswapAdapter(NETWORK);
+
+    const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
+
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Rejected,
+      reason: 'Request failed with status code 401',
+    });
+  });
+
+  it('returns an error as a network failure, without the detail the SDK drops, when the RPC node cannot be reached', async () => {
+    const fetchFailed = new TypeError('fetch failed', { cause: new Error('getaddrinfo ENOTFOUND rpc.invalid') });
+    vi.stubGlobal('fetch', vi.fn<Fetch>().mockRejectedValue(fetchFailed));
+    const soroswap = soroswapAdapter(NETWORK);
+
+    const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
+
+    expect(quote).toEqual({ status: QuoteStatus.Error, cause: QuoteErrorCause.Network, reason: 'fetch failed' });
+  });
+
+  it('returns an error of an unknown kind for a 200 that is not JSON-RPC, which the SDK fails to read', async () => {
+    vi.stubGlobal('fetch', vi.fn<Fetch>().mockResolvedValue(new Response('<html>hello</html>', { status: 200 })));
+    const soroswap = soroswapAdapter(NETWORK);
+
+    const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
+
+    expect(quote).toEqual({ status: QuoteStatus.Error, cause: QuoteErrorCause.Unknown, reason: expect.any(String) });
   });
 
   it('refuses an amount of zero without calling the RPC node', async () => {
@@ -85,7 +134,11 @@ describe('soroswapAdapter, when the quote cannot be read', () => {
 
     const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, 0n);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'expected an amount in above zero, got 0' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.BadRequest,
+      reason: 'expected an amount in above zero, got 0',
+    });
     expect(fetch).not.toHaveBeenCalled();
   });
 });

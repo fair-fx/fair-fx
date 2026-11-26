@@ -1,6 +1,7 @@
 export {
   GuardMode,
   NoRouteCause,
+  QuoteErrorCause,
   QuoteStatus,
   VenueId,
   type Quote,

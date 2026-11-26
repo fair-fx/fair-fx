@@ -1,6 +1,6 @@
-import { NoRouteCause, QuoteStatus, type Quote, type SwapAssets } from '@fair-fx/core';
+import { NoRouteCause, type Quote, QuoteErrorCause, QuoteStatus, type SwapAssets } from '@fair-fx/core';
 import { z } from 'zod';
-import { errorQuote, HTTP_OK, noRouteQuote, type JsonResponse } from '../shared/index.ts';
+import { errorQuote, HTTP_OK, httpErrorCause, noRouteQuote, type JsonResponse } from '../shared/index.ts';
 import { findPathSchema } from './aquarius.schema.ts';
 import type { AquariusRoute, FindPathRequest } from './aquarius.types.ts';
 import { findPathFailure, refusedUnlistedToken } from './failure.ts';
@@ -29,12 +29,12 @@ export function toAquariusQuote(response: JsonResponse): Quote<AquariusRoute> {
   if (response.status !== HTTP_OK) {
     return refusedUnlistedToken(response)
       ? noRouteQuote(NoRouteCause.UnlistedToken)
-      : errorQuote(findPathFailure(response));
+      : errorQuote(httpErrorCause(response.status), findPathFailure(response));
   }
 
   const answer = findPathSchema.safeParse(response.body);
   if (!answer.success) {
-    return errorQuote(`aquarius response: ${z.prettifyError(answer.error)}`);
+    return errorQuote(QuoteErrorCause.BadAnswer, `aquarius response: ${z.prettifyError(answer.error)}`);
   }
 
   const path = answer.data;

@@ -1,4 +1,4 @@
-import { QuoteStatus } from '@fair-fx/core';
+import { QuoteErrorCause, QuoteStatus } from '@fair-fx/core';
 import { toSoroswapQuote } from '@fair-fx/venues';
 
 const PATH = [
@@ -16,6 +16,10 @@ describe('toSoroswapQuote', () => {
   ])('returns an error for $answer', ({ value }) => {
     const quote = toSoroswapQuote({ value, ledger: 65_681_036 }, PATH);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: expect.stringMatching(/^soroswap answer: /) });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.BadAnswer,
+      reason: expect.stringMatching(/^soroswap answer: /),
+    });
   });
 });

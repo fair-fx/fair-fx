@@ -1,4 +1,4 @@
-import { Direction, NoRouteCause, QuoteStatus } from '@fair-fx/core';
+import { Direction, NoRouteCause, QuoteErrorCause, QuoteStatus } from '@fair-fx/core';
 import { buildNetworkConfig, buildPair } from '@fair-fx/core/testing';
 import { aquariusAdapter, type Fetch } from '@fair-fx/venues';
 import { aquariusAnswering, fetchThatNeverAnswers } from '@fair-fx/venues/testing';
@@ -98,6 +98,7 @@ describe('aquariusAdapter', () => {
 
     expect(quote).toEqual({
       status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Rejected,
       reason: 'aquarius answered 400: token_out_address: This field is required.',
     });
   });
@@ -107,7 +108,11 @@ describe('aquariusAdapter', () => {
 
     const quote = await aquarius.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'timed out after 1 ms' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Timeout,
+      reason: 'timed out after 1 ms',
+    });
   });
 
   it('returns an error for an HTML error page', async () => {
@@ -116,6 +121,10 @@ describe('aquariusAdapter', () => {
 
     const quote = await aquarius.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.Error, reason: 'aquarius answered 502' });
+    expect(quote).toEqual({
+      status: QuoteStatus.Error,
+      cause: QuoteErrorCause.Unavailable,
+      reason: 'aquarius answered 502',
+    });
   });
 });
