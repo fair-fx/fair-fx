@@ -17,7 +17,7 @@ const amountSchema: z.ZodType<bigint> = z.union(
       .pipe(z.bigint()),
     z.int().nonnegative().transform(BigInt),
   ],
-  'expected an amount that is not negative, as a decimal string or an integer',
+  'expected an amount that is not negative, as a decimal string or an integer below 2^53',
 );
 
 /**
