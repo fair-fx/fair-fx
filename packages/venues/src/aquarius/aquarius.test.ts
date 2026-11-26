@@ -1,4 +1,4 @@
-import { QuoteStatus } from '@fair-fx/core';
+import { NoRouteCause, QuoteStatus } from '@fair-fx/core';
 import { toAquariusQuote } from '@fair-fx/venues';
 import { buildFindPathResponse, buildFoundPath } from '@fair-fx/venues/testing';
 
@@ -48,14 +48,18 @@ describe('toAquariusQuote', () => {
   });
 
   it.each([
-    { what: 'a path that pays nothing', body: buildFoundPath({ amount: '0.000000000000000000' }) },
-    { what: 'no path, whatever the other fields hold', body: { success: false } },
-  ])('returns no_route for $what', ({ body }) => {
+    {
+      what: 'a path that pays nothing',
+      body: buildFoundPath({ amount: '0.000000000000000000' }),
+      cause: NoRouteCause.PaysNothing,
+    },
+    { what: 'no path, whatever the other fields hold', body: { success: false }, cause: NoRouteCause.NoPath },
+  ])('returns no_route and says why for $what', ({ body, cause }) => {
     const response = buildFindPathResponse(body);
 
     const quote = toAquariusQuote(response);
 
-    expect(quote).toEqual({ status: QuoteStatus.NoRoute });
+    expect(quote).toEqual({ status: QuoteStatus.NoRoute, cause });
   });
 
   it.each([

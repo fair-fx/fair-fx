@@ -1,4 +1,4 @@
-import { Direction, QuoteStatus } from '@fair-fx/core';
+import { Direction, NoRouteCause, QuoteStatus } from '@fair-fx/core';
 import { buildNetworkConfig, buildPair } from '@fair-fx/core/testing';
 import { sdexAdapter, type Fetch } from '@fair-fx/venues';
 import { fetchThatNeverAnswers, horizonAnswering } from '@fair-fx/venues/testing';
@@ -68,7 +68,7 @@ describe('sdexAdapter', () => {
 
     const quote = await sdex.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.NoRoute });
+    expect(quote).toEqual({ status: QuoteStatus.NoRoute, cause: NoRouteCause.NoPath });
   });
 
   it('returns an error with the reason Horizon gave for a recorded 400', async () => {

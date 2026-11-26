@@ -1,6 +1,6 @@
-import { QuoteStatus, type Quote, type SwapAssets } from '@fair-fx/core';
+import { NoRouteCause, QuoteStatus, type Quote, type SwapAssets } from '@fair-fx/core';
 import { z } from 'zod';
-import { errorQuote, HTTP_OK, type JsonResponse } from '../shared/index.ts';
+import { errorQuote, HTTP_OK, noRouteQuote, type JsonResponse } from '../shared/index.ts';
 import { findPathSchema } from './aquarius.schema.ts';
 import type { AquariusRoute, FindPathRequest } from './aquarius.types.ts';
 import { findPathFailure, refusedUnlistedToken } from './failure.ts';
@@ -17,16 +17,19 @@ export function findPathRequest(swap: SwapAssets, amountIn: bigint): FindPathReq
 /**
  * Turns Aquarius's answer to a find-path request into a quote. Never throws.
  *
- * Only a path that pays more than zero is an `ok` quote. No path, or one that pays nothing, is
- * `no_route`. So is a request Aquarius refused because it lists no such token. Any other HTTP error,
- * or a body of another shape, is `error`.
+ * Only a path that pays more than zero is an `ok` quote. No path is `no_route` as `no_path`, and that is
+ * also how Aquarius answers an amount too small for its pools. A path that pays nothing is `no_route` as
+ * `pays_nothing`, a request Aquarius refused because it lists no such token is `no_route` as
+ * `unlisted_token`. Any other HTTP error, or a body of another shape, is `error`.
  *
  * The ledger of an `ok` quote is `null`: Aquarius prices a path from the pool state it has indexed
  * and does not say at which ledger.
  */
 export function toAquariusQuote(response: JsonResponse): Quote<AquariusRoute> {
   if (response.status !== HTTP_OK) {
-    return refusedUnlistedToken(response) ? { status: QuoteStatus.NoRoute } : errorQuote(findPathFailure(response));
+    return refusedUnlistedToken(response)
+      ? noRouteQuote(NoRouteCause.UnlistedToken)
+      : errorQuote(findPathFailure(response));
   }
 
   const answer = findPathSchema.safeParse(response.body);
@@ -38,5 +41,5 @@ export function toAquariusQuote(response: JsonResponse): Quote<AquariusRoute> {
 
   return path !== null && path.amountOut > 0n
     ? { status: QuoteStatus.Ok, amountOut: path.amountOut, route: path.route, ledger: null }
-    : { status: QuoteStatus.NoRoute };
+    : noRouteQuote(path === null ? NoRouteCause.NoPath : NoRouteCause.PaysNothing);
 }

@@ -1,4 +1,4 @@
-import { QuoteStatus } from '@fair-fx/core';
+import { NoRouteCause, QuoteStatus } from '@fair-fx/core';
 import { EURC, USDC } from '@fair-fx/core/testing';
 import { strictSendUrl, toSdexQuote } from '@fair-fx/venues';
 import { buildStrictSendRecord, buildStrictSendResponse } from '@fair-fx/venues/testing';
@@ -71,15 +71,16 @@ describe('toSdexQuote', () => {
   });
 
   it.each([
-    { what: 'Horizon lists no path', response: buildStrictSendResponse([]) },
+    { what: 'Horizon lists no path', response: buildStrictSendResponse([]), cause: NoRouteCause.NoPath },
     {
       what: 'the only path pays nothing',
       response: buildStrictSendResponse([buildStrictSendRecord({ destination_amount: '0.0000000' })]),
+      cause: NoRouteCause.PaysNothing,
     },
-  ])('returns no_route when $what', ({ response }) => {
+  ])('returns no_route and says why when $what', ({ response, cause }) => {
     const quote = toSdexQuote(response);
 
-    expect(quote).toEqual({ status: QuoteStatus.NoRoute });
+    expect(quote).toEqual({ status: QuoteStatus.NoRoute, cause });
   });
 
   it.each([
