@@ -12,7 +12,8 @@
       {"name": "negative amount truncates toward zero", "amount_in": "-1000000000", "price_in": "100000000000000", "decimals_in": 7, "price_out": "111681400000000", "decimals_out": 7, "expected": "-895404248"},
       {"name": "largest amount whose product with the price fits i128", "amount_in": "1523451384567790444350512", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "expected": "1701411834604692317316872"},
       {"name": "product is exactly the i128 maximum", "amount_in": "170141183460469231731687303715884105727", "price_in": "1", "decimals_in": 7, "price_out": "1", "decimals_out": 7, "expected": "170141183460469231731687303715884105727"},
-      {"name": "product is exactly the i128 minimum", "amount_in": "-85070591730234615865843651857942052864", "price_in": "2", "decimals_in": 7, "price_out": "1", "decimals_out": 7, "expected": "-170141183460469231731687303715884105728"}
+      {"name": "product is exactly the i128 minimum", "amount_in": "-85070591730234615865843651857942052864", "price_in": "2", "decimals_in": 7, "price_out": "1", "decimals_out": 7, "expected": "-170141183460469231731687303715884105728"},
+      {"name": "largest power of ten that fits i128", "amount_in": "1", "price_in": "1", "decimals_in": 0, "price_out": "1", "decimals_out": 38, "expected": "100000000000000000000000000000000000000"}
     ],
     "refuses": [
       {"name": "zero input price", "amount_in": "1", "price_in": "0", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "error": "OracleInvalid"},
@@ -24,6 +25,7 @@
       {"name": "i128 maximum amount", "amount_in": "170141183460469231731687303715884105727", "price_in": "111681400000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 7, "error": "MathOverflow"},
       {"name": "product is one above the i128 maximum", "amount_in": "85070591730234615865843651857942052864", "price_in": "2", "decimals_in": 7, "price_out": "1", "decimals_out": 7, "error": "MathOverflow"},
       {"name": "product is one below the i128 minimum", "amount_in": "-56713727820156410577229101238628035243", "price_in": "3", "decimals_in": 7, "price_out": "1", "decimals_out": 7, "error": "MathOverflow"},
+      {"name": "input side overflows when the output token has fewer decimals", "amount_in": "170141183460469231731687303715884105727", "price_in": "2", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 6, "error": "MathOverflow"},
       {"name": "scaled numerator overflows though the result would fit", "amount_in": "20000000000000", "price_in": "100000000000000", "decimals_in": 7, "price_out": "100000000000000", "decimals_out": 18, "error": "MathOverflow"},
       {"name": "scaled denominator overflows", "amount_in": "1000000000", "price_in": "100000000000000", "decimals_in": 32, "price_out": "100000000000000", "decimals_out": 7, "error": "MathOverflow"},
       {"name": "power of ten for the decimals gap overflows", "amount_in": "1000000000", "price_in": "100000000000000", "decimals_in": 39, "price_out": "100000000000000", "decimals_out": 0, "error": "MathOverflow"},
