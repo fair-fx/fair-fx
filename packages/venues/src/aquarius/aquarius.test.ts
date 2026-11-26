@@ -34,11 +34,6 @@ describe('toAquariusQuote', () => {
       amount: '9007199254740993.000000000000000000',
       amountOut: 9_007_199_254_740_993n,
     },
-    {
-      what: 'a JSON integer, as the documented endpoints send it',
-      amount: 918_572_852,
-      amountOut: 918_572_852n,
-    },
   ])('reads an amount with $what', ({ amount, amountOut }) => {
     const response = buildFindPathResponse(buildFoundPath({ amount }));
 
@@ -50,7 +45,7 @@ describe('toAquariusQuote', () => {
   it.each([
     {
       what: 'a path that pays nothing',
-      body: buildFoundPath({ amount: '0.000000000000000000' }),
+      body: buildFoundPath({ amount: 0 }),
       cause: NoRouteCause.PaysNothing,
     },
     { what: 'no path, whatever the other fields hold', body: { success: false }, cause: NoRouteCause.NoPath },
@@ -71,7 +66,7 @@ describe('toAquariusQuote', () => {
     { what: 'an empty swap chain', body: buildFoundPath({ swap_chain_xdr: '' }), names: '→ at swap_chain_xdr' },
     {
       what: 'a body that does not say whether a path was found',
-      body: { amount: '918572852.000000000000000000' },
+      body: { amount: 918_572_852 },
       names: '→ at success',
     },
   ])('returns an error that names the field for $what', ({ body, names }) => {

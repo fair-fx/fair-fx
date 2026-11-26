@@ -5,9 +5,9 @@ import type { AquariusPath } from './aquarius.types.ts';
 
 /**
  * An amount as Aquarius sends it, in the smallest unit of its token. The endpoint in `config/` sends
- * a decimal string (`"918572852.000000000000000000"`), read with its fraction cut off and not
- * rounded. The documented endpoints send a JSON integer. A JSON number too large to be exact is
- * refused: `z.int()` takes safe integers only.
+ * a JSON integer, and one too large to be exact is refused: `z.int()` takes safe integers only. The
+ * endpoint asked before it, `/pools/find-path/`, sends a decimal string
+ * (`"918572852.000000000000000000"`), read with its fraction cut off and not rounded.
  */
 const amountSchema: z.ZodType<bigint> = z.union(
   [
@@ -24,6 +24,10 @@ const amountSchema: z.ZodType<bigint> = z.union(
  * The body of a find-path answer, read as the path it found, or `null` when it found none. `success`
  * picks the reading, so a found path with a wrong field is reported with the name of that field.
  * Aquarius still sends every field when it finds no path, empty or zero. None of them is read.
+ *
+ * `amount` is the output Aquarius estimates. `amount_with_fee` is not read: it is `amount` lowered by
+ * the slippage and the provider fee the request allows, the least a swap should accept and not what
+ * the venue would pay. The adapter asks with neither, so the two are equal in every answer it gets.
  */
 export const findPathSchema: z.ZodType<AquariusPath | null> = z
   .discriminatedUnion('success', [

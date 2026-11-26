@@ -13,7 +13,7 @@ export function buildFoundPath(overrides: object = {}): object {
       'CCW67TSZV3SSS2HXMBQ5JFGCKJNXKZM7UQUWUZPUTHXSTZLEO7SJMI75',
       'CDTKPWPLOURQA2SGTKTUQOWRCBZEORB4BWBOMJ3D3ZTQQSGE5F6JBQLV',
     ],
-    amount: '918572852.000000000000000000',
+    amount: 918_572_852,
     ...overrides,
   };
 }

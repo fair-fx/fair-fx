@@ -18,9 +18,10 @@ export function findPathRequest(swap: SwapAssets, amountIn: bigint): FindPathReq
  * Turns Aquarius's answer to a find-path request into a quote. Never throws.
  *
  * Only a path that pays more than zero is an `ok` quote. No path is `no_route` as `no_path`, and that is
- * also how Aquarius answers an amount too small for its pools. A path that pays nothing is `no_route` as
- * `pays_nothing`, a request Aquarius refused because it lists no such token is `no_route` as
- * `unlisted_token`. Any other HTTP error, or a body of another shape, is `error`.
+ * also how Aquarius answers an amount too small for its pools: its API says it finds a path only when
+ * the path pays more than zero. A path that pays nothing would be `no_route` as `pays_nothing`, a
+ * request Aquarius refused because it lists no such token is `no_route` as `unlisted_token`. Any other
+ * HTTP error, or a body of another shape, is `error`.
  *
  * The ledger of an `ok` quote is `null`: Aquarius prices a path from the pool state it has indexed
  * and does not say at which ledger.
