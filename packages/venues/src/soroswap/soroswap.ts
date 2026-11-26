@@ -21,6 +21,9 @@ export function getAmountsOutCall(router: string, amountIn: bigint, path: readon
  *
  * An amount out of zero is `no_route`: the pool pays nothing for an amount this small. An answer that
  * is not two amounts is `error`.
+ *
+ * The ledger of an `ok` quote is the ledger of `read`: the latest one the RPC node knew when it simulated
+ * the call.
  */
 export function toSoroswapQuote(read: SimulatedRead, path: readonly string[]): Quote<SoroswapRoute> {
   const amounts = directAmountsSchema.safeParse(read.value);

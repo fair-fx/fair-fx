@@ -27,7 +27,7 @@ describe('soroswapAdapter', () => {
       status: QuoteStatus.Ok,
       amountOut: 917_323_955n, // 91.7323955 EURC
       route: { path: [USDC, EURC] },
-      ledger: 65_681_036,
+      ledger: 65_681_036, // the ledger the RPC node was at when the answer was recorded
     });
   });
 
