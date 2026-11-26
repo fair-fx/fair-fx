@@ -1,9 +1,8 @@
 import { divideRoundingUp } from '../shared/index.ts';
 import { isTokenDecimals, powerOfTen, withinI128 } from './rate.checks.ts';
+import { BPS } from './rate.constants.ts';
 import { RateMathError } from './rate.error.ts';
 import { RateMathErrorCode, type RateLeg } from './rate.types.ts';
-
-const BPS = 10_000n;
 
 /**
  * What `amountIn` is worth in the output token at the reference prices, rounded down.

@@ -1,10 +1,7 @@
 import { Account, BASE_FEE, rpc, scValToNative, TransactionBuilder, type xdr } from '@stellar/stellar-sdk';
 import type { NetworkConfig } from '../index.ts';
 import { SimulationError } from './simulation.error.ts';
-
-// A simulated transaction is never submitted, so its sequence number and time bound are placeholders.
-const PLACEHOLDER_SEQUENCE = '0';
-const PLACEHOLDER_TIME_BOUND_SECONDS = 30;
+import { PLACEHOLDER_SEQUENCE, PLACEHOLDER_TIME_BOUND_SECONDS } from './soroban.constants.ts';
 
 export type SimulationNetwork = Pick<NetworkConfig, 'passphrase' | 'simulationSource'>;
 
