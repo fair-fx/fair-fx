@@ -1,7 +1,10 @@
 # FairFX: how to run and test
 
-Work delivered on 2026-11-25 and 2026-11-26. The test counts below are those of the `dev` branch on
-2026-11-26 and grow as tests are added.
+Work delivered on 2026-11-25 and 2026-11-26. The output below was recorded on 2026-11-26 from the `dev`
+branch. Counts grow as tests are added, and times differ from one machine to the next.
+
+Every test, by name, is in [`test-output.md`](test-output.md): read it to see what is checked without
+running anything.
 
 ## 1. What you are testing
 
@@ -38,16 +41,32 @@ and remove it when they end.
 pnpm check
 ```
 
-Runs the dependency audit, lint, typecheck, dependency rules and the tests. Expected:
+Runs the dependency audit, lint, typecheck, dependency rules and the tests. It takes well under a
+minute once the Postgres image is downloaded, and ends with exit code 0. The lines to look for (`...`
+stands for lines left out):
 
-- `no dependency violations found`
-- core: 136 passed, 2 skipped
-- venues: 78 passed, 3 skipped
-- db: 18 passed
+```text
+2 vulnerabilities found
+Severity: 2 moderate
+...
+✔ no dependency violations found (172 modules, 404 dependencies cruised)
+...
+packages/core test:  Test Files  11 passed | 1 skipped (12)
+packages/core test:       Tests  136 passed | 2 skipped (138)
+...
+packages/venues test:  Test Files  9 passed | 3 skipped (12)
+packages/venues test:       Tests  78 passed | 3 skipped (81)
+...
+packages/db test:  Test Files  4 passed (4)
+packages/db test:       Tests  18 passed (18)
+```
 
-The skipped tests are the live ones in step 4. The core and venues tests need no network: they replay
-answers recorded from the real venues, kept in `tests/fixtures/`. The db tests run against a real
-Postgres. Their first run downloads the Postgres image, after that they take a few seconds.
+- The two moderate advisories are in `glob` and `minimatch`, which two dependencies pull in. The check
+  stops at severity high or above, so it passes.
+- The skipped tests are the live ones in step 4.
+- The core and venues tests need no network: they replay answers recorded from the real venues, kept
+  in `tests/fixtures/`.
+- The db tests run against a real Postgres. Their first run downloads the Postgres image.
 
 ## 4. Run against live mainnet
 
@@ -55,7 +74,22 @@ Postgres. Their first run downloads the Postgres image, after that they take a f
 pnpm test:smoke --reporter=verbose
 ```
 
-Read-only. No keys, no funds, no transactions. Expected: 2 passed in core, 3 passed in venues.
+Read-only. No keys, no funds, no transactions. Output:
+
+```text
+ ✓ src/node/reference-reader.smoke.test.ts > the live Reflector fiat feed > holds a plausible EUR price on mainnet, at the addresses in config/ 583ms
+ ✓ src/node/reference-reader.smoke.test.ts > the live Reflector fiat feed > holds a plausible EUR price on testnet 1022ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+...
+ ✓ src/soroswap/soroswap.smoke.test.ts > the live Soroswap router > quotes 100 USDC to EURC on mainnet, at the addresses in config/ 471ms
+ ✓ src/aquarius/aquarius.smoke.test.ts > the live Aquarius API > quotes 100 USDC to EURC on mainnet, at the addresses in config/ 997ms
+ ✓ src/sdex/sdex.smoke.test.ts > the live Horizon > quotes 100 USDC to EURC on mainnet, at the addresses in config/ 1353ms
+
+ Test Files  3 passed (3)
+      Tests  3 passed (3)
+```
 
 - The Reflector fiat feed returns a plausible EUR price on mainnet and on testnet.
 - SDEX + Classic AMM, Soroswap and Aquarius each quote 100 USDC to EURC on mainnet, and the quote is
@@ -69,8 +103,22 @@ failure here can mean one of them is down. Run it again before reporting it.
 Add `--reporter=verbose` to any command in the table to see each test by name, for example:
 
 ```sh
-pnpm --filter @fair-fx/venues test aquarius --reporter=verbose
+pnpm --filter @fair-fx/db test --reporter=verbose
 ```
+
+```text
+ ✓ src/migrate/migrate.test.ts > migrate > creates the tables of a run and its samples in an empty database 149ms
+ ✓ src/migrate/migrate.test.ts > migrate > applies nothing to a database that has every migration 55ms
+ ✓ src/writes/write-run.test.ts > writeRun > stores a run with its reference and a quote of each status 116ms
+ ✓ src/writes/write-run-slot.test.ts > writeRun, one run per slot > stores nothing and says the slot is taken when a run of the slot is stored already 121ms
+ ✓ src/writes/write-run-slot.test.ts > writeRun, one run per slot > waits for a run that is writing the same slot, then says the slot is taken 79ms
+ ✓ src/writes/write-run-slot.test.ts > writeRun, one run per slot > stores nothing of a run when the database refuses one of its rows 65ms
+...
+ Test Files  4 passed (4)
+      Tests  18 passed (18)
+```
+
+Each line is one behaviour. The other packages read the same way.
 
 ## 6. Look at the database
 
@@ -90,11 +138,29 @@ docker exec fairfx-postgres psql -U postgres -d fairfx -c '\dt' -c '\d quote_sam
 docker rm -f fairfx-postgres
 ```
 
-Expected:
+Output (`...` stands for the SQL of the migration, which is printed in full):
 
-- `pnpm db:migrate` ends with `Migrations complete!`. A second run prints `No migrations to run!`.
-- `\dt` lists four tables: `run`, `reference_sample`, `quote_sample`, and `pgmigrations`, where the
-  migration tool records what it applied.
+```text
+127.0.0.1:5432 - no response
+127.0.0.1:5432 - accepting connections
+> Migrating files:
+> - 0001_run-and-samples
+### MIGRATION 0001_run-and-samples (UP) ###
+...
+Migrations complete!
+                List of tables
+ Schema |       Name       | Type  |  Owner
+--------+------------------+-------+----------
+ public | pgmigrations     | table | postgres
+ public | quote_sample     | table | postgres
+ public | reference_sample | table | postgres
+ public | run              | table | postgres
+(4 rows)
+```
+
+- After the list comes the description of `quote_sample`: its columns, indexes and constraints.
+- `pgmigrations` is where the migration tool records what it applied. A second `pnpm db:migrate`
+  prints `No migrations to run!`.
 - The tables are empty. Nothing collects quotes on a schedule yet, so the write of a run is shown by
   the db tests in step 3 and not by rows here.
 
