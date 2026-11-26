@@ -1,12 +1,7 @@
+import { divideRoundingUp, fitsI128, LARGEST_EXPONENT_OF_TEN_IN_I128 } from '../shared/index.ts';
 import { RateMathErrorCode, type RateLeg } from './rate.types.ts';
 
 const BPS = 10_000n;
-
-// The contract computes in i128. Every step here is held to the same range, so an amount the
-// contract refuses with MathOverflow is refused here too.
-const I128_MAX = 2n ** 127n - 1n;
-const I128_MIN = -(2n ** 127n);
-const LARGEST_EXPONENT_OF_TEN_IN_I128 = 38;
 
 /** The rate math refused an input. `code` says why. */
 export class RateMathError extends Error {
@@ -32,12 +27,12 @@ export function refOut(amountIn: bigint, input: RateLeg, output: RateLeg): bigin
   if (!isTokenDecimals(input.decimals) || !isTokenDecimals(output.decimals)) {
     throw new RateMathError(RateMathErrorCode.InvalidPolicy, 'token decimals must be a whole number, 0 or more');
   }
-  const value = multiply(amountIn, input.price);
+  const value = withinI128(amountIn * input.price);
   const scale = powerOfTen(Math.abs(output.decimals - input.decimals));
   if (output.decimals >= input.decimals) {
-    return multiply(value, scale) / output.price;
+    return withinI128(value * scale) / output.price;
   }
-  return value / multiply(output.price, scale);
+  return value / withinI128(output.price * scale);
 }
 
 /**
@@ -51,8 +46,9 @@ export function shortfallBps(reference: bigint, actualOut: bigint): bigint {
   if (reference <= 0n) {
     throw new RateMathError(RateMathErrorCode.AmountOutOfRange, 'the reference output is zero or negative');
   }
-  const missing = subtract(reference, actualOut);
-  return divideRoundingUp(multiply(missing, BPS), reference);
+  const missing = withinI128(reference - actualOut);
+  const missingBps = withinI128(missing * BPS);
+  return divideRoundingUp(missingBps, reference);
 }
 
 /**
@@ -65,19 +61,12 @@ export function floorOut(reference: bigint, maxShortfallBps: bigint): bigint {
   if (maxShortfallBps < 0n || maxShortfallBps > BPS) {
     throw new RateMathError(RateMathErrorCode.InvalidPolicy, `the limit must be 0 to ${BPS} bps`);
   }
-  return divideRoundingUp(multiply(reference, BPS - maxShortfallBps), BPS);
+  const kept = withinI128(reference * (BPS - maxShortfallBps));
+  return divideRoundingUp(kept, BPS);
 }
 
 function isTokenDecimals(decimals: number): boolean {
   return Number.isInteger(decimals) && decimals >= 0;
-}
-
-function multiply(a: bigint, b: bigint): bigint {
-  return withinI128(a * b);
-}
-
-function subtract(a: bigint, b: bigint): bigint {
-  return withinI128(a - b);
 }
 
 function powerOfTen(exponent: number): bigint {
@@ -87,8 +76,10 @@ function powerOfTen(exponent: number): bigint {
   return 10n ** BigInt(exponent);
 }
 
+// The contract computes in i128. Every step here is held to the same range, so an amount the
+// contract refuses with MathOverflow is refused here too.
 function withinI128(value: bigint): bigint {
-  if (value < I128_MIN || value > I128_MAX) {
+  if (!fitsI128(value)) {
     throw overflow();
   }
   return value;
@@ -96,10 +87,4 @@ function withinI128(value: bigint): bigint {
 
 function overflow(): RateMathError {
   return new RateMathError(RateMathErrorCode.MathOverflow, 'a step of the calculation does not fit in i128');
-}
-
-/** `/` truncates toward zero, which is already the ceiling of a negative quotient. */
-function divideRoundingUp(dividend: bigint, positiveDivisor: bigint): bigint {
-  const quotient = dividend / positiveDivisor;
-  return dividend % positiveDivisor > 0n ? quotient + 1n : quotient;
 }
