@@ -20,11 +20,11 @@ describe('aquariusAdapter', () => {
 
     expect(quote).toEqual({
       status: QuoteStatus.Ok,
-      amountOut: 918_572_852n, // 91.8572852 EURC, sent as "918572852.000000000000000000"
+      amountOut: 919_252_118n, // 91.9252118 EURC
       route: {
         swapChainXdr: expect.stringMatching(/^AAAAEAAAAAEAAAAC[A-Za-z0-9+/]+=$/),
         pools: [
-          'CBV6LZABOAJRXHLIEKILTWBPC2AXLYVR4CGGPKZQ3PWJ5QFTPIWSWGWQ',
+          'CDD3OQDUVL3ITL4ZJF27WVSO65PFEQQ5AOHEUPUHC7YNL7VUYM4QRLZ5',
           'CCPN4NNSQKL3LLPTSPTFKYKXR3FBL37AULE6PTZH3QD24MPHXQCN5O3U',
         ],
         tokens: [USDC, SUSD, EURC],
@@ -39,16 +39,27 @@ describe('aquariusAdapter', () => {
 
     const quote = await aquarius.quote(PAIR, Direction.QuoteToBase, 1_000_000_000_000n);
 
-    // 28,494.5534890 USDC: the pools are small, so an amount this large moves their price a long way.
-    expect(quote).toMatchObject({ amountOut: 284_945_534_890n, route: { tokens: [EURC, SUSD, USDC] } });
+    // 26,793.0385595 USDC: the pools are small, so an amount this large moves their price a long way.
+    expect(quote).toMatchObject({ amountOut: 267_930_385_595n, route: { tokens: [EURC, SUSD, USDC] } });
   });
 
-  it('quotes from a recorded answer of the documented endpoint, which sends amounts as integers', async () => {
-    const fetch = await aquariusAnswering('find-path.v2.usdc-eurc.100');
+  it('quotes the estimate, not the lower bound, from a recorded answer to a request with slippage', async () => {
+    const fetch = await aquariusAnswering('find-path.usdc-eurc.100.slippage');
     const aquarius = aquariusAdapter(NETWORK, { fetch });
 
     const quote = await aquarius.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
+    // The request allows 1 percent: `amount` is 919252118 and `amount_with_fee` is 910059596.
+    expect(quote).toMatchObject({ status: QuoteStatus.Ok, amountOut: 919_252_118n });
+  });
+
+  it('quotes from a recorded answer of the endpoint asked before, which sends amounts as decimal strings', async () => {
+    const fetch = await aquariusAnswering('find-path.pools.usdc-eurc.100');
+    const aquarius = aquariusAdapter(NETWORK, { fetch });
+
+    const quote = await aquarius.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
+
+    // Sent as "918572852.000000000000000000".
     expect(quote).toMatchObject({ status: QuoteStatus.Ok, amountOut: 918_572_852n });
   });
 
@@ -62,7 +73,7 @@ describe('aquariusAdapter', () => {
     await aquarius.quote(PAIR, direction, HUNDRED_USDC);
 
     const [url, init] = fetch.mock.lastCall ?? [];
-    expect(String(url)).toBe('https://amm-api.aqua.network/pools/find-path/');
+    expect(String(url)).toBe('https://amm-api.aqua.network/api/external/v2/find-path/');
     expect(init?.method).toBe('POST');
     expect(new Headers(init?.headers).get('content-type')).toBe('application/json');
     expect(JSON.parse(String(init?.body))).toEqual({
