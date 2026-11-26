@@ -1,8 +1,8 @@
-import { QuoteStatus, type Quote } from '@fair-fx/core';
+import { NoRouteCause, QuoteStatus, type Quote } from '@fair-fx/core';
 import type { SimulatedRead } from '@fair-fx/core/node';
 import { Address, Contract, nativeToScVal, xdr } from '@stellar/stellar-sdk';
 import { z } from 'zod';
-import { errorQuote } from '../shared/index.ts';
+import { errorQuote, noRouteQuote } from '../shared/index.ts';
 import { GET_AMOUNTS_OUT } from './soroswap.constants.ts';
 import { directAmountsSchema } from './soroswap.schema.ts';
 import type { SoroswapRoute } from './soroswap.types.ts';
@@ -19,8 +19,8 @@ export function getAmountsOutCall(router: string, amountIn: bigint, path: readon
 /**
  * Turns the router's answer for a direct pair into a quote. Never throws.
  *
- * Only an amount out above zero is an `ok` quote. Zero is `no_route`: the pool pays nothing for an
- * amount this small. An answer that is not two amounts is `error`.
+ * Only an amount out above zero is an `ok` quote. Zero is `no_route` as `pays_nothing`: the pool pays
+ * nothing for an amount this small. An answer that is not two amounts is `error`.
  *
  * The ledger of an `ok` quote is the ledger of `read`: the latest one the RPC node knew when it simulated
  * the call.
@@ -35,5 +35,5 @@ export function toSoroswapQuote(read: SimulatedRead, path: readonly string[]): Q
 
   return amountOut > 0n
     ? { status: QuoteStatus.Ok, amountOut, route: { path }, ledger: read.ledger }
-    : { status: QuoteStatus.NoRoute };
+    : noRouteQuote(NoRouteCause.PaysNothing);
 }

@@ -1,4 +1,4 @@
-import { Direction, QuoteStatus } from '@fair-fx/core';
+import { Direction, NoRouteCause, QuoteStatus } from '@fair-fx/core';
 import { buildNetworkConfig, buildPair } from '@fair-fx/core/testing';
 import { soroswapAdapter } from '@fair-fx/venues';
 import { buildFailedSimulation, simulatedCalls, sorobanRpcAnswering, sorobanRpcSaying } from '@fair-fx/venues/testing';
@@ -66,7 +66,7 @@ describe('soroswapAdapter', () => {
 
     const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, 1n);
 
-    expect(quote).toEqual({ status: QuoteStatus.NoRoute });
+    expect(quote).toEqual({ status: QuoteStatus.NoRoute, cause: NoRouteCause.PaysNothing });
   });
 
   it('returns no_route for a pair nobody created, once the router has answered another call', async () => {
@@ -76,7 +76,7 @@ describe('soroswapAdapter', () => {
 
     const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.NoRoute });
+    expect(quote).toEqual({ status: QuoteStatus.NoRoute, cause: NoRouteCause.NoPath });
     expect(simulatedCalls(fetch, NETWORK.passphrase)).toEqual([
       expect.objectContaining({ function_name: 'router_get_amounts_out' }),
       { contract_address: ROUTER, function_name: 'get_factory', args: [] },
@@ -91,7 +91,7 @@ describe('soroswapAdapter', () => {
 
     const quote = await soroswap.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.NoRoute });
+    expect(quote).toEqual({ status: QuoteStatus.NoRoute, cause: NoRouteCause.NoPath });
     expect(fetch).toHaveBeenCalledOnce();
   });
 });

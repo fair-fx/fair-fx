@@ -1,4 +1,4 @@
-import { Direction, QuoteStatus } from '@fair-fx/core';
+import { Direction, NoRouteCause, QuoteStatus } from '@fair-fx/core';
 import { buildNetworkConfig, buildPair } from '@fair-fx/core/testing';
 import { aquariusAdapter, type Fetch } from '@fair-fx/venues';
 import { aquariusAnswering, fetchThatNeverAnswers } from '@fair-fx/venues/testing';
@@ -72,13 +72,13 @@ describe('aquariusAdapter', () => {
     });
   });
 
-  it('returns no_route from a recorded answer that found no path for 1 stroop', async () => {
+  it('returns no_route as no path from a recorded answer for 1 stroop, which Aquarius does not tell from a missing pool', async () => {
     const fetch = await aquariusAnswering('find-path.usdc-eurc.1-stroop');
     const aquarius = aquariusAdapter(NETWORK, { fetch });
 
     const quote = await aquarius.quote(PAIR, Direction.BaseToQuote, 1n);
 
-    expect(quote).toEqual({ status: QuoteStatus.NoRoute });
+    expect(quote).toEqual({ status: QuoteStatus.NoRoute, cause: NoRouteCause.NoPath });
   });
 
   it('returns no_route from a recorded 400 that says Aquarius lists no such token', async () => {
@@ -87,7 +87,7 @@ describe('aquariusAdapter', () => {
 
     const quote = await aquarius.quote(PAIR, Direction.BaseToQuote, HUNDRED_USDC);
 
-    expect(quote).toEqual({ status: QuoteStatus.NoRoute });
+    expect(quote).toEqual({ status: QuoteStatus.NoRoute, cause: NoRouteCause.UnlistedToken });
   });
 
   it('returns an error with what Aquarius said in a recorded 400 for a request that names one token', async () => {
