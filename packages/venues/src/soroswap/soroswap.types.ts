@@ -7,8 +7,12 @@ export interface SoroswapRoute {
   readonly path: readonly string[];
 }
 
-/** What `router_get_amounts_out` returns for a direct pair: the amount in, then the amount out. */
-export type DirectAmounts = readonly [amountIn: bigint, amountOut: bigint];
+/** What `router_get_amounts_out` returns for a direct pair, with each amount named. */
+export interface DirectAmounts {
+  readonly amountIn: bigint;
+  /** Zero or more. */
+  readonly amountOut: bigint;
+}
 
 /** The part of the network config the Soroswap adapter reads. */
 export type SoroswapNetwork = SimulationNetwork & Pick<NetworkConfig, 'rpcUrl' | 'soroswapRouter'>;

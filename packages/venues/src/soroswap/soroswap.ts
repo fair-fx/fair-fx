@@ -19,8 +19,8 @@ export function getAmountsOutCall(router: string, amountIn: bigint, path: readon
 /**
  * Turns the router's answer for a direct pair into a quote. Never throws.
  *
- * An amount out of zero is `no_route`: the pool pays nothing for an amount this small. An answer that
- * is not two amounts is `error`.
+ * Only an amount out above zero is an `ok` quote. Zero is `no_route`: the pool pays nothing for an
+ * amount this small. An answer that is not two amounts is `error`.
  *
  * The ledger of an `ok` quote is the ledger of `read`: the latest one the RPC node knew when it simulated
  * the call.
@@ -31,10 +31,9 @@ export function toSoroswapQuote(read: SimulatedRead, path: readonly string[]): Q
     return errorQuote(`soroswap answer: ${z.prettifyError(amounts.error)}`);
   }
 
-  const [, amountOut] = amounts.data;
-  if (amountOut === 0n) {
-    return { status: QuoteStatus.NoRoute };
-  }
+  const { amountOut } = amounts.data;
 
-  return { status: QuoteStatus.Ok, amountOut, route: { path }, ledger: read.ledger };
+  return amountOut > 0n
+    ? { status: QuoteStatus.Ok, amountOut, route: { path }, ledger: read.ledger }
+    : { status: QuoteStatus.NoRoute };
 }
