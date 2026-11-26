@@ -17,6 +17,7 @@ const swapFields = {
 /** The cases of one function: those that return `expected` and those refused with `error`. */
 export function casesWith<Inputs extends z.ZodRawShape>(inputs: Inputs) {
   const named = { name: z.string(), ...inputs };
+
   return z.strictObject({
     returns: z.array(z.strictObject({ ...named, expected: integer })),
     refuses: z.array(z.strictObject({ ...named, error: z.enum(RateMathErrorCode) })),

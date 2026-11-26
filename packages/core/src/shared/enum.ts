@@ -10,5 +10,6 @@ export function parseEnumValue<E extends StringEnum>(enumObject: E, value: strin
   if (!isEnumValue(enumObject, value)) {
     throw new RangeError(`${field}: expected one of ${Object.values(enumObject).join(', ')}, got ${value}`);
   }
+
   return value;
 }

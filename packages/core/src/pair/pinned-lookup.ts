@@ -21,5 +21,6 @@ export function requirePinnedAsset(config: PairsConfig, ref: AssetRef): PinnedAs
   if (asset === undefined) {
     throw new UnpinnedAssetError(config.network, ref);
   }
+
   return asset;
 }
