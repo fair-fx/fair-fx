@@ -4,7 +4,8 @@ Work delivered on 2026-11-25 and 2026-11-26. The output below was recorded on 20
 branch. Counts grow as tests are added, and times differ from one machine to the next.
 
 This guide is on the branch `wip/run-and-test-guide`. The code on that branch is the code of `dev`: the
-branch adds only the files in `docs/` and the links to them.
+branch adds only documentation, which is the files in `docs/`, the links to them in the README, and one
+line in `packages/db/README.md`.
 
 Two more files go with this guide, for reading without running anything:
 
