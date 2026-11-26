@@ -2,6 +2,33 @@
 
 FX execution check for stablecoin payments on Stellar.
 
+## What it is
+
+A payment app that converts USDC to EURC gets the rate of whatever liquidity sits in one pool or order
+book at that moment. That is not the foreign exchange rate, and neither the app nor its user sees the
+difference. FairFX measures it, so the app can answer three questions:
+
+1. How far is each Stellar venue from the FX rate, for this amount, right now?
+2. What is the largest amount I can swap and stay inside my limit?
+3. Can the swap fail by itself when the rate is worse than my limit?
+
+It does so by asking each venue what a swap would pay (a quote), reading the FX rate from an oracle (the
+reference), and expressing the gap in basis points (the shortfall).
+
+## Status
+
+Early. There is no app to start yet: what exists is libraries and their tests.
+
+| Part | What it does | State |
+| --- | --- | --- |
+| Venue quotes | Asks SDEX and the Classic AMM, Soroswap and Aquarius what a swap would pay | Built |
+| Reference rate | Reads the fiat FX rate from the Reflector feed | Built |
+| Rate math | Reference output, shortfall and the lowest output a limit allows, in integers | Built |
+| Storage | Postgres schema and the write of one collector run | Built |
+| Collector | Takes quotes and the reference on a schedule and stores them | Not built |
+| Guard | The `fx_guard` Soroban contract, which makes a swap fail past a limit | Not built |
+| API, dashboard, SDK, CLI | How an app or a person reads the measurements | Not built |
+
 ## Setup
 
 Needs Node 26 and pnpm 12 (Rust 1.99 later, for contracts).
@@ -37,17 +64,19 @@ third-party endpoints, so one failure can mean an endpoint is down: run them aga
 
 ## Layout
 
-```
-config/             networks and pinned pairs, read by @fair-fx/core/node
-packages/core       math, formatting, freshness (browser-safe), a Node-only entry, test factories
-packages/venues     one quote adapter per venue
-packages/db         Postgres: the migrations and what a collector run writes (private)
-contracts/          Soroban contracts (empty for now)
-spec/vectors/       rate math cases, read by the TypeScript tests and later by the Rust tests
-```
+| Path | What it is responsible for |
+| --- | --- |
+| `config/` | Which networks, endpoints, contracts and pairs FairFX uses. Code takes every address from here. |
+| `packages/core` | The shared types and the rate math. The main entry does no I/O. `@fair-fx/core/node` adds the config loader and the reference reader. |
+| `packages/venues` | One quote adapter per venue. Each answers `ok`, `no_route` or `error`, and says why when it is not `ok`. |
+| `packages/db` | All Postgres access: the migrations and the write of one collector run. Private, not published. |
+| `contracts/` | Soroban contracts. An empty Cargo workspace for now. |
+| `spec/vectors/` | Rate math cases with their expected results, read by the TypeScript tests and later by the Rust tests, so both give the same numbers. |
+| `tests/fixtures/` | Answers recorded from the real venues. The unit tests replay them, so they need no network. |
+| `.github/workflows/` | CI: `pnpm check` and a scan for secrets on every pull request. |
 
-Packages may only import in the allowed direction. The rules are in `.dependency-cruiser.ts`
-(`pnpm deps`).
+Packages may only import in the allowed direction: `venues` and `db` use `core`, and `core` uses
+neither. The rules are in `.dependency-cruiser.ts` (`pnpm deps`).
 
 ## License
 
