@@ -5,12 +5,20 @@ import { PLACEHOLDER_SEQUENCE, PLACEHOLDER_TIME_BOUND_SECONDS } from './soroban.
 
 export type SimulationNetwork = Pick<NetworkConfig, 'passphrase' | 'simulationSource'>;
 
-/** Simulates one contract call and returns its result as a native value. Nothing is signed or sent. */
+/** What one simulated contract call returned. */
+export interface SimulatedRead {
+  /** The contract's return value as a native value, unchecked. */
+  readonly value: unknown;
+  /** The latest ledger the RPC node knew when it ran the simulation. */
+  readonly ledger: number;
+}
+
+/** Simulates one contract call. Nothing is signed or sent. Throws a `SimulationError` when the call fails. */
 export async function simulateRead(
   server: rpc.Server,
   network: SimulationNetwork,
   call: xdr.Operation,
-): Promise<unknown> {
+): Promise<SimulatedRead> {
   const source = new Account(network.simulationSource, PLACEHOLDER_SEQUENCE);
   const transaction = new TransactionBuilder(source, { fee: BASE_FEE, networkPassphrase: network.passphrase })
     .addOperation(call)
@@ -26,5 +34,5 @@ export async function simulateRead(
     throw new SimulationError('the simulation returned no value');
   }
 
-  return scValToNative(simulation.result.retval);
+  return { value: scValToNative(simulation.result.retval), ledger: simulation.latestLedger };
 }
