@@ -29,8 +29,10 @@ Early. There is no app to start yet: what exists is libraries and their tests.
 | Guard | The `fx_guard` Soroban contract, which makes a swap fail past a limit | Not built |
 | API, dashboard, SDK, CLI | How an app or a person reads the measurements | Not built |
 
-[`docs/how-to-run-and-test.md`](docs/how-to-run-and-test.md) shows how to check what is built, with
-the output to expect.
+- [`docs/how-to-run-and-test.md`](docs/how-to-run-and-test.md): how to check what is built, with the
+  output to expect.
+- [`docs/venue-adapters.md`](docs/venue-adapters.md): what each venue is asked, what it answers, and how
+  each kind of answer is handled.
 
 ## Setup
 
@@ -85,7 +87,7 @@ fair-fx/
 │   └── vectors/             rate math cases with expected results, for TypeScript and later Rust
 ├── tests/
 │   └── fixtures/            answers recorded from the real venues, replayed by the unit tests
-├── docs/                    the guide to run and test, and its recorded output
+├── docs/                    the guide to run and test, its recorded output, adapter input and output
 └── .github/
     └── workflows/           CI: repo checks, one test job per package and a scan for secrets
 ```

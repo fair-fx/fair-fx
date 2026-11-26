@@ -3,8 +3,11 @@
 Work delivered on 2026-11-25 and 2026-11-26. The output below was recorded on 2026-11-26 from the `dev`
 branch. Counts grow as tests are added, and times differ from one machine to the next.
 
-Every test, by name, is in [`test-output.md`](test-output.md): read it to see what is checked without
-running anything.
+Two more files go with this guide, for reading without running anything:
+
+- [`test-output.md`](test-output.md): every test, by name, with its result.
+- [`venue-adapters.md`](venue-adapters.md): what each venue is asked, what it answers, and how each kind
+  of answer is handled.
 
 ## 1. What you are testing
 
