@@ -6,8 +6,8 @@ import {
   type NetworkConfig,
   type PairsConfig,
 } from '../index.ts';
+import { requirePinnedSacs } from '../stellar/index.ts';
 import { loadFile } from './load-file.ts';
-import { requirePinnedSacs } from './pinned-sac.ts';
 
 /** Everything FairFX reads from `config/` for one network. */
 export interface Config extends PairsConfig {

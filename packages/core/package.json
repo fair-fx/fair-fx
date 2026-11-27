@@ -1,7 +1,7 @@
 {
   "name": "@fair-fx/core",
   "version": "0.0.1",
-  "description": "Pairs, fixed point math, formatting and freshness. Main entry has no I/O; /node holds the Node-only readers.",
+  "description": "Pairs, fixed point math, formatting and freshness. Main entry has no I/O; /stellar reads the network through the Stellar SDK; /node reads files and the environment.",
   "license": "Apache-2.0",
   "type": "module",
   "sideEffects": false,
@@ -10,6 +10,11 @@
       "@fair-fx/source": "./src/index.ts",
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./stellar": {
+      "@fair-fx/source": "./src/stellar/index.ts",
+      "types": "./dist/stellar/index.d.ts",
+      "default": "./dist/stellar/index.js"
     },
     "./node": {
       "@fair-fx/source": "./src/node/index.ts",

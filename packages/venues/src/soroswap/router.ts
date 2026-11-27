@@ -1,5 +1,5 @@
 import type { SwapAssets } from '@fair-fx/core';
-import { simulateRead, SimulationError } from '@fair-fx/core/node';
+import { simulateRead, SimulationError } from '@fair-fx/core/stellar';
 import { Contract, type rpc } from '@stellar/stellar-sdk';
 import { MissingRouterError } from './missing-router.error.ts';
 import { GET_FACTORY } from './soroswap.constants.ts';

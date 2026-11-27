@@ -1,5 +1,5 @@
 import { errorMessageWithCause, type QuoteError, QuoteErrorCause } from '@fair-fx/core';
-import { SimulationError } from '@fair-fx/core/node';
+import { SimulationError } from '@fair-fx/core/stellar';
 import { errorQuote, httpErrorCause } from '../shared/index.ts';
 import { MissingRouterError } from './missing-router.error.ts';
 import { REQUEST_TIMED_OUT } from './soroswap.constants.ts';
