@@ -1,4 +1,4 @@
-import type { JsonResponse } from '../shared/index.ts';
+import type { JsonResponse } from '../http/index.ts';
 
 /**
  * The body of a find-path answer that found a path, with only the fields the adapter reads:

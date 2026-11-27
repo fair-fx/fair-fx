@@ -1,4 +1,4 @@
-import type { Fetch } from '../shared/index.ts';
+import type { Fetch } from '../http/index.ts';
 
 /** A `fetch` that never answers. Like the real one, it rejects with the signal's reason once the signal aborts. */
 export const fetchThatNeverAnswers: Fetch = (_url, init) =>

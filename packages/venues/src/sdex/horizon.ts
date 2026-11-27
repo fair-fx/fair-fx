@@ -1,4 +1,4 @@
-import type { JsonResponse } from '../shared/index.ts';
+import type { JsonResponse } from '../http/index.ts';
 import { LATEST_LEDGER_HEADER, LONGEST_ALPHANUM4_CODE } from './sdex.constants.ts';
 import { horizonProblemSchema } from './sdex.schema.ts';
 import type { SdexPath } from './sdex.types.ts';

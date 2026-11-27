@@ -1,6 +1,7 @@
 import { DEFAULT_TIMEOUT_MS, swapAssets, VenueId, type QuoteError, type VenueAdapter } from '@fair-fx/core';
-import { GUARD_MODE } from '../guard-mode.constants.ts';
-import { fetchFailure, postJson, quoteOrError, type HttpOptions } from '../shared/index.ts';
+import { GUARD_MODE } from '../guard-mode/index.ts';
+import { type HttpOptions, postJson } from '../http/index.ts';
+import { fetchFailure, quoteOrError } from '../quote/index.ts';
 import { findPathRequest, toAquariusQuote } from './aquarius.ts';
 import type { AquariusNetwork, AquariusRoute } from './aquarius.types.ts';
 

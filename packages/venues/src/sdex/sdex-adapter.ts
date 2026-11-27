@@ -1,6 +1,7 @@
 import { DEFAULT_TIMEOUT_MS, swapAssets, VenueId, type QuoteError, type VenueAdapter } from '@fair-fx/core';
-import { GUARD_MODE } from '../guard-mode.constants.ts';
-import { fetchFailure, fetchJson, quoteOrError, type HttpOptions } from '../shared/index.ts';
+import { GUARD_MODE } from '../guard-mode/index.ts';
+import { fetchJson, type HttpOptions } from '../http/index.ts';
+import { fetchFailure, quoteOrError } from '../quote/index.ts';
 import { strictSendUrl, toSdexQuote } from './sdex.ts';
 import type { SdexNetwork, SdexRoute } from './sdex.types.ts';
 
