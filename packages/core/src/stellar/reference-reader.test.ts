@@ -1,5 +1,5 @@
 import { Fiat, ReferenceStatus } from '@fair-fx/core';
-import { readReference } from '@fair-fx/core/node';
+import { readReference } from '@fair-fx/core/stellar';
 import { buildReferenceFeed } from '@fair-fx/core/testing';
 
 describe('readReference', () => {

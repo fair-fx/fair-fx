@@ -1,6 +1,7 @@
 import { fileURLToPath } from 'node:url';
 import { Fiat, Network, ReferenceStatus } from '@fair-fx/core';
-import { loadConfig, readEnv, readReference, sorobanReferenceFeed } from '@fair-fx/core/node';
+import { loadConfig, readEnv } from '@fair-fx/core/node';
+import { readReference, sorobanReferenceFeed } from '@fair-fx/core/stellar';
 import { buildNetworkConfig } from '@fair-fx/core/testing';
 
 // Reads the live feeds, so it needs the network: FAIRFX_SMOKE=1 pnpm --filter @fair-fx/core test smoke

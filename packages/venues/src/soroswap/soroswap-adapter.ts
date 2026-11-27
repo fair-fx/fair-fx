@@ -1,5 +1,5 @@
 import { DEFAULT_TIMEOUT_MS, swapAssets, VenueId, type VenueAdapter } from '@fair-fx/core';
-import { simulateRead } from '@fair-fx/core/node';
+import { simulateRead } from '@fair-fx/core/stellar';
 import { rpc } from '@stellar/stellar-sdk';
 import { GUARD_MODE } from '../guard-mode.constants.ts';
 import { quoteOrError } from '../shared/index.ts';

@@ -1,5 +1,5 @@
 import { NoRouteCause, type Quote, QuoteErrorCause, QuoteStatus } from '@fair-fx/core';
-import type { SimulatedRead } from '@fair-fx/core/node';
+import type { SimulatedRead } from '@fair-fx/core/stellar';
 import { Address, Contract, nativeToScVal, xdr } from '@stellar/stellar-sdk';
 import { z } from 'zod';
 import { errorQuote, noRouteQuote } from '../shared/index.ts';

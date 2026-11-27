@@ -1,5 +1,5 @@
 import type { NetworkConfig } from '@fair-fx/core';
-import type { SimulationNetwork } from '@fair-fx/core/node';
+import type { SimulationNetwork } from '@fair-fx/core/stellar';
 import type { HttpOptions } from '../shared/index.ts';
 
 /** The token contracts a quote swaps through, input first. FairFX asks for the direct pair only. */

@@ -1,5 +1,5 @@
 import { NoRouteCause, type Quote } from '@fair-fx/core';
-import { SimulationError } from '@fair-fx/core/node';
+import { SimulationError } from '@fair-fx/core/stellar';
 import type { rpc } from '@stellar/stellar-sdk';
 import { noRouteQuote } from '../shared/index.ts';
 import { requireRouter } from './router.ts';
