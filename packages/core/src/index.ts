@@ -21,6 +21,7 @@ export {
 } from './pair/index.ts';
 export {
   floorOut,
+  rateLeg,
   RateMathError,
   RateMathErrorCode,
   refOut,
