@@ -47,12 +47,14 @@ export function toReferenceReading(fiat: Fiat, rawDecimals: unknown, rawLastPric
 
 /**
  * Seconds since the feed set this price, or `null` for the base currency, which never ages.
- * A price dated after `nowSeconds` (clock skew) is 0 seconds old.
+ *
+ * Negative when the price is dated after `nowSeconds`. The feed and the clock that gave `nowSeconds`
+ * disagree then, and what to make of the price is the caller's decision.
  */
 export function referenceAgeSeconds(reference: ReferencePrice, nowSeconds: number): number | null {
   if (reference.oracleTime === null) {
     return null;
   }
 
-  return Math.max(0, nowSeconds - reference.oracleTime);
+  return nowSeconds - reference.oracleTime;
 }

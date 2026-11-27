@@ -59,7 +59,7 @@ describe('referenceAgeSeconds', () => {
   it.each([
     { what: 'a price set a day ago', now: ONE_DAY_LATER, age: 86_400 },
     { what: 'a price set this second', now: PRICE_SET_AT, age: 0 },
-    { what: 'a price dated after now', now: ONE_SECOND_EARLIER, age: 0 },
+    { what: 'a price dated one second after now', now: ONE_SECOND_EARLIER, age: -1 },
   ])('gives $age seconds for $what', ({ now, age }) => {
     const seconds = referenceAgeSeconds(eur, now);
 
