@@ -1,0 +1,25 @@
+ℹ️  Transaction hash is 4045a0adb43c17a873d37ba163a64c97d5176133fe6c2614529585549672595d
+🔗 https://stellar.expert/explorer/testnet/tx/4045a0adb43c17a873d37ba163a64c97d5176133fe6c2614529585549672595d
+📅 CD5RGJNOYDS4CY6KUDJWTGVSZYN3OXJCBJMV3OWG6N2Z7LEBV7IE6CKK - Failure - Event: [{"symbol":"transfer"},{"address":"GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"},{"address":"CADLVG5ZBSBJCZ6JAMWBWUHXDJLJRU6REOQY6XYFLL2MMK34GA4KZBSL"},{"string":"TUSD:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"}] = {"i128":"1000000000"}
+📅 CAUGQB2TTOVKEMUB7ZNC4B25J3YWBTRQTJJS3YLSJJFPVVFNWGIQAXDH - Failure - Event: [{"symbol":"transfer"},{"address":"CADLVG5ZBSBJCZ6JAMWBWUHXDJLJRU6REOQY6XYFLL2MMK34GA4KZBSL"},{"address":"GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"},{"string":"TEUR:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"}] = {"i128":"896534060"}
+📅 CADLVG5ZBSBJCZ6JAMWBWUHXDJLJRU6REOQY6XYFLL2MMK34GA4KZBSL - Failure - Event: [{"string":"SoroswapPair"},{"symbol":"sync"}] = {"map":[{"key":{"symbol":"new_reserve_0"},"val":{"i128":"909123305552"}},{"key":{"symbol":"new_reserve_1"},"val":{"i128":"1012000000000"}}]}
+📅 CADLVG5ZBSBJCZ6JAMWBWUHXDJLJRU6REOQY6XYFLL2MMK34GA4KZBSL - Failure - Event: [{"string":"SoroswapPair"},{"symbol":"swap"}] = {"map":[{"key":{"symbol":"amount_0_in"},"val":{"i128":"0"}},{"key":{"symbol":"amount_0_out"},"val":{"i128":"896534060"}},{"key":{"symbol":"amount_1_in"},"val":{"i128":"1000000000"}},{"key":{"symbol":"amount_1_out"},"val":{"i128":"0"}},{"key":{"symbol":"to"},"val":{"address":"GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"}}]}
+📅 CCJUD55AG6W5HAI5LRVNKAE5WDP5XGZBUDS5WNTIVDU7O264UZZE7BRD - Failure - Event: [{"string":"SoroswapRouter"},{"symbol":"swap"}] = {"map":[{"key":{"symbol":"amounts"},"val":{"vec":[{"i128":"1000000000"},{"i128":"896534060"}]}},{"key":{"symbol":"path"},"val":{"vec":[{"address":"CD5RGJNOYDS4CY6KUDJWTGVSZYN3OXJCBJMV3OWG6N2Z7LEBV7IE6CKK"},{"address":"CAUGQB2TTOVKEMUB7ZNC4B25J3YWBTRQTJJS3YLSJJFPVVFNWGIQAXDH"}]}},{"key":{"symbol":"to"},"val":{"address":"GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"}}]}
+❌ Error event: [{"symbol":"error"},{"error":{"contract":8}}] = {"string":"escalating Ok(ScErrorType::Contract) frame-exit to Err"}
+❌ error: transaction submission failed: Some(
+    TransactionResult {
+        fee_charged: 15347,
+        result: TxFailed(
+            VecM(
+                [
+                    OpInner(
+                        InvokeHostFunction(
+                            Trapped,
+                        ),
+                    ),
+                ],
+            ),
+        ),
+        ext: V0,
+    },
+)

@@ -1,0 +1,18 @@
+Transaction Status: [0m[1m[32mSUCCESS[0m
+Transaction Ledger: 5951197
+
+{
+  "fee_charged": "18756",
+  "result": {
+    "tx_success": [
+      {
+        "op_inner": {
+          "invoke_host_function": {
+            "success": "a55340bd6f317352fa1117be1f56efc095785bcd0742335387c4915df5597a70"
+          }
+        }
+      }
+    ]
+  },
+  "ext": "v0"
+}
