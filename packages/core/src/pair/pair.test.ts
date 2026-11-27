@@ -1,5 +1,7 @@
 import { ConfigError, Network, parsePairsConfig } from '@fair-fx/core';
-import { buildPairsFile, LADDER_UNITS, USDC } from '@fair-fx/core/testing';
+import { buildPairsFile, EURC, LADDER_UNITS, USDC } from '@fair-fx/core/testing';
+
+const BASE_AND_QUOTE = { base: USDC, quote: EURC };
 
 describe('parsePairsConfig', () => {
   it('returns the pairs of the network with an id and the ladder as bigint', () => {
@@ -27,6 +29,12 @@ describe('parsePairsConfig', () => {
       json: buildPairsFile({ quote: USDC }),
       at: 'pairs.mainnet[0]',
       message: 'base and quote are the same asset',
+    },
+    {
+      what: 'two pairs with the same codes',
+      json: { ladder: LADDER_UNITS, pairs: { mainnet: [BASE_AND_QUOTE, BASE_AND_QUOTE] } },
+      at: 'pairs.mainnet',
+      message: 'expected each pair once, by the codes of its base and quote',
     },
     {
       what: 'a ladder that does not increase',

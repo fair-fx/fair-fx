@@ -1,4 +1,4 @@
-export { isStrictlyIncreasing } from './array.ts';
+export { isDistinct, isStrictlyIncreasing } from './array.ts';
 export { formatDecimalAmount, parseDecimalAmount } from './decimal.ts';
 export { isEnumValue, parseEnumValue } from './enum.ts';
 export { errorMessage, errorMessageWithCause } from './error.ts';
