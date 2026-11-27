@@ -1,6 +1,6 @@
 import { Contract, rpc, xdr } from '@stellar/stellar-sdk';
-import { DEFAULT_TIMEOUT_MS, type NetworkConfig, type ReferenceFeed } from '../index.ts';
-import { simulateRead, type SimulationNetwork } from './simulate-read.ts';
+import { DEFAULT_TIMEOUT_MS, type NetworkConfig, type ReferenceFeed } from '../../index.ts';
+import { simulateRead, type SimulationNetwork } from '../simulation/index.ts';
 
 export type ReferenceFeedNetwork = SimulationNetwork & Pick<NetworkConfig, 'rpcUrl' | 'reflectorFiatFeed'>;
 

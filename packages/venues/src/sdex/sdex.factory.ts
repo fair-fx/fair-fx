@@ -1,4 +1,4 @@
-import type { JsonResponse } from '../shared/index.ts';
+import type { JsonResponse } from '../http/index.ts';
 
 /** One record of a strict-send answer, with only the fields the adapter reads: 91.8509809 EURC, traded directly. */
 export function buildStrictSendRecord(overrides: object = {}): object {

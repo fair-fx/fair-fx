@@ -1,5 +1,5 @@
 import { rpc } from '@stellar/stellar-sdk';
-import { DEFAULT_TIMEOUT_MS, type LedgerSource, type NetworkConfig } from '../index.ts';
+import { DEFAULT_TIMEOUT_MS, type LedgerSource, type NetworkConfig } from '../../index.ts';
 
 export type LedgerSourceNetwork = Pick<NetworkConfig, 'rpcUrl'>;
 

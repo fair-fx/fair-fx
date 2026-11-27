@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { TransactionBuilder } from '@stellar/stellar-sdk';
 import type { Mock } from 'vitest';
 import { z } from 'zod';
-import type { Fetch } from '../shared/index.ts';
+import type { Fetch } from '../http/index.ts';
 
 const FIXTURES = new URL('../../../../tests/fixtures/soroban-rpc/', import.meta.url);
 

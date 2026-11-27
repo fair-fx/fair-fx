@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import type { Mock } from 'vitest';
-import type { Fetch } from '../shared/index.ts';
+import type { Fetch } from '../http/index.ts';
 
 const FIXTURES = new URL('../../../../tests/fixtures/aquarius/', import.meta.url);
 

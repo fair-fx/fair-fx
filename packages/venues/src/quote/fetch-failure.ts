@@ -1,6 +1,6 @@
 import { errorMessageWithCause, type QuoteError, QuoteErrorCause } from '@fair-fx/core';
 import { errorQuote } from './error-quote.ts';
-import { TIMEOUT_ERROR_NAME } from './http.constants.ts';
+import { TIMEOUT_ERROR_NAME } from '../http/index.ts';
 
 /**
  * The `error` quote for a `fetch` that rejected. `fetch` rejects with a `TypeError` when the request

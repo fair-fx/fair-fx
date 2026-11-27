@@ -1,6 +1,7 @@
 import { NoRouteCause, type Quote, QuoteErrorCause, QuoteStatus, type SwapAssets } from '@fair-fx/core';
 import { z } from 'zod';
-import { errorQuote, HTTP_OK, httpErrorCause, noRouteQuote, type JsonResponse } from '../shared/index.ts';
+import { HTTP_OK, type JsonResponse } from '../http/index.ts';
+import { errorQuote, httpErrorCause, noRouteQuote } from '../quote/index.ts';
 import { findPathSchema } from './aquarius.schema.ts';
 import type { AquariusRoute, FindPathRequest } from './aquarius.types.ts';
 import { findPathFailure, refusedUnlistedToken } from './failure.ts';
