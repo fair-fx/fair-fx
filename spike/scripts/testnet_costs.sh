@@ -1,21 +1,24 @@
 #!/usr/bin/env bash
-# Simulates the same TUSD to TEUR swap twice against the same pool state on testnet,
-# once straight to the Soroswap router and once through the guard, and prints what
-# each would cost. Nothing is signed or sent.
+# Simulates the same swap twice against the same pool state on testnet, once straight
+# to the venue's router and once through the guard, and prints what each would cost.
+# Nothing is signed or sent.
 #
-#   testnet_costs.sh [<amount_in>]
+#   testnet_costs.sh <venue> <amount_in>
+#
+# <venue> names a file in scripts/venues/.
 set -euo pipefail
 
-AMOUNT_IN="${1:-1000000000}"
+VENUE_NAME="$1"
+AMOUNT_IN="$2"
 USER_KEY=fx-spike-user
-SWAP_FUNCTION=swap_exact_tokens_for_tokens
 
 SPIKE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 # shellcheck source=/dev/null
 . "$SPIKE_DIR/testnet/deployed.env"
-OUT="$SPIKE_DIR/testnet/evidence/costs"
+# shellcheck source=/dev/null
+. "$SPIKE_DIR/scripts/venues/$VENUE_NAME.sh"
+OUT="$SPIKE_DIR/testnet/evidence/$VENUE_NAME-costs"
 mkdir -p "$OUT"
-DEADLINE=$(($(date +%s) + 3600))
 
 simulate() { # simulate <name> <contract> <function and arguments...>
   local name="$1" contract="$2"
@@ -25,12 +28,11 @@ simulate() { # simulate <name> <contract> <function and arguments...>
   stellar tx decode <"$OUT/$name.xdr" | python3 -m json.tool >"$OUT/$name.json"
 }
 
-simulate direct "$ROUTER" "$SWAP_FUNCTION" --amount_in "$AMOUNT_IN" --amount_out_min 0 \
-  --path "[\"$TUSD\",\"$TEUR\"]" --to "$USER" --deadline "$DEADLINE"
+direct_call "$AMOUNT_IN" "$USER"
+simulate direct "$VENUE" "${DIRECT_CALL[@]}"
 
 simulate guarded "$GUARD" guarded_swap --user "$USER" --recipient "$USER" \
-  --asset_in "$TUSD" --asset_out "$TEUR" --amount_in "$AMOUNT_IN" --min_out 0 \
-  --venue "$ROUTER" --func "$SWAP_FUNCTION" \
-  --args "[{\"i128\":\"$AMOUNT_IN\"},{\"i128\":\"0\"},{\"vec\":[{\"address\":\"$TUSD\"},{\"address\":\"$TEUR\"}]},{\"address\":\"$USER\"},{\"u64\":\"$DEADLINE\"}]"
+  --asset_in "$ASSET_IN" --asset_out "$ASSET_OUT" --amount_in "$AMOUNT_IN" --min_out 0 \
+  --venue "$VENUE" --func "$SWAP_FUNCTION" --args "$(guard_args "$AMOUNT_IN" "$USER")"
 
 python3 "$SPIKE_DIR/scripts/print_costs.py" "$OUT/direct.json" "$OUT/guarded.json" | tee "$OUT/table.txt"

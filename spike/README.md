@@ -25,20 +25,22 @@ This branch is not meant to be merged.
 | Mainnet state loaded from a ledger snapshot, real router code runs on it | Done, 1 test |
 | Soroswap on testnet, signed: one swap applied, one refused | Done, 2 transactions (below) |
 | The guard above the mainnet Soroswap router, on the snapshot | Done, 3 tests, mocked authorization |
-| Cost of the guard above Soroswap | Done on testnet, simulated (below) |
-| Aquarius, signed | Not started |
+| Aquarius on testnet, signed: one swap applied, one refused | Done, 2 transactions (below) |
+| Cost of the guard above each router | Done on testnet, simulated (below) |
+| The guard above the mainnet Aquarius router, on a snapshot | Not started |
 | Path payment with `destMin`, oracle read from a contract | Not started |
 
-Question 1 is answered for Soroswap and open for Aquarius. Nothing here ran on mainnet: the
-mainnet router code ran on a snapshot only.
+Question 1 is answered on testnet for both routers, with one pool and one hop each. Nothing here
+ran on mainnet: the mainnet Soroswap router code ran on a snapshot only, and the mainnet Aquarius
+router code has not been run at all.
 
 ## Soroswap on testnet
 
-Run on 2026-11-27 with `scripts/testnet_guarded_swap.sh`. The assets are two classic test assets
-with trustlines, TUSD and TEUR, wrapped as token contracts the way USDC and EURC are. The pool was
-made through the Soroswap testnet router. Addresses are in `testnet/deployed.env`, the files behind
-every number below in `testnet/evidence/`. Testnet is reset from time to time, and the explorer
-links stop working then.
+Run on 2026-11-27 with `scripts/testnet_guarded_swap.sh soroswap`. The assets are two classic test
+assets with trustlines, TUSD and TEUR, wrapped as token contracts the way USDC and EURC are. The
+pool was made through the Soroswap testnet router `CCJUD55A…7BRD`. Addresses are in
+`testnet/deployed.env`, the files behind every number below in `testnet/evidence/`. Testnet is
+reset from time to time, and the explorer links stop working then.
 
 The user's key signs one transaction. In both runs the router is given `amount_out_min = 0`, so the
 only floor is the guard's `min_out`. Amounts are in units of 0.0000001.
@@ -78,8 +80,8 @@ Two things this run found:
 
 ### Cost
 
-`scripts/testnet_costs.sh` simulates the same swap twice on the same pool state: straight to the
-router, and through the guard.
+`scripts/testnet_costs.sh soroswap 1000000000` simulates the same swap twice on the same pool
+state: straight to the router, and through the guard.
 
 | | Direct | Through the guard | Added |
 | --- | --- | --- | --- |
@@ -95,12 +97,64 @@ These are testnet numbers for a pool of two test assets and one hop. The testnet
 same build as the mainnet one (wasm `4b95…` against `4c3d…`), and fees follow each network's own
 settings.
 
-### What it does not show
+## Aquarius on testnet
 
-- Aquarius. Its router may ask for authorization in another shape.
-- The mainnet router with a real signature. The snapshot tests below run its code with mocked
-  authorization and get the same tree: guard, router, USDC transfer from the user to the pair.
-- Real USDC and EURC, a route of more than one hop, or mainnet fees.
+Run on 2026-11-27 with `scripts/testnet_guarded_swap.sh aquarius`, against the Aquarius testnet
+router `CBCFTQSP…A6GD` and one of its own pools: Aquarius' test AQUA to its test USDC, two classic
+assets, constant product, fee 0.3%. The guard is the same deployed contract as above, unchanged.
+The router function is `swap_chained` with a chain of one hop and `out_min = 0`.
+
+| | Swap applied | Swap refused |
+| --- | --- | --- |
+| Transaction | [`d0a1dece…e4ab511`](https://stellar.expert/explorer/testnet/tx/d0a1decea150ba8668e75c812da9765a743665bcfe93bed757c8922c1e4ab511) | [`c6dd0050…eff076c`](https://stellar.expert/explorer/testnet/tx/c6dd0050ffcdca6e3457e9c51b366d1f876859798184b11e93786402ceff076c) |
+| Ledger, close time (UTC) | 5951309, 11:49:49 | 5951318, 11:50:34 |
+| Network result | `SUCCESS` | `FAILED`, contract error 8 (`BelowFloor`) raised by the guard |
+| `amount_in` | 10,000,000,000 AQUA | 10,000,000,000 AQUA |
+| Guard `min_out` | 54,901,754 | 50,578,183 |
+| Paid by the router | 54,901,754 | 43,333,630, then undone |
+| User AQUA, before and after | 40,825,492,245 and 30,825,492,245 | 30,825,492,245 and 30,825,492,245 |
+| User USDC, before and after | 0 and 54,901,754 | 54,901,754 and 54,901,754 |
+| Fee charged, in XLM | 0.0032513 | 0.0021686 |
+
+The second one was refused the same way as on Soroswap: signed at a quote of 50,578,183, then a
+second account sold 20,000,000,000 AQUA into the pool, then the signed transaction was sent.
+
+What the user signed, from `testnet/evidence/aquarius-pass/simulated.json`, again one authorization
+with source account credentials:
+
+```
+guard     guarded_swap
+  router    swap_chained
+    AQUA      transfer (user to router, amount_in)
+```
+
+The shape is the same as on Soroswap. The one difference is where the input goes: Aquarius pulls
+it into the router, Soroswap sends it to the pair. Aquarius also pays the output to the address
+that paid the input, so here too `recipient` has to be the `user`.
+
+### Cost
+
+`scripts/testnet_costs.sh aquarius 10000000000`:
+
+| | Direct | Through the guard | Added |
+| --- | --- | --- | --- |
+| Instructions | 6,338,230 | 6,900,608 | 562,378 (9%) |
+| Ledger entries read only | 7 | 9 | 2 (the guard and its code) |
+| Ledger entries written | 7 | 7 | 0 |
+| Disk read bytes | 232 | 232 | 0 |
+| Write bytes | 3,644 | 3,644 | 0 |
+| Transaction size, bytes | 2,112 | 3,141 | 1,029 |
+| Resource fee, stroops | 28,924 | 31,512 | 2,588 (9%) |
+
+## What the testnet runs do not show
+
+- A mainnet router with a real signature. The snapshot tests below run the mainnet Soroswap router
+  code with mocked authorization and get the same tree: guard, router, USDC transfer from the user
+  to the pair. The mainnet Aquarius router has not been run.
+- Real USDC and EURC, a route of more than one hop, other pool types (Aquarius has stable and
+  concentrated pools), or mainnet fees.
+- An account that signs through a contract (a smart wallet). Both users here are classic accounts
+  that are also the source of the transaction.
 
 ## Run
 
@@ -116,9 +170,10 @@ The testnet runs need the network and write keys to the keystore of `stellar-cli
 repo:
 
 ```sh
-scripts/testnet_setup.sh                                  # once: accounts, assets, pool, guard
-scripts/testnet_guarded_swap.sh <label> <amount_in> <min_out> [<mover_amount>]
-scripts/testnet_costs.sh
+scripts/testnet_setup.sh             # once: accounts, test assets, Soroswap pool, guard
+scripts/testnet_setup_aquarius.sh    # once: trustlines and test AQUA for the Aquarius runs
+scripts/testnet_guarded_swap.sh <soroswap|aquarius> <label> <amount_in> <min_out> [<mover_amount>]
+scripts/testnet_costs.sh <soroswap|aquarius> <amount_in>
 ```
 
 ## Mainnet state

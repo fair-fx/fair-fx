@@ -1,0 +1,420 @@
+{
+    "tx": {
+        "tx": {
+            "source_account": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+            "fee": 38974,
+            "seq_num": "25560054753132552",
+            "cond": "none",
+            "memo": "none",
+            "operations": [
+                {
+                    "source_account": null,
+                    "body": {
+                        "invoke_host_function": {
+                            "host_function": {
+                                "invoke_contract": {
+                                    "contract_address": "CDPKZ3KLGWFLEDY77L546RMJLZ5KEFOTIJ7C7X7O2JIJGMXEKJ7L7C53",
+                                    "function_name": "guarded_swap",
+                                    "args": [
+                                        {
+                                            "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                                        },
+                                        {
+                                            "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                                        },
+                                        {
+                                            "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                                        },
+                                        {
+                                            "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                                        },
+                                        {
+                                            "i128": "10000000000"
+                                        },
+                                        {
+                                            "i128": "54901754"
+                                        },
+                                        {
+                                            "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                                        },
+                                        {
+                                            "symbol": "swap_chained"
+                                        },
+                                        {
+                                            "vec": [
+                                                {
+                                                    "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                                                },
+                                                {
+                                                    "vec": [
+                                                        {
+                                                            "vec": [
+                                                                {
+                                                                    "vec": [
+                                                                        {
+                                                                            "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                                                                        },
+                                                                        {
+                                                                            "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "bytes": "9ac7a9cde23ac2ada11105eeaa42e43c2ea8332ca0aa8f41f58d7160274d718e"
+                                                                },
+                                                                {
+                                                                    "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                                                },
+                                                {
+                                                    "u128": "10000000000"
+                                                },
+                                                {
+                                                    "u128": "0"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            },
+                            "auth": [
+                                {
+                                    "credentials": "source_account",
+                                    "root_invocation": {
+                                        "function": {
+                                            "contract_fn": {
+                                                "contract_address": "CDPKZ3KLGWFLEDY77L546RMJLZ5KEFOTIJ7C7X7O2JIJGMXEKJ7L7C53",
+                                                "function_name": "guarded_swap",
+                                                "args": [
+                                                    {
+                                                        "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                                                    },
+                                                    {
+                                                        "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                                                    },
+                                                    {
+                                                        "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                                                    },
+                                                    {
+                                                        "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                                                    },
+                                                    {
+                                                        "i128": "10000000000"
+                                                    },
+                                                    {
+                                                        "i128": "54901754"
+                                                    },
+                                                    {
+                                                        "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                                                    },
+                                                    {
+                                                        "symbol": "swap_chained"
+                                                    },
+                                                    {
+                                                        "vec": [
+                                                            {
+                                                                "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                                                            },
+                                                            {
+                                                                "vec": [
+                                                                    {
+                                                                        "vec": [
+                                                                            {
+                                                                                "vec": [
+                                                                                    {
+                                                                                        "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                                                                                    },
+                                                                                    {
+                                                                                        "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "bytes": "9ac7a9cde23ac2ada11105eeaa42e43c2ea8332ca0aa8f41f58d7160274d718e"
+                                                                            },
+                                                                            {
+                                                                                "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                                                            },
+                                                            {
+                                                                "u128": "10000000000"
+                                                            },
+                                                            {
+                                                                "u128": "0"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "sub_invocations": [
+                                            {
+                                                "function": {
+                                                    "contract_fn": {
+                                                        "contract_address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+                                                        "function_name": "swap_chained",
+                                                        "args": [
+                                                            {
+                                                                "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                                                            },
+                                                            {
+                                                                "vec": [
+                                                                    {
+                                                                        "vec": [
+                                                                            {
+                                                                                "vec": [
+                                                                                    {
+                                                                                        "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                                                                                    },
+                                                                                    {
+                                                                                        "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "bytes": "9ac7a9cde23ac2ada11105eeaa42e43c2ea8332ca0aa8f41f58d7160274d718e"
+                                                                            },
+                                                                            {
+                                                                                "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                                                            },
+                                                            {
+                                                                "u128": "10000000000"
+                                                            },
+                                                            {
+                                                                "u128": "0"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "sub_invocations": [
+                                                    {
+                                                        "function": {
+                                                            "contract_fn": {
+                                                                "contract_address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+                                                                "function_name": "transfer",
+                                                                "args": [
+                                                                    {
+                                                                        "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                                                                    },
+                                                                    {
+                                                                        "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                                                                    },
+                                                                    {
+                                                                        "i128": "10000000000"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "sub_invocations": []
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "ext": {
+                "v1": {
+                    "ext": "v0",
+                    "resources": {
+                        "footprint": {
+                            "read_only": [
+                                {
+                                    "contract_data": {
+                                        "contract": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+                                        "key": "ledger_key_contract_instance",
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+                                        "key": {
+                                            "vec": [
+                                                {
+                                                    "symbol": "TokensSetPools"
+                                                },
+                                                {
+                                                    "bytes": "fe7549b09f195b922835da528bc1aae565b26c1ae44ebdd3305a5646d96624f2"
+                                                }
+                                            ]
+                                        },
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+                                        "key": "ledger_key_contract_instance",
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CDD3G6M2JSJLXBYLY4N6WLWVU2LB5UGPSKFO5ZV4M6BMYQY555Q6FA46",
+                                        "key": {
+                                            "executable_tag": "amm.constant"
+                                        },
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+                                        "key": "ledger_key_contract_instance",
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CDPKZ3KLGWFLEDY77L546RMJLZ5KEFOTIJ7C7X7O2JIJGMXEKJ7L7C53",
+                                        "key": "ledger_key_contract_instance",
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_code": {
+                                        "hash": "70476939e1ce8b4f7d6898d7a1403bd0752ba0535ad6c4aea3c4b500ad4715e0"
+                                    }
+                                },
+                                {
+                                    "contract_code": {
+                                        "hash": "840aa116e14f3f01578933c76c472b372a65e8a2ecff3a8b8d69b2df0a114108"
+                                    }
+                                },
+                                {
+                                    "contract_code": {
+                                        "hash": "b0b0630e4729e01db58af49c2807e87e1a5e2e0d6853c0d64e3ff24c0f8b0f0d"
+                                    }
+                                }
+                            ],
+                            "read_write": [
+                                {
+                                    "trustline": {
+                                        "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                                        "asset": {
+                                            "credit_alphanum4": {
+                                                "asset_code": "AQUA",
+                                                "issuer": "GAHPYWLK6YRN7CVYZOO4H3VDRZ7PVF5UJGLZCSPAEIKJE2XSWF5LAGER"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "trustline": {
+                                        "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                                        "asset": {
+                                            "credit_alphanum4": {
+                                                "asset_code": "USDC",
+                                                "issuer": "GAHPYWLK6YRN7CVYZOO4H3VDRZ7PVF5UJGLZCSPAEIKJE2XSWF5LAGER"
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+                                        "key": {
+                                            "vec": [
+                                                {
+                                                    "symbol": "Balance"
+                                                },
+                                                {
+                                                    "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                                                }
+                                            ]
+                                        },
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+                                        "key": {
+                                            "vec": [
+                                                {
+                                                    "symbol": "Balance"
+                                                },
+                                                {
+                                                    "address": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ"
+                                                }
+                                            ]
+                                        },
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ",
+                                        "key": "ledger_key_contract_instance",
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+                                        "key": {
+                                            "vec": [
+                                                {
+                                                    "symbol": "Balance"
+                                                },
+                                                {
+                                                    "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                                                }
+                                            ]
+                                        },
+                                        "durability": "persistent"
+                                    }
+                                },
+                                {
+                                    "contract_data": {
+                                        "contract": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+                                        "key": {
+                                            "vec": [
+                                                {
+                                                    "symbol": "Balance"
+                                                },
+                                                {
+                                                    "address": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ"
+                                                }
+                                            ]
+                                        },
+                                        "durability": "persistent"
+                                    }
+                                }
+                            ]
+                        },
+                        "instructions": 6903142,
+                        "disk_read_bytes": 232,
+                        "write_bytes": 3644
+                    },
+                    "resource_fee": "38874"
+                }
+            }
+        },
+        "signatures": []
+    }
+}

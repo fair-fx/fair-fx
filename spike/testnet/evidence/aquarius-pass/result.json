@@ -1,0 +1,15 @@
+{
+  "fee_charged": "32513",
+  "result": {
+    "tx_success": [
+      {
+        "op_inner": {
+          "invoke_host_function": {
+            "success": "15340042c8254c501fb072ca8fd96d8b10e4308993df7036ddf1bf9e410d06f8"
+          }
+        }
+      }
+    ]
+  },
+  "ext": "v0"
+}

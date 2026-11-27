@@ -1,0 +1,1677 @@
+{
+  "v4": {
+    "ext": "v0",
+    "tx_changes_before": [
+      {
+        "state": {
+          "last_modified_ledger_seq": 5951318,
+          "data": {
+            "account": {
+              "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+              "balance": "98972186090",
+              "seq_num": "25560054753132552",
+              "num_sub_entries": 4,
+              "inflation_dest": null,
+              "flags": 0,
+              "home_domain": "",
+              "thresholds": "01000000",
+              "signers": [],
+              "ext": {
+                "v1": {
+                  "liabilities": {
+                    "buying": "0",
+                    "selling": "0"
+                  },
+                  "ext": {
+                    "v2": {
+                      "num_sponsored": 0,
+                      "num_sponsoring": 0,
+                      "signer_sponsoring_i_ds": [],
+                      "ext": {
+                        "v3": {
+                          "ext": "v0",
+                          "seq_ledger": 5951309,
+                          "seq_time": "1795780189"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ext": "v0"
+        }
+      },
+      {
+        "updated": {
+          "last_modified_ledger_seq": 5951318,
+          "data": {
+            "account": {
+              "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+              "balance": "98972186090",
+              "seq_num": "25560054753132553",
+              "num_sub_entries": 4,
+              "inflation_dest": null,
+              "flags": 0,
+              "home_domain": "",
+              "thresholds": "01000000",
+              "signers": [],
+              "ext": {
+                "v1": {
+                  "liabilities": {
+                    "buying": "0",
+                    "selling": "0"
+                  },
+                  "ext": {
+                    "v2": {
+                      "num_sponsored": 0,
+                      "num_sponsoring": 0,
+                      "signer_sponsoring_i_ds": [],
+                      "ext": {
+                        "v3": {
+                          "ext": "v0",
+                          "seq_ledger": 5951318,
+                          "seq_time": "1795780234"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "ext": "v0"
+        }
+      }
+    ],
+    "operations": [],
+    "tx_changes_after": [],
+    "soroban_meta": {
+      "ext": {
+        "v1": {
+          "ext": "v0",
+          "total_non_refundable_resource_fee_charged": "21586",
+          "total_refundable_resource_fee_charged": "0",
+          "rent_fee_charged": "0"
+        }
+      },
+      "return_value": null
+    },
+    "events": [
+      {
+        "stage": "before_all_txs",
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fee"
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                }
+              ],
+              "data": {
+                "i128": "31612"
+              }
+            }
+          }
+        }
+      },
+      {
+        "stage": "after_all_txs",
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fee"
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                }
+              ],
+              "data": {
+                "i128": "-9926"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "diagnostic_events": [
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "deaced4b358ab20f1ffafbcf45895e7aa215d3427e2fdfeed2509332e4527ebf"
+                },
+                {
+                  "symbol": "guarded_swap"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                  },
+                  {
+                    "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                  },
+                  {
+                    "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                  },
+                  {
+                    "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                  },
+                  {
+                    "i128": "10000000000"
+                  },
+                  {
+                    "i128": "50578183"
+                  },
+                  {
+                    "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                  },
+                  {
+                    "symbol": "swap_chained"
+                  },
+                  {
+                    "vec": [
+                      {
+                        "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                      },
+                      {
+                        "vec": [
+                          {
+                            "vec": [
+                              {
+                                "vec": [
+                                  {
+                                    "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                                  },
+                                  {
+                                    "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                                  }
+                                ]
+                              },
+                              {
+                                "bytes": "9ac7a9cde23ac2ada11105eeaa42e43c2ea8332ca0aa8f41f58d7160274d718e"
+                              },
+                              {
+                                "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                      },
+                      {
+                        "u128": "10000000000"
+                      },
+                      {
+                        "u128": "0"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDPKZ3KLGWFLEDY77L546RMJLZ5KEFOTIJ7C7X7O2JIJGMXEKJ7L7C53",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "db585b9c16ce05e1b58724e0df1d25b1335717bf92f249cb80c014a3a5175738"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "i128": "30825492245"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDPKZ3KLGWFLEDY77L546RMJLZ5KEFOTIJ7C7X7O2JIJGMXEKJ7L7C53",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "331c74d2284b71fcfe300a107706c4263bd3905594cc16c1064b41522ddd957f"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "i128": "54901754"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDPKZ3KLGWFLEDY77L546RMJLZ5KEFOTIJ7C7X7O2JIJGMXEKJ7L7C53",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "4459c24f18408cfa3e7a60a942ca6aac7d4115da389fea47b050ad80718819d0"
+                },
+                {
+                  "symbol": "swap_chained"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                  },
+                  {
+                    "vec": [
+                      {
+                        "vec": [
+                          {
+                            "vec": [
+                              {
+                                "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                              },
+                              {
+                                "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                              }
+                            ]
+                          },
+                          {
+                            "bytes": "9ac7a9cde23ac2ada11105eeaa42e43c2ea8332ca0aa8f41f58d7160274d718e"
+                          },
+                          {
+                            "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                  },
+                  {
+                    "u128": "10000000000"
+                  },
+                  {
+                    "u128": "0"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "331c74d2284b71fcfe300a107706c4263bd3905594cc16c1064b41522ddd957f"
+                },
+                {
+                  "symbol": "name"
+                }
+              ],
+              "data": "void"
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "name"
+                }
+              ],
+              "data": {
+                "string": "USDC:GAHPYWLK6YRN7CVYZOO4H3VDRZ7PVF5UJGLZCSPAEIKJE2XSWF5LAGER"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "331c74d2284b71fcfe300a107706c4263bd3905594cc16c1064b41522ddd957f"
+                },
+                {
+                  "symbol": "trust"
+                }
+              ],
+              "data": {
+                "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "trust"
+                }
+              ],
+              "data": "void"
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "db585b9c16ce05e1b58724e0df1d25b1335717bf92f249cb80c014a3a5175738"
+                },
+                {
+                  "symbol": "transfer"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                  },
+                  {
+                    "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                  },
+                  {
+                    "i128": "10000000000"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "transfer"
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                },
+                {
+                  "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                },
+                {
+                  "string": "AQUA:GAHPYWLK6YRN7CVYZOO4H3VDRZ7PVF5UJGLZCSPAEIKJE2XSWF5LAGER"
+                }
+              ],
+              "data": {
+                "i128": "10000000000"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "transfer"
+                }
+              ],
+              "data": "void"
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "8bda8abbcb71c570837a033150b3e6289e4f3d1e74a6d2af77105d2407187fb6"
+                },
+                {
+                  "symbol": "swap"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                  },
+                  {
+                    "u32": 1
+                  },
+                  {
+                    "u32": 0
+                  },
+                  {
+                    "u128": "10000000000"
+                  },
+                  {
+                    "u128": "0"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "331c74d2284b71fcfe300a107706c4263bd3905594cc16c1064b41522ddd957f"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "address": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "i128": "1342725149"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "db585b9c16ce05e1b58724e0df1d25b1335717bf92f249cb80c014a3a5175738"
+                },
+                {
+                  "symbol": "transfer"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                  },
+                  {
+                    "address": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ"
+                  },
+                  {
+                    "i128": "10000000000"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "transfer"
+                },
+                {
+                  "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                },
+                {
+                  "address": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ"
+                },
+                {
+                  "string": "AQUA:GAHPYWLK6YRN7CVYZOO4H3VDRZ7PVF5UJGLZCSPAEIKJE2XSWF5LAGER"
+                }
+              ],
+              "data": {
+                "i128": "10000000000"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "transfer"
+                }
+              ],
+              "data": "void"
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "331c74d2284b71fcfe300a107706c4263bd3905594cc16c1064b41522ddd957f"
+                },
+                {
+                  "symbol": "transfer"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "address": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ"
+                  },
+                  {
+                    "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                  },
+                  {
+                    "i128": "43333630"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "transfer"
+                },
+                {
+                  "address": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ"
+                },
+                {
+                  "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                },
+                {
+                  "string": "USDC:GAHPYWLK6YRN7CVYZOO4H3VDRZ7PVF5UJGLZCSPAEIKJE2XSWF5LAGER"
+                }
+              ],
+              "data": {
+                "i128": "43333630"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "transfer"
+                }
+              ],
+              "data": "void"
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "trade"
+                },
+                {
+                  "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                },
+                {
+                  "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                },
+                {
+                  "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "i128": "10000000000"
+                  },
+                  {
+                    "i128": "43333630"
+                  },
+                  {
+                    "i128": "15000000"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "update_reserves"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "i128": "1144813898"
+                  },
+                  {
+                    "i128": "273378451578"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "swap"
+                }
+              ],
+              "data": {
+                "u128": "43333630"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "swap"
+                },
+                {
+                  "vec": [
+                    {
+                      "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                    },
+                    {
+                      "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                    }
+                  ]
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "address": "CCF5VCV3ZNY4K4EDPIBTCUFT4YUJ4TZ5DZ2KNUVPO4IF2JAHDB73MFXJ"
+                  },
+                  {
+                    "address": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE"
+                  },
+                  {
+                    "address": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5"
+                  },
+                  {
+                    "u128": "10000000000"
+                  },
+                  {
+                    "u128": "43333630"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "331c74d2284b71fcfe300a107706c4263bd3905594cc16c1064b41522ddd957f"
+                },
+                {
+                  "symbol": "transfer"
+                }
+              ],
+              "data": {
+                "vec": [
+                  {
+                    "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                  },
+                  {
+                    "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                  },
+                  {
+                    "i128": "43333630"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "transfer"
+                },
+                {
+                  "address": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD"
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                },
+                {
+                  "string": "USDC:GAHPYWLK6YRN7CVYZOO4H3VDRZ7PVF5UJGLZCSPAEIKJE2XSWF5LAGER"
+                }
+              ],
+              "data": {
+                "i128": "43333630"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "transfer"
+                }
+              ],
+              "data": "void"
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CBCFTQSPDBAIZ6R6PJQKSQWKNKWH2QIV3I4J72SHWBIK3ADRRAM5A6GD",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "swap_chained"
+                }
+              ],
+              "data": {
+                "u128": "43333630"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDPKZ3KLGWFLEDY77L546RMJLZ5KEFOTIJ7C7X7O2JIJGMXEKJ7L7C53",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "db585b9c16ce05e1b58724e0df1d25b1335717bf92f249cb80c014a3a5175738"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDNVQW44C3HALYNVQ4SOBXY5EWYTGVYXX6JPESOLQDABJI5FC5LTRRUE",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "i128": "20825492245"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDPKZ3KLGWFLEDY77L546RMJLZ5KEFOTIJ7C7X7O2JIJGMXEKJ7L7C53",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_call"
+                },
+                {
+                  "bytes": "331c74d2284b71fcfe300a107706c4263bd3905594cc16c1064b41522ddd957f"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CAZRY5GSFBFXD7H6GAFBA5YGYQTDXU4QKWKMYFWBAZFUCURN3WKX6LF5",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fn_return"
+                },
+                {
+                  "symbol": "balance"
+                }
+              ],
+              "data": {
+                "i128": "98235384"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDPKZ3KLGWFLEDY77L546RMJLZ5KEFOTIJ7C7X7O2JIJGMXEKJ7L7C53",
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "error"
+                },
+                {
+                  "error": {
+                    "contract": 8
+                  }
+                }
+              ],
+              "data": {
+                "string": "escalating Ok(ScErrorType::Contract) frame-exit to Err"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "host_fn_failed"
+                },
+                {
+                  "error": {
+                    "contract": 8
+                  }
+                }
+              ],
+              "data": "void"
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "read_entry"
+                }
+              ],
+              "data": {
+                "u64": "16"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "write_entry"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "ledger_read_byte"
+                }
+              ],
+              "data": {
+                "u64": "232"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "ledger_write_byte"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "read_key_byte"
+                }
+              ],
+              "data": {
+                "u64": "168"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "write_key_byte"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "read_data_byte"
+                }
+              ],
+              "data": {
+                "u64": "232"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "write_data_byte"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "read_code_byte"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "write_code_byte"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "emit_event"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "emit_event_byte"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "cpu_insn"
+                }
+              ],
+              "data": {
+                "u64": "6076754"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "mem_byte"
+                }
+              ],
+              "data": {
+                "u64": "4589660"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "invoke_time_nsecs"
+                }
+              ],
+              "data": {
+                "u64": "2677692"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "max_rw_key_byte"
+                }
+              ],
+              "data": {
+                "u64": "84"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "max_rw_data_byte"
+                }
+              ],
+              "data": {
+                "u64": "116"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "max_rw_code_byte"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      },
+      {
+        "in_successful_contract_call": false,
+        "event": {
+          "ext": "v0",
+          "contract_id": null,
+          "type": "diagnostic",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "core_metrics"
+                },
+                {
+                  "symbol": "max_emit_event_byte"
+                }
+              ],
+              "data": {
+                "u64": "0"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}
