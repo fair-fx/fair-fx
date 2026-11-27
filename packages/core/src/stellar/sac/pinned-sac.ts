@@ -1,5 +1,5 @@
-import type { PairsConfig } from '../index.ts';
-import { parseOrThrow } from '../shared/index.ts';
+import type { PairsConfig } from '../../index.ts';
+import { parseOrThrow } from '../../shared/index.ts';
 import { sacPinnedPairsSchema } from './pinned-sac.schema.ts';
 
 /**
