@@ -1,8 +1,8 @@
 import { DEFAULT_TIMEOUT_MS, swapAssets, VenueId, type VenueAdapter } from '@fair-fx/core';
 import { simulateRead } from '@fair-fx/core/stellar';
 import { rpc } from '@stellar/stellar-sdk';
-import { GUARD_MODE } from '../guard-mode.constants.ts';
-import { quoteOrError } from '../shared/index.ts';
+import { GUARD_MODE } from '../guard-mode/index.ts';
+import { quoteOrError } from '../quote/index.ts';
 import { noRouteOrThrow } from './no-route.ts';
 import { swapPath } from './router.ts';
 import { rpcFailure } from './rpc-failure.ts';

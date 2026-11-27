@@ -1,4 +1,4 @@
-import type { JsonResponse } from '../shared/index.ts';
+import type { JsonResponse } from '../http/index.ts';
 import { UNLISTED_TOKEN } from './aquarius.constants.ts';
 import { findPathProblemSchema } from './aquarius.schema.ts';
 
