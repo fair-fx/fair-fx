@@ -2,6 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { Client } from 'pg';
 import { inject } from 'vitest';
 import { openDatabase, type Database } from '../database/index.ts';
+import type {} from './provided-context.ts';
 import { EMPTY_DATABASE, MAINTENANCE_DATABASE, MIGRATED_DATABASE } from './testing.constants.ts';
 
 /** A database of its own for one test, on the server the global setup started. */

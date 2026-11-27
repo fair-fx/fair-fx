@@ -17,7 +17,7 @@ reference), and expressing the gap in basis points (the shortfall).
 
 ## Status
 
-Early. There is no app to start yet: what exists is libraries and their tests.
+Early. The collector can run once by hand; nothing starts it on a schedule yet.
 
 | Part | What it does | State |
 | --- | --- | --- |
@@ -25,7 +25,7 @@ Early. There is no app to start yet: what exists is libraries and their tests.
 | Reference rate | Reads the fiat FX rate from the Reflector feed | Built |
 | Rate math | Reference output, shortfall and the lowest output a limit allows, in integers | Built |
 | Storage | Postgres schema and the write of one collector run | Built |
-| Collector | Takes quotes and the reference on a schedule and stores them | Not built |
+| Collector | Takes the quotes and the reference of one 5 minute slot and stores them as a run | Built, runs once by hand; no schedule yet |
 | Guard | The `fx_guard` Soroban contract, which makes a swap fail past a limit | Not built |
 | API, dashboard, SDK, CLI | How an app or a person reads the measurements | Not built |
 
@@ -40,8 +40,8 @@ pnpm check
 
 `pnpm check` runs audit, lint, typecheck, the dependency rules and the tests. CI runs the same on every
 pull request, split into one job for the checks of the whole repo and one test job per package, next to
-a scan for secrets. The tests of `packages/db` start a Postgres server in a container, so Docker has to
-be running.
+a scan for secrets. The tests of `packages/db` and `apps/collector` start a Postgres server in a
+container, so Docker has to be running.
 
 ## Commands
 
@@ -58,11 +58,32 @@ pnpm --filter @fair-fx/venues test             # the tests of one package
 pnpm --filter @fair-fx/venues test aquarius    # only the test files with "aquarius" in their name
 pnpm test:smoke                                # live read-only calls to mainnet and testnet
 pnpm db:migrate                                # apply the migrations to the database at DATABASE_URL
+pnpm build                                     # compile every package to dist/, needed before pnpm collect
+pnpm collect                                   # one collector run on mainnet, stored at DATABASE_URL
 ```
 
 Add `--reporter=verbose` to a test command to see each test by name. The smoke tests call public
 third-party endpoints, so one failure can mean an endpoint is down: run them again before trusting it.
 [`packages/db/README.md`](packages/db/README.md) has the steps for a local database.
+
+### One collector run
+
+```sh
+export DATABASE_URL=postgres://postgres:local@127.0.0.1:5433/fairfx   # a migrated database
+pnpm build
+pnpm collect
+```
+
+- It reads mainnet only and sends no transaction. It quotes every pair of `config/pairs.json` both
+  ways at every venue, reads the reference prices, then the latest ledger, and stores one run.
+- It prints one JSON line on standard output: the slot, the ledger's close time and how far it was
+  from this machine's clock, the age of each price, and how each venue answered. A failure prints one
+  `run_failed` line on standard error and exits with 1.
+- A second run in the same 5 minute slot stores nothing and reports `slot_taken`, with exit code 0.
+- `DATABASE_URL` can also go in a `.env` file at the repo root. `FAIRFX_NETWORK` (default `mainnet`)
+  and `FAIRFX_CONFIG_DIR` (default the repo's `config/`) are optional.
+- This machine's clock must be kept in time (NTP): a run whose clock is more than 30 seconds from the
+  ledger's is stored as `unknown`.
 
 ## Layout
 
@@ -70,7 +91,7 @@ third-party endpoints, so one failure can mean an endpoint is down: run them aga
 fair-fx/
 ├── config/                  networks, endpoints, contracts and pairs: code reads addresses from here
 ├── apps/
-│   └── collector/           the scheduled worker, private: so far only how what a run read becomes the run to store
+│   └── collector/           the worker, private: one run per start, `pnpm collect`
 ├── packages/
 │   ├── core/                shared types and the rate math, no I/O in the main entry
 │   │   ├── src/stellar/     entry that reads the network through the Stellar SDK: the reference and latest ledger readers

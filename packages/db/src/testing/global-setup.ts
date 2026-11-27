@@ -2,14 +2,8 @@ import { PostgreSqlContainer } from '@testcontainers/postgresql';
 import type { TestProject } from 'vitest/node';
 import { migrate } from '../migrate/index.ts';
 import { discardLog } from './discard-log.ts';
+import type {} from './provided-context.ts';
 import { MIGRATED_DATABASE, POSTGRES_IMAGE } from './testing.constants.ts';
-
-declare module 'vitest' {
-  export interface ProvidedContext {
-    /** URL of the database on the test server that has every migration applied. */
-    migratedDatabaseUrl: string;
-  }
-}
 
 /**
  * Starts one Postgres server in a container for the whole test run and applies the migrations to one

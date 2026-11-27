@@ -22,4 +22,24 @@ describe('errorMessageWithCause', () => {
 
     expect(message).toBe('fetch failed: getaddrinfo ENOTFOUND rpc.invalid');
   });
+
+  it('reads the errors inside an AggregateError that has no message of its own', () => {
+    const refusedOnBothAddresses = new AggregateError([
+      new Error('connect ECONNREFUSED ::1:5433'),
+      new Error('connect ECONNREFUSED 127.0.0.1:5433'),
+    ]);
+
+    const message = errorMessageWithCause(refusedOnBothAddresses);
+
+    expect(message).toBe('connect ECONNREFUSED ::1:5433; connect ECONNREFUSED 127.0.0.1:5433');
+  });
+
+  it('does not repeat a cause whose message is already in the message', () => {
+    const missingFile = new Error('ENOENT: no such file or directory');
+    const unreadableConfig = new Error('/srv/pairs.json: ENOENT: no such file or directory', { cause: missingFile });
+
+    const message = errorMessageWithCause(unreadableConfig);
+
+    expect(message).toBe('/srv/pairs.json: ENOENT: no such file or directory');
+  });
 });
