@@ -26,7 +26,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: [core, venues, db]
+        package: [core, venues, db, collector]
     uses: ./.github/workflows/pnpm.yml
     with:
       run: pnpm --filter @fair-fx/${{ matrix.package }} test

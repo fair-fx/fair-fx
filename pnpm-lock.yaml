@@ -216,6 +216,15 @@ importers:
         specifier: 5.1.1
         version: 5.1.1(@types/node@26.6.6)(vite@8.3.8(@types/node@26.6.6)(jiti@2.6.1)(yaml@2.9.0))
 
+  apps/collector:
+    dependencies:
+      '@fair-fx/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@fair-fx/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+
   packages/core:
     dependencies:
       '@stellar/stellar-sdk':

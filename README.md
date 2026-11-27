@@ -69,6 +69,8 @@ third-party endpoints, so one failure can mean an endpoint is down: run them aga
 ```text
 fair-fx/
 ├── config/                  networks, endpoints, contracts and pairs: code reads addresses from here
+├── apps/
+│   └── collector/           the scheduled worker, private: so far only how what a run read becomes the run to store
 ├── packages/
 │   ├── core/                shared types and the rate math, no I/O in the main entry
 │   │   ├── src/stellar/     entry that reads the network through the Stellar SDK: the reference and latest ledger readers
@@ -88,7 +90,8 @@ fair-fx/
 ```
 
 Packages may only import in the allowed direction: `venues` and `db` use `core`, and `core` uses
-neither. The rules are in `.dependency-cruiser.ts` (`pnpm deps`).
+neither. The collector may use all three, and no package may use the collector. The rules are in
+`.dependency-cruiser.ts` (`pnpm deps`).
 
 ## License
 

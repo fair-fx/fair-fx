@@ -1,0 +1,24 @@
+{
+  "name": "@fair-fx/collector",
+  "version": "0.0.1",
+  "description": "Scheduled worker: takes the quotes and the reference of one 5 minute slot and stores them as a run.",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "@fair-fx/source": "./src/index.ts"
+    },
+    "./testing": {
+      "@fair-fx/source": "./src/testing/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.spec.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@fair-fx/core": "workspace:*",
+    "@fair-fx/db": "workspace:*"
+  }
+}
