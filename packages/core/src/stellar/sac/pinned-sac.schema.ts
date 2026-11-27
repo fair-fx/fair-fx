@@ -1,6 +1,6 @@
 import { Asset, StrKey } from '@stellar/stellar-sdk';
 import { z } from 'zod';
-import type { PinnedAsset } from '../index.ts';
+import type { PinnedAsset } from '../../index.ts';
 
 /**
  * An asset pinned to the SAC of its code and issuer on the network of `passphrase`. The issuer's

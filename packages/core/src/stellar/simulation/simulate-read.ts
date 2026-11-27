@@ -1,5 +1,5 @@
 import { Account, BASE_FEE, rpc, scValToNative, TransactionBuilder, type xdr } from '@stellar/stellar-sdk';
-import type { NetworkConfig } from '../index.ts';
+import type { NetworkConfig } from '../../index.ts';
 import { SimulationError } from './simulation.error.ts';
 import { PLACEHOLDER_SEQUENCE, PLACEHOLDER_TIME_BOUND_SECONDS } from './soroban.constants.ts';
 
