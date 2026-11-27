@@ -1,4 +1,5 @@
-import type { FeedPrice, ReferenceFeed } from './reference.types.ts';
+import { Fiat } from '../asset/index.ts';
+import { ReferenceStatus, type FeedPrice, type ReferenceFeed, type ReferencePrice } from './reference.types.ts';
 
 /** What `decimals()` of the mainnet feed answers. A literal, so a wrong production constant fails a test. */
 const FEED_DECIMALS = 14;
@@ -14,6 +15,18 @@ export function buildReferenceFeed(overrides: Partial<ReferenceFeed> = {}): Refe
   return {
     decimals: () => Promise.resolve(FEED_DECIMALS),
     lastPrice: () => Promise.resolve(EUR_FEED_PRICE),
+    ...overrides,
+  };
+}
+
+/** An EUR reading of `EUR_FEED_PRICE`, set at 2026-11-26 08:55:00 UTC unless `overrides` says otherwise. */
+export function buildReferencePrice(overrides: Partial<ReferencePrice> = {}): ReferencePrice {
+  return {
+    status: ReferenceStatus.Ok,
+    fiat: Fiat.Eur,
+    price: 109_531_321_156_430n,
+    decimals: 14,
+    oracleTime: 1_795_683_300,
     ...overrides,
   };
 }
