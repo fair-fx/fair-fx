@@ -10,11 +10,12 @@ set -euo pipefail
 
 VENUE_NAME="$1"
 AMOUNT_IN="$2"
-USER_KEY=fx-spike-user
 
 SPIKE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 # shellcheck source=/dev/null
 . "$SPIKE_DIR/testnet/deployed.env"
+# shellcheck source=/dev/null
+. "$SPIKE_DIR/scripts/testnet_common.sh"
 # shellcheck source=/dev/null
 . "$SPIKE_DIR/scripts/venues/$VENUE_NAME.sh"
 OUT="$SPIKE_DIR/testnet/evidence/$VENUE_NAME-costs"

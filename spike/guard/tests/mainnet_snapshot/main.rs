@@ -1,8 +1,9 @@
 //! Runs the real mainnet contracts on mainnet state, read from `spike/snapshots/`.
 //!
-//! The state is that of one ledger, so the expected amounts are fixed. `spike/README.md` says how
-//! the file was made.
+//! Each snapshot is the state of one ledger, so the expected amounts are fixed. `spike/README.md`
+//! says how the files were made.
 
-mod guard;
-mod router;
+mod aquarius;
+mod auth_tree;
+mod soroswap;
 mod world;

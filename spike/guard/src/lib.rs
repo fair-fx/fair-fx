@@ -16,6 +16,8 @@ use soroban_sdk::{
 #[cfg(test)]
 mod test;
 #[cfg(test)]
+mod test_reentry;
+#[cfg(test)]
 mod test_venue;
 
 /// Codes match the error table of the `fx_guard` design, so notes from the spike read the same.

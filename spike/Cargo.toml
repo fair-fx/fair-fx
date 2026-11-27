@@ -1,6 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["guard"]
+members = ["guard", "oracle-read"]
 
 [workspace.package]
 edition = "2024"

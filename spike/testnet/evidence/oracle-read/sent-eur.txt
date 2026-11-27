@@ -1,0 +1,6 @@
+ℹ️  Simulating transaction…
+ℹ️  Signing transaction: b382929e937ca90d047f717404fb64b5270198768346b79ced4a40b60b6ba72c
+🌎 Sending transaction…
+✅ Transaction submitted successfully!
+🔗 https://stellar.expert/explorer/testnet/tx/b382929e937ca90d047f717404fb64b5270198768346b79ced4a40b60b6ba72c
+{"age_seconds":39,"oracle_time":1795780800,"price":"109657386069270"}

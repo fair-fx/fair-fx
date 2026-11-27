@@ -19,6 +19,8 @@ POOL_TUSD=1000000000000   # 100,000 TUSD
 POOL_TEUR=920000000000    #  92,000 TEUR
 WALLET=100000000000       #  10,000 of each asset for the user and the mover
 PROVIDER_FUNDS=2000000000000
+OFFER_TEUR=100000000000   # 10,000 TEUR on the classic order book
+OFFER_PRICE=1087:1000     # TUSD asked for one TEUR
 
 SPIKE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 OUT="$SPIKE_DIR/testnet/deployed.env"
@@ -60,6 +62,10 @@ stellar contract invoke --id "$ROUTER" --source "$PROVIDER" --network "$NETWORK"
   --to "$(stellar keys address "$PROVIDER")" --deadline "$DEADLINE"
 PAIR_ID="$(stellar contract invoke --id "$ROUTER" --source "$PROVIDER" --network "$NETWORK" -- \
   router_pair_for --token_a "$TUSD_ID" --token_b "$TEUR_ID" | tr -d '"')"
+
+# A classic offer for the path payment runs: 10,000 TEUR for sale at 1.087 TUSD each.
+stellar tx new manage-sell-offer --source "$PROVIDER" --network "$NETWORK" \
+  --selling "$TEUR" --buying "$TUSD" --amount "$OFFER_TEUR" --price "$OFFER_PRICE"
 
 GUARD_ID="$(stellar contract deploy --wasm "$WASM" --source "$PROVIDER" --network "$NETWORK")"
 

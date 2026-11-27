@@ -1856,6 +1856,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "spike-oracle-read"
+version = "0.0.0"
+dependencies = [
+ "soroban-sdk",
+]
+
+[[package]]
 name = "spin"
 version = "0.9.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"

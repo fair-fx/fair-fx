@@ -19,21 +19,15 @@ AMOUNT_IN="$3"
 MIN_OUT="$4"
 MOVER_AMOUNT="${5:-}"
 
-USER_KEY=fx-spike-user
-MOVER_KEY=fx-spike-mover
-
 SPIKE_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 # shellcheck source=/dev/null
 . "$SPIKE_DIR/testnet/deployed.env"
 # shellcheck source=/dev/null
+. "$SPIKE_DIR/scripts/testnet_common.sh"
+# shellcheck source=/dev/null
 . "$SPIKE_DIR/scripts/venues/$VENUE_NAME.sh"
 EVIDENCE="$SPIKE_DIR/testnet/evidence/$LABEL"
 mkdir -p "$EVIDENCE"
-
-balance() { # balance <token> <holder>
-  stellar contract invoke --id "$1" --source "$USER_KEY" --network "$NETWORK" -- \
-    balance --id "$2" 2>/dev/null | tr -d '"'
-}
 
 holder_balances() { # holder_balances <name> <address>
   echo "$1 $IN_NAME $(balance "$ASSET_IN" "$2")"
@@ -67,15 +61,11 @@ if [ -n "$MOVER_AMOUNT" ]; then
   balances | tee "$EVIDENCE/balances-after-mover.txt"
 fi
 
-fetch() { # fetch <result|meta>: that part of the sent transaction, without the CLI's status lines
-  stellar tx fetch "$1" --hash "$HASH" --network "$NETWORK" --output json-formatted | sed -n '/^{/,$p'
-}
-
 # A transaction the network applies and fails still makes `tx send` exit non-zero.
 stellar tx send --network "$NETWORK" <"$EVIDENCE/signed.xdr" >"$EVIDENCE/send.txt" 2>&1 || true
-fetch result >"$EVIDENCE/result.json"
+fetch result "$HASH" >"$EVIDENCE/result.json"
 # The metadata holds the diagnostic events: which contract raised which error.
-fetch meta >"$EVIDENCE/meta.json"
+fetch meta "$HASH" >"$EVIDENCE/meta.json"
 
 balances | tee "$EVIDENCE/balances-after.txt"
 echo "hash $HASH"

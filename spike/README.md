@@ -21,18 +21,20 @@ This branch is not meant to be merged.
 | Step | State |
 | --- | --- |
 | Toolchain pinned (`soroban-sdk` 30.0.0, Rust 1.99.1), contract builds to wasm | Done |
-| Unit tests with a test venue (mocked authorization) | Done, 4 tests |
-| Mainnet state loaded from a ledger snapshot, real router code runs on it | Done, 1 test |
+| Unit tests with a test venue (mocked authorization) | Done, 5 tests |
 | Soroswap on testnet, signed: one swap applied, one refused | Done, 2 transactions (below) |
-| The guard above the mainnet Soroswap router, on the snapshot | Done, 3 tests, mocked authorization |
 | Aquarius on testnet, signed: one swap applied, one refused | Done, 2 transactions (below) |
 | Cost of the guard above each router | Done on testnet, simulated (below) |
-| The guard above the mainnet Aquarius router, on a snapshot | Not started |
-| Path payment with `destMin`, oracle read from a contract | Not started |
+| The guard above the mainnet Soroswap router code, on a snapshot | Done, 4 tests, mocked authorization |
+| The guard above the mainnet Aquarius router code, on a snapshot | Done, 3 tests, mocked authorization |
+| Path payment with `destMin` on testnet: one applied, one refused | Done, 2 transactions (below) |
+| Reflector price read from a contract on testnet | Done, 1 transaction and 5 unit tests (below) |
+| A venue that calls the guard back | Done, 1 unit test: the host stops it |
 
 Question 1 is answered on testnet for both routers, with one pool and one hop each. Nothing here
-ran on mainnet: the mainnet Soroswap router code ran on a snapshot only, and the mainnet Aquarius
-router code has not been run at all.
+ran on mainnet. The mainnet code of both routers ran on snapshots of mainnet state, where
+authorization is mocked. The two testnet routers are not the same builds as the mainnet ones:
+Soroswap wasm `4b95…` against `4c3d…`, Aquarius wasm `840a…` against `2f8e…`.
 
 ## Soroswap on testnet
 
@@ -146,13 +148,56 @@ that paid the input, so here too `recipient` has to be the `user`.
 | Transaction size, bytes | 2,112 | 3,141 | 1,029 |
 | Resource fee, stroops | 28,924 | 31,512 | 2,588 (9%) |
 
+## Path payment on testnet
+
+The route without a contract: a classic `path_payment_strict_send` of TUSD for TEUR against a sell
+offer on the order book (10,000 TEUR at 1.087 TUSD each), with the operation's own `destMin` as
+the floor. Run with `scripts/testnet_path_payment.sh`.
+
+| | Payment applied | Payment refused |
+| --- | --- | --- |
+| Transaction | [`51e77385…7145311`](https://stellar.expert/explorer/testnet/tx/51e773850ace2a585053eea733c3bc514eb86b0d98fe985e0e4afeab07145311) | [`503eac1c…fdd92f1`](https://stellar.expert/explorer/testnet/tx/503eac1c4fa8cfc24f9429fe772a9d43a1258f1b0d3e0a273e1e8ae40fdd92f1) |
+| Ledger, close time (UTC) | 5951408, 11:58:04 | 5951410, 11:58:14 |
+| Network result | `SUCCESS` | `FAILED`, operation result `under_destmin` |
+| Sent | 1,000,000,000 TUSD | 1,000,000,000 TUSD |
+| `destMin` | 919,963,201 | 919,963,202 |
+| User TEUR, before and after | 100,916,326,422 and 101,836,289,623 | 101,836,289,623 and 101,836,289,623 |
+| Fee charged, in XLM | 0.00001 | 0.00001 |
+
+The offer pays 919,963,201 for that amount. One unit more in `destMin` and the network refuses the
+payment with a named result and moves nothing.
+
+## Reflector price read from a contract
+
+`oracle-read/` is a second small contract, kept apart so the deployed guard does not change. Its
+`fiat_price(oracle, symbol, max_age_seconds)` calls `lastprice(Asset::Other(symbol))` on a
+Reflector feed and refuses a missing price (error 4), an old one (error 5), and one that is not
+positive or is dated after the ledger (error 6). Five unit tests cover those, each seen failing
+against a seeded fault. Run on testnet with `scripts/testnet_oracle_read.sh`, against the Reflector
+fiat feed `CCSSOHTB…5NV4W` (USD base, 14 decimals):
+
+- Sent as transaction
+  [`b382929e…6ba72c`](https://stellar.expert/explorer/testnet/tx/b382929e937ca90d047f717404fb64b5270198768346b79ced4a40b60b6ba72c),
+  ledger 5951439: EUR at 109,657,386,069,270, which is 1.09657386 USD, dated 39 seconds before
+  the ledger, with a limit of 600 seconds.
+- Simulated with a limit of 1 second: error 5. Simulated for a symbol the feed does not have:
+  error 4. A read that fails in simulation is never sent, so these two are simulations.
+
+This is the testnet feed. The mainnet feed has not been read from a contract.
+
+## A venue that calls the guard back
+
+One unit test gives the guard a venue that calls `guarded_swap` again while the first call is
+still waiting. The host stops it with "Contract re-entry is not allowed". It is a unit test, and
+the host code is the same one the network runs (`soroban-env-host` 30.0.1).
+
 ## What the testnet runs do not show
 
-- A mainnet router with a real signature. The snapshot tests below run the mainnet Soroswap router
-  code with mocked authorization and get the same tree: guard, router, USDC transfer from the user
-  to the pair. The mainnet Aquarius router has not been run.
-- Real USDC and EURC, a route of more than one hop, other pool types (Aquarius has stable and
-  concentrated pools), or mainnet fees.
+- A mainnet router with a real signature. The snapshot tests below run the mainnet code of both
+  routers with mocked authorization and get the same tree as on testnet.
+- Real USDC and EURC on a network, or mainnet fees. On testnet each router ran one pool and one
+  hop. The mainnet Aquarius snapshot test runs three hops, through one constant product and two
+  concentrated pools.
 - An account that signs through a contract (a smart wallet). Both users here are classic accounts
   that are also the source of the transaction.
 
@@ -162,8 +207,8 @@ Needs Rust (the version in `rust-toolchain.toml` at the repo root) and `stellar-
 
 ```sh
 cd spike
-cargo test                 # 8 tests, offline
-stellar contract build     # target/wasm32v1-none/release/spike_guard.wasm
+cargo test                 # 17 tests, offline
+stellar contract build     # target/wasm32v1-none/release/spike_guard.wasm and spike_oracle_read.wasm
 ```
 
 The testnet runs need the network and write keys to the keystore of `stellar-cli`, never to this
@@ -174,6 +219,8 @@ scripts/testnet_setup.sh             # once: accounts, test assets, Soroswap poo
 scripts/testnet_setup_aquarius.sh    # once: trustlines and test AQUA for the Aquarius runs
 scripts/testnet_guarded_swap.sh <soroswap|aquarius> <label> <amount_in> <min_out> [<mover_amount>]
 scripts/testnet_costs.sh <soroswap|aquarius> <amount_in>
+scripts/testnet_path_payment.sh <label> <send_amount> <dest_min>
+scripts/testnet_oracle_read.sh
 ```
 
 ## Mainnet state
@@ -225,3 +272,39 @@ Three things to know about the file:
 
 A test on this file runs real mainnet code on real mainnet state, with mocked authorization. It can
 show what a router does and what it costs. It cannot show that a signature is accepted.
+
+### Aquarius
+
+`snapshots/aquarius-usdc-eurc.json` is mainnet at ledger 65698970 (2026-11-27 12:02 UTC). It was
+made another way, without the 14 GB download: simulate the swap on mainnet through the RPC, take
+the list of ledger entries the simulation touched, and read exactly those entries in one RPC
+call. Nothing was signed or sent. The simulation needs an address that holds USDC, and used the
+Soroswap USDC/EURC pair contract for that. The simulated transaction is kept in
+`mainnet/aquarius-direct-simulated.json`.
+
+```sh
+python3 scripts/snapshot_from_footprint.py mainnet/aquarius-direct-simulated.json \
+  snapshots/soroswap-usdc-eurc.json https://mainnet.sorobanrpc.com snapshots/aquarius-usdc-eurc.json
+python3 scripts/add_accounts.py snapshots/aquarius-usdc-eurc.json https://mainnet.sorobanrpc.com \
+  GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN \
+  GDHU6WRG4IEQXM5NZ4BMPKOXHW76MZM4Y2IEMFDVXBSDP6SJY4ITNPP2
+```
+
+The route is the one the Aquarius API returned for 100 USDC to EURC at that time: USDC to CETES to
+sUSD to EURC, through one constant product pool and two concentrated pools. Three tests put the
+guard above the mainnet router `CBQDHNBF…C6QUK` on it. The swap pays 91.9094020 EURC, the amount
+the API quoted. A floor one unit higher undoes it. The authorization is one tree: guard,
+`swap_chained`, USDC transfer.
+
+A snapshot made this way holds what one call needs and no more. Another route or another amount
+may touch entries it does not have.
+
+### Cost on mainnet
+
+The simulation above is of the direct swap, without the guard, on mainnet at 12:02 UTC:
+37,574,361 instructions, 35 ledger entries (17 read only, 18 written), 11,964 bytes written and a
+resource fee of 172,580 stroops (0.017258 XLM). The limit of one transaction on mainnet, read
+from the network's settings the same day, is 400,000,000 instructions and 200 entries. The guard
+is not deployed on mainnet, so its cost there is not measured: on testnet it added about 570,000
+instructions to either router.
+

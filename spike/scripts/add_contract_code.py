@@ -7,18 +7,11 @@ writes contract data entries. A wasm entry is fixed by its hash, so reading it f
 later ledger gives the same bytes.
 """
 import json
-import subprocess
 import sys
-import urllib.request
+
+from ledger_rpc import read_entry
 
 INSTANCE_KEY = "ledger_key_contract_instance"
-# The public RPC node answers 403 to the default user agent of urllib.
-REQUEST_HEADERS = {"Content-Type": "application/json", "User-Agent": "snapshot-tool"}
-
-
-def stellar_xdr(arguments: list[str], text: str) -> str:
-    done = subprocess.run(["stellar", "xdr", *arguments], input=text, capture_output=True, text=True, check=True)
-    return done.stdout.strip()
 
 
 def wasm_hashes(entries: list[dict], kind: str) -> set[str]:
@@ -32,23 +25,6 @@ def wasm_hashes(entries: list[dict], kind: str) -> set[str]:
             if isinstance(executable, dict) and "wasm" in executable:
                 hashes.add(executable["wasm"])
     return hashes
-
-
-def read_entry(rpc_url: str, key: dict) -> dict:
-    """One ledger entry as it is on the RPC now, in the shape a snapshot file holds."""
-    encoded = stellar_xdr(["encode", "--type", "LedgerKey"], json.dumps(key))
-    body = {"jsonrpc": "2.0", "id": 1, "method": "getLedgerEntries", "params": {"keys": [encoded]}}
-    request = urllib.request.Request(rpc_url, json.dumps(body).encode(), REQUEST_HEADERS)
-    with urllib.request.urlopen(request, timeout=30) as response:
-        found = json.load(response)["result"]["entries"]
-    if len(found) != 1:
-        raise SystemExit(f"the RPC has no entry for {json.dumps(key)}")
-    data = json.loads(stellar_xdr(["decode", "--type", "LedgerEntryData", "--output", "json"], found[0]["xdr"]))
-    return {
-        "entry": {"last_modified_ledger_seq": found[0]["lastModifiedLedgerSeq"], "data": data, "ext": "v0"},
-        # An account or a trustline has no expiry ledger.
-        "live_until": found[0].get("liveUntilLedgerSeq"),
-    }
 
 
 def main(snapshot_path: str, rpc_url: str) -> None:

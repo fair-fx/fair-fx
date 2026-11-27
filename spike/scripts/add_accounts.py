@@ -10,7 +10,7 @@ as the issuer's flags.
 import json
 import sys
 
-from add_contract_code import read_entry
+from ledger_rpc import read_entry
 
 
 def main(snapshot_path: str, rpc_url: str, accounts: list[str]) -> None:
