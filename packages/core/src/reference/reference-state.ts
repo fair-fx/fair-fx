@@ -6,7 +6,7 @@ import { ReferenceState, ReferenceStatus, type ReferenceReading } from './refere
 /**
  * What a run can say about its reference at `nowSeconds` (Unix seconds), from every reading it made.
  *
- * `unknown` comes first, at any hour: a reading gave no price, a price is older than 15 minutes, or
+ * `unknown` comes first, at any hour: a reading gave no price, a price is older than 10 minutes, or
  * there is no reading. Only then do the hours count: `closed` inside `closedWindow`, `fresh` outside.
  */
 export function referenceState(

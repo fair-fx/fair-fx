@@ -10,21 +10,21 @@ import { buildReferencePrice, WEEKEND_WINDOW } from '@fair-fx/core/testing';
 
 // Unix seconds. The market is open on the Wednesday and closed on the Saturday, by WEEKEND_WINDOW.
 const WEDNESDAY_NOON = 1_795_608_000; // 2026-11-25 12:00:00 UTC
-const WEDNESDAY_900_S_LATER = 1_795_608_900;
-const WEDNESDAY_901_S_LATER = 1_795_608_901;
+const WEDNESDAY_600_S_LATER = 1_795_608_600;
+const WEDNESDAY_601_S_LATER = 1_795_608_601;
 const SATURDAY_NOON = 1_795_867_200; // 2026-11-28 12:00:00 UTC
-const SATURDAY_900_S_LATER = 1_795_868_100;
-const SATURDAY_901_S_LATER = 1_795_868_101;
+const SATURDAY_600_S_LATER = 1_795_867_800;
+const SATURDAY_601_S_LATER = 1_795_867_801;
 
 const MISSING: ReferenceReading = { status: ReferenceStatus.Missing, fiat: Fiat.Eur };
 const UNAVAILABLE: ReferenceReading = { status: ReferenceStatus.Unavailable, fiat: Fiat.Eur, reason: 'timeout' };
 
 describe('referenceState', () => {
   it.each([
-    { what: 'a price 900 s old in open hours', setAt: WEDNESDAY_NOON, now: WEDNESDAY_900_S_LATER, state: 'fresh' },
-    { what: 'a price 901 s old in open hours', setAt: WEDNESDAY_NOON, now: WEDNESDAY_901_S_LATER, state: 'unknown' },
-    { what: 'a price 900 s old in closed hours', setAt: SATURDAY_NOON, now: SATURDAY_900_S_LATER, state: 'closed' },
-    { what: 'a price 901 s old in closed hours', setAt: SATURDAY_NOON, now: SATURDAY_901_S_LATER, state: 'unknown' },
+    { what: 'a price 600 s old in open hours', setAt: WEDNESDAY_NOON, now: WEDNESDAY_600_S_LATER, state: 'fresh' },
+    { what: 'a price 601 s old in open hours', setAt: WEDNESDAY_NOON, now: WEDNESDAY_601_S_LATER, state: 'unknown' },
+    { what: 'a price 600 s old in closed hours', setAt: SATURDAY_NOON, now: SATURDAY_600_S_LATER, state: 'closed' },
+    { what: 'a price 601 s old in closed hours', setAt: SATURDAY_NOON, now: SATURDAY_601_S_LATER, state: 'unknown' },
   ])('gives $state for $what', ({ setAt, now, state }) => {
     const price = buildReferencePrice({ oracleTime: setAt });
 
