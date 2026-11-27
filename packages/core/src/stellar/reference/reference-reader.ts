@@ -5,9 +5,9 @@ import {
   type Fiat,
   type ReferenceFeed,
   type ReferenceReading,
-} from '../index.ts';
-import { REFERENCE_BASE } from '../reference/index.ts';
-import { errorMessageWithCause } from '../shared/index.ts';
+} from '../../index.ts';
+import { REFERENCE_BASE } from '../../reference/index.ts';
+import { errorMessageWithCause } from '../../shared/index.ts';
 
 /**
  * Reads the reference price of `fiat` from `feed`. The feed's base currency is answered without a

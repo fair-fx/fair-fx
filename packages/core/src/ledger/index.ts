@@ -1,4 +1,4 @@
-export { toLedgerReading } from './ledger.ts';
+export { toLedgerReading } from './to-ledger-reading.ts';
 export {
   LedgerStatus,
   type LatestLedger,

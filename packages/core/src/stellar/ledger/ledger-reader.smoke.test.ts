@@ -5,7 +5,7 @@ import { readLatestLedger, sorobanLedgerSource } from '@fair-fx/core/stellar';
 
 // Asks live RPC nodes, so it needs the network: FAIRFX_SMOKE=1 pnpm --filter @fair-fx/core test smoke
 const SMOKE = readEnv('FAIRFX_SMOKE') === '1';
-const CONFIG_DIR = fileURLToPath(new URL('../../../../config', import.meta.url));
+const CONFIG_DIR = fileURLToPath(new URL('../../../../../config', import.meta.url));
 
 // `config/networks.json` gets its testnet entry with the testnet deploy.
 const TESTNET = { rpcUrl: 'https://soroban-testnet.stellar.org' };
