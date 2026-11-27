@@ -71,7 +71,7 @@ fair-fx/
 ├── config/                  networks, endpoints, contracts and pairs: code reads addresses from here
 ├── packages/
 │   ├── core/                shared types and the rate math, no I/O in the main entry
-│   │   ├── src/stellar/     entry that reads the network through the Stellar SDK: the reference reader
+│   │   ├── src/stellar/     entry that reads the network through the Stellar SDK: the reference and latest ledger readers
 │   │   └── src/node/        Node-only entry: the config loader
 │   ├── venues/              one quote adapter per venue: ok, no_route or error, with the cause
 │   │   └── src/             sdex/, soroswap/, aquarius/

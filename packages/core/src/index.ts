@@ -1,4 +1,12 @@
 export { Fiat, type AssetRef, type PinnedAsset } from './asset/index.ts';
+export {
+  LedgerStatus,
+  toLedgerReading,
+  type LatestLedger,
+  type LedgerFailure,
+  type LedgerReading,
+  type LedgerSource,
+} from './ledger/index.ts';
 export { DEFAULT_MARKET_HOURS, isMarketClosed, type MarketHours, type WeeklyWindow } from './market/index.ts';
 export { Network, parseNetworkConfig, type NetworkConfig } from './network/index.ts';
 export {
