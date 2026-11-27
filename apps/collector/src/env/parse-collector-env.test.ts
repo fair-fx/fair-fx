@@ -22,9 +22,20 @@ describe('parseCollectorEnv', () => {
     });
   });
 
+  it('takes the default of an optional variable that is set but blank', () => {
+    const env = parseCollectorEnv({ DATABASE_URL, FAIRFX_NETWORK: '', FAIRFX_CONFIG_DIR: ' ' });
+
+    expect(env).toEqual({
+      databaseUrl: DATABASE_URL,
+      network: 'mainnet',
+      configDir: REPO_CONFIG_DIR,
+    });
+  });
+
   it.each([
     { what: 'the database is not set', env: {}, named: 'DATABASE_URL' },
     { what: 'the database is empty', env: { DATABASE_URL: '' }, named: 'DATABASE_URL' },
+    { what: 'the database is only spaces', env: { DATABASE_URL: '  ' }, named: 'DATABASE_URL' },
     { what: 'the network is not one FairFX knows', env: { DATABASE_URL, FAIRFX_NETWORK: 'futurenet' }, named: 'FAIRFX_NETWORK' },
   ])('refuses, naming the variable and not the password, when $what', ({ env, named }) => {
     const parse = () => parseCollectorEnv(env);

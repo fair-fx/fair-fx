@@ -11,12 +11,14 @@ try {
   const env = parseCollectorEnv(process.env);
   const config = await loadConfig(env.configDir, env.network);
   const database = openDatabase(env.databaseUrl);
-  database.on('error', (error) => writeLogLine(stderr, failureLogLine(LogEvent.DatabaseError, error)));
+  const logDatabaseError = (error: unknown) => writeLogLine(stderr, failureLogLine(LogEvent.DatabaseError, error));
+  database.on('error', logDatabaseError);
   try {
     const report = await runOnce(livePorts(config.endpoints, database), collectorPlan(config));
     writeLogLine(stdout, runLogLine(report));
   } finally {
-    await database.end();
+    // A pool that will not close does not fail a run that is stored, nor hide why a run failed.
+    await database.end().catch(logDatabaseError);
   }
 } catch (error) {
   writeLogLine(stderr, failureLogLine(LogEvent.RunFailed, error));
