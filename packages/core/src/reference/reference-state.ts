@@ -6,19 +6,24 @@ import { ReferenceState, ReferenceStatus, type ReferenceReading } from './refere
 /**
  * What a run can say about its reference at `nowSeconds` (Unix seconds), from every reading it made.
  *
- * `unknown` comes first, at any hour: a reading gave no price, a price is older than 10 minutes, or
- * there is no reading. Only then do the hours count: `closed` inside `closedWindow`, `fresh` outside.
+ * `unknown` comes first, at any hour: a reading gave no price, a price is older than 10 minutes or
+ * dated after `nowSeconds`, or there is no reading. Only then do the hours count: `closed` inside
+ * `closedWindow`, `fresh` outside.
  */
 export function referenceState(
   readings: readonly ReferenceReading[],
   closedWindow: WeeklyWindow | null,
   nowSeconds: number,
 ): ReferenceState {
-  const usable = readings.every(
-    (reading) =>
-      reading.status === ReferenceStatus.Ok &&
-      (referenceAgeSeconds(reading, nowSeconds) ?? 0) <= MAX_REFERENCE_AGE_SECONDS,
-  );
+  const usable = readings.every((reading) => {
+    if (reading.status !== ReferenceStatus.Ok) {
+      return false;
+    }
+
+    const ageSeconds = referenceAgeSeconds(reading, nowSeconds) ?? 0;
+
+    return ageSeconds >= 0 && ageSeconds <= MAX_REFERENCE_AGE_SECONDS;
+  });
   if (readings.length === 0 || !usable) {
     return ReferenceState.Unknown;
   }

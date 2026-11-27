@@ -17,7 +17,7 @@ export enum ReferenceState {
   Fresh = 'fresh',
   /** The same, in the hours the market is taken to be closed: the price is usable but not moving. */
   Closed = 'closed',
-  /** There is no usable price, at any hour: not read, or too old. */
+  /** There is no usable price, at any hour: not read, too old, or dated after the clock it is judged by. */
   Unknown = 'unknown',
 }
 
