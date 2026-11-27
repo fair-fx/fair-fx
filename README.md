@@ -17,7 +17,8 @@ reference), and expressing the gap in basis points (the shortfall).
 
 ## Status
 
-Early. The collector can run once by hand; nothing starts it on a schedule yet.
+Early. The collector runs once per start: by hand, or every 5 minutes on Google Cloud once
+`pnpm cloud:setup` has built the schedule there.
 
 | Part | What it does | State |
 | --- | --- | --- |
@@ -25,7 +26,7 @@ Early. The collector can run once by hand; nothing starts it on a schedule yet.
 | Reference rate | Reads the fiat FX rate from the Reflector feed | Built |
 | Rate math | Reference output, shortfall and the lowest output a limit allows, in integers | Built |
 | Storage | Postgres schema and the write of one collector run | Built |
-| Collector | Takes the quotes and the reference of one 5 minute slot and stores them as a run | Built, runs once by hand; no schedule yet |
+| Collector | Takes the quotes and the reference of one 5 minute slot and stores them as a run | Built; the 5 minute schedule is set up by `deploy/collector` |
 | Guard | The `fx_guard` Soroban contract, which makes a swap fail past a limit | Not built |
 | API, dashboard, SDK, CLI | How an app or a person reads the measurements | Not built |
 
@@ -40,8 +41,8 @@ pnpm check
 
 `pnpm check` runs audit, lint, typecheck, the dependency rules and the tests. CI runs the same on every
 pull request, split into one job for the checks of the whole repo and one test job per package, next to
-a scan for secrets and a build of the collector image. The tests of `packages/db` and `apps/collector`
-start a Postgres server in a container, so Docker has to be running.
+a scan for secrets, a build of the collector image and a lint of the deploy scripts. The tests of
+`packages/db` and `apps/collector` start a Postgres server in a container, so Docker has to be running.
 
 ## Commands
 
@@ -60,6 +61,8 @@ pnpm test:smoke                                # live read-only calls to mainnet
 pnpm db:migrate                                # apply the migrations to the database at DATABASE_URL
 pnpm build                                     # compile every package to dist/, needed before pnpm collect
 pnpm collect                                   # one collector run on mainnet, stored at DATABASE_URL
+pnpm cloud:setup                               # build the collector's Google Cloud setup, needs FAIRFX_GCP_PROJECT
+pnpm cloud:release                             # put the commit that is checked out on Google Cloud
 ```
 
 Add `--reporter=verbose` to a test command to see each test by name. The smoke tests call public
@@ -99,6 +102,17 @@ docker run --rm -e DATABASE_URL=postgres://... fairfx-collector
 - Build it from the repo root. `.dockerignore` lets in only the files it names.
 - It does not apply migrations. Run `pnpm db:migrate` against the database first.
 
+### The collector on Google Cloud
+
+```sh
+FAIRFX_GCP_PROJECT=my-project pnpm cloud:setup
+```
+
+- Builds everything in one project: the image repository, a Cloud SQL Postgres, the secret with its URL,
+  a Cloud Run job and a Cloud Scheduler job that starts it every 5 minutes.
+- It creates only what is missing, so it can be run again. `pnpm cloud:release` puts a later commit there.
+- [`deploy/collector/README.md`](deploy/collector/README.md) has what you need first and what it creates.
+
 ## Layout
 
 ```text
@@ -116,14 +130,14 @@ fair-fx/
 │       ├── migrations/      the schema, as SQL files
 │       └── src/writes/      the write of one collector run
 ├── deploy/
-│   └── collector/           the Dockerfile of the collector image
+│   └── collector/           the collector image, and the scripts that put it on Google Cloud
 ├── contracts/               Soroban contracts, an empty Cargo workspace for now
 ├── spec/
 │   └── vectors/             rate math cases with expected results, for TypeScript and later Rust
 ├── tests/
 │   └── fixtures/            answers recorded from the real venues, replayed by the unit tests
 └── .github/
-    └── workflows/           CI: repo checks, one test job per package, the collector image and a scan for secrets; a nightly smoke run
+    └── workflows/           CI: repo checks, one test job per package, the collector image, the deploy scripts and a scan for secrets; a nightly smoke run
 ```
 
 Packages may only import in the allowed direction: `venues` and `db` use `core`, and `core` uses

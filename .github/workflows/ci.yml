@@ -46,9 +46,18 @@ jobs:
           cat run.log
           grep --quiet '"event":"run_failed".*DATABASE_URL' run.log
 
+  scripts:
+    name: deploy scripts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+
+      - run: shellcheck --external-sources deploy/collector/*.sh
+
   ci:
     if: always()
-    needs: [secrets, repo, test, image]
+    needs: [secrets, repo, test, image, scripts]
     uses: ./.github/workflows/gate.yml
     with:
       results: ${{ toJSON(needs) }}
