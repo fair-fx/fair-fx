@@ -1,0 +1,48 @@
+{
+  "fee_charged": "100",
+  "result": {
+    "tx_success": [
+      {
+        "op_inner": {
+          "path_payment_strict_send": {
+            "success": {
+              "offers": [
+                {
+                  "order_book": {
+                    "seller_id": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX",
+                    "offer_id": "1022553",
+                    "asset_sold": {
+                      "credit_alphanum4": {
+                        "asset_code": "TEUR",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "amount_sold": "919963201",
+                    "asset_bought": {
+                      "credit_alphanum4": {
+                        "asset_code": "TUSD",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "amount_bought": "1000000000"
+                  }
+                }
+              ],
+              "last": {
+                "destination": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                "asset": {
+                  "credit_alphanum4": {
+                    "asset_code": "TEUR",
+                    "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                  }
+                },
+                "amount": "919963201"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "ext": "v0"
+}

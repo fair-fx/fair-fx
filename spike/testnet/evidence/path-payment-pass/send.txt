@@ -1,0 +1,677 @@
+ℹ️  Transaction hash is 51e773850ace2a585053eea733c3bc514eb86b0d98fe985e0e4afeab07145311
+🔗 https://stellar.expert/explorer/testnet/tx/51e773850ace2a585053eea733c3bc514eb86b0d98fe985e0e4afeab07145311
+{
+  "status": "SUCCESS",
+  "ledger": 5951408,
+  "application_order": 12,
+  "fee_bump": false,
+  "tx_hash": "51e773850ace2a585053eea733c3bc514eb86b0d98fe985e0e4afeab07145311",
+  "created_at": 1795780684,
+  "envelope": {
+    "tx": {
+      "tx": {
+        "source_account": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+        "fee": 100,
+        "seq_num": "25560054753132554",
+        "cond": "none",
+        "memo": "none",
+        "operations": [
+          {
+            "source_account": null,
+            "body": {
+              "path_payment_strict_send": {
+                "send_asset": {
+                  "credit_alphanum4": {
+                    "asset_code": "TUSD",
+                    "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                  }
+                },
+                "send_amount": "1000000000",
+                "destination": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                "dest_asset": {
+                  "credit_alphanum4": {
+                    "asset_code": "TEUR",
+                    "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                  }
+                },
+                "dest_min": "919963201",
+                "path": []
+              }
+            }
+          }
+        ],
+        "ext": "v0"
+      },
+      "signatures": [
+        {
+          "hint": "4f83aaf6",
+          "signature": "59fde6ac3afe6eb9d9c7e65df4750b7af5c2f384707d30deb10c99ce3eee7c649322ad84330e4838c712b755d31e27134799e9278f214e30e346de1d2e14130b"
+        }
+      ]
+    }
+  },
+  "result": {
+    "fee_charged": "100",
+    "result": {
+      "tx_success": [
+        {
+          "op_inner": {
+            "path_payment_strict_send": {
+              "success": {
+                "offers": [
+                  {
+                    "order_book": {
+                      "seller_id": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX",
+                      "offer_id": "1022553",
+                      "asset_sold": {
+                        "credit_alphanum4": {
+                          "asset_code": "TEUR",
+                          "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                        }
+                      },
+                      "amount_sold": "919963201",
+                      "asset_bought": {
+                        "credit_alphanum4": {
+                          "asset_code": "TUSD",
+                          "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                        }
+                      },
+                      "amount_bought": "1000000000"
+                    }
+                  }
+                ],
+                "last": {
+                  "destination": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                  "asset": {
+                    "credit_alphanum4": {
+                      "asset_code": "TEUR",
+                      "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                    }
+                  },
+                  "amount": "919963201"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ext": "v0"
+  },
+  "result_meta": {
+    "v4": {
+      "ext": "v0",
+      "tx_changes_before": [
+        {
+          "state": {
+            "last_modified_ledger_seq": 5951408,
+            "data": {
+              "account": {
+                "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                "balance": "98972195916",
+                "seq_num": "25560054753132553",
+                "num_sub_entries": 4,
+                "inflation_dest": null,
+                "flags": 0,
+                "home_domain": "",
+                "thresholds": "01000000",
+                "signers": [],
+                "ext": {
+                  "v1": {
+                    "liabilities": {
+                      "buying": "0",
+                      "selling": "0"
+                    },
+                    "ext": {
+                      "v2": {
+                        "num_sponsored": 0,
+                        "num_sponsoring": 0,
+                        "signer_sponsoring_i_ds": [],
+                        "ext": {
+                          "v3": {
+                            "ext": "v0",
+                            "seq_ledger": 5951318,
+                            "seq_time": "1795780234"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "ext": "v0"
+          }
+        },
+        {
+          "updated": {
+            "last_modified_ledger_seq": 5951408,
+            "data": {
+              "account": {
+                "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                "balance": "98972195916",
+                "seq_num": "25560054753132554",
+                "num_sub_entries": 4,
+                "inflation_dest": null,
+                "flags": 0,
+                "home_domain": "",
+                "thresholds": "01000000",
+                "signers": [],
+                "ext": {
+                  "v1": {
+                    "liabilities": {
+                      "buying": "0",
+                      "selling": "0"
+                    },
+                    "ext": {
+                      "v2": {
+                        "num_sponsored": 0,
+                        "num_sponsoring": 0,
+                        "signer_sponsoring_i_ds": [],
+                        "ext": {
+                          "v3": {
+                            "ext": "v0",
+                            "seq_ledger": 5951408,
+                            "seq_time": "1795780684"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "ext": "v0"
+          }
+        }
+      ],
+      "operations": [
+        {
+          "ext": "v0",
+          "changes": [
+            {
+              "state": {
+                "last_modified_ledger_seq": 5951197,
+                "data": {
+                  "trustline": {
+                    "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                    "asset": {
+                      "credit_alphanum4": {
+                        "asset_code": "TEUR",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "balance": "100916326422",
+                    "limit": "9223372036854775807",
+                    "flags": 1,
+                    "ext": "v0"
+                  }
+                },
+                "ext": "v0"
+              }
+            },
+            {
+              "updated": {
+                "last_modified_ledger_seq": 5951408,
+                "data": {
+                  "trustline": {
+                    "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                    "asset": {
+                      "credit_alphanum4": {
+                        "asset_code": "TEUR",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "balance": "101836289623",
+                    "limit": "9223372036854775807",
+                    "flags": 1,
+                    "ext": "v0"
+                  }
+                },
+                "ext": "v0"
+              }
+            },
+            {
+              "state": {
+                "last_modified_ledger_seq": 5951405,
+                "data": {
+                  "trustline": {
+                    "account_id": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX",
+                    "asset": {
+                      "credit_alphanum4": {
+                        "asset_code": "TUSD",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "balance": "1000000000000",
+                    "limit": "9223372036854775807",
+                    "flags": 1,
+                    "ext": {
+                      "v1": {
+                        "liabilities": {
+                          "buying": "108700000000",
+                          "selling": "0"
+                        },
+                        "ext": "v0"
+                      }
+                    }
+                  }
+                },
+                "ext": "v0"
+              }
+            },
+            {
+              "updated": {
+                "last_modified_ledger_seq": 5951408,
+                "data": {
+                  "trustline": {
+                    "account_id": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX",
+                    "asset": {
+                      "credit_alphanum4": {
+                        "asset_code": "TUSD",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "balance": "1001000000000",
+                    "limit": "9223372036854775807",
+                    "flags": 1,
+                    "ext": {
+                      "v1": {
+                        "liabilities": {
+                          "buying": "107700000000",
+                          "selling": "0"
+                        },
+                        "ext": "v0"
+                      }
+                    }
+                  }
+                },
+                "ext": "v0"
+              }
+            },
+            {
+              "state": {
+                "last_modified_ledger_seq": 5951405,
+                "data": {
+                  "offer": {
+                    "seller_id": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX",
+                    "offer_id": "1022553",
+                    "selling": {
+                      "credit_alphanum4": {
+                        "asset_code": "TEUR",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "buying": {
+                      "credit_alphanum4": {
+                        "asset_code": "TUSD",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "amount": "100000000000",
+                    "price": {
+                      "n": 1087,
+                      "d": 1000
+                    },
+                    "flags": 0,
+                    "ext": "v0"
+                  }
+                },
+                "ext": "v0"
+              }
+            },
+            {
+              "updated": {
+                "last_modified_ledger_seq": 5951408,
+                "data": {
+                  "offer": {
+                    "seller_id": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX",
+                    "offer_id": "1022553",
+                    "selling": {
+                      "credit_alphanum4": {
+                        "asset_code": "TEUR",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "buying": {
+                      "credit_alphanum4": {
+                        "asset_code": "TUSD",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "amount": "99080036799",
+                    "price": {
+                      "n": 1087,
+                      "d": 1000
+                    },
+                    "flags": 0,
+                    "ext": "v0"
+                  }
+                },
+                "ext": "v0"
+              }
+            },
+            {
+              "state": {
+                "last_modified_ledger_seq": 5951405,
+                "data": {
+                  "trustline": {
+                    "account_id": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX",
+                    "asset": {
+                      "credit_alphanum4": {
+                        "asset_code": "TEUR",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "balance": "1080000000000",
+                    "limit": "9223372036854775807",
+                    "flags": 1,
+                    "ext": {
+                      "v1": {
+                        "liabilities": {
+                          "buying": "0",
+                          "selling": "100000000000"
+                        },
+                        "ext": "v0"
+                      }
+                    }
+                  }
+                },
+                "ext": "v0"
+              }
+            },
+            {
+              "updated": {
+                "last_modified_ledger_seq": 5951408,
+                "data": {
+                  "trustline": {
+                    "account_id": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX",
+                    "asset": {
+                      "credit_alphanum4": {
+                        "asset_code": "TEUR",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "balance": "1079080036799",
+                    "limit": "9223372036854775807",
+                    "flags": 1,
+                    "ext": {
+                      "v1": {
+                        "liabilities": {
+                          "buying": "0",
+                          "selling": "99080036799"
+                        },
+                        "ext": "v0"
+                      }
+                    }
+                  }
+                },
+                "ext": "v0"
+              }
+            },
+            {
+              "state": {
+                "last_modified_ledger_seq": 5951197,
+                "data": {
+                  "trustline": {
+                    "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                    "asset": {
+                      "credit_alphanum4": {
+                        "asset_code": "TUSD",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "balance": "99000000000",
+                    "limit": "9223372036854775807",
+                    "flags": 1,
+                    "ext": "v0"
+                  }
+                },
+                "ext": "v0"
+              }
+            },
+            {
+              "updated": {
+                "last_modified_ledger_seq": 5951408,
+                "data": {
+                  "trustline": {
+                    "account_id": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB",
+                    "asset": {
+                      "credit_alphanum4": {
+                        "asset_code": "TUSD",
+                        "issuer": "GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                      }
+                    },
+                    "balance": "98000000000",
+                    "limit": "9223372036854775807",
+                    "flags": 1,
+                    "ext": "v0"
+                  }
+                },
+                "ext": "v0"
+              }
+            }
+          ],
+          "events": [
+            {
+              "ext": "v0",
+              "contract_id": "CD5RGJNOYDS4CY6KUDJWTGVSZYN3OXJCBJMV3OWG6N2Z7LEBV7IE6CKK",
+              "type": "contract",
+              "body": {
+                "v0": {
+                  "topics": [
+                    {
+                      "symbol": "transfer"
+                    },
+                    {
+                      "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                    },
+                    {
+                      "address": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX"
+                    },
+                    {
+                      "string": "TUSD:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                    }
+                  ],
+                  "data": {
+                    "i128": "1000000000"
+                  }
+                }
+              }
+            },
+            {
+              "ext": "v0",
+              "contract_id": "CAUGQB2TTOVKEMUB7ZNC4B25J3YWBTRQTJJS3YLSJJFPVVFNWGIQAXDH",
+              "type": "contract",
+              "body": {
+                "v0": {
+                  "topics": [
+                    {
+                      "symbol": "transfer"
+                    },
+                    {
+                      "address": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX"
+                    },
+                    {
+                      "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                    },
+                    {
+                      "string": "TEUR:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                    }
+                  ],
+                  "data": {
+                    "i128": "919963201"
+                  }
+                }
+              }
+            },
+            {
+              "ext": "v0",
+              "contract_id": "CAUGQB2TTOVKEMUB7ZNC4B25J3YWBTRQTJJS3YLSJJFPVVFNWGIQAXDH",
+              "type": "contract",
+              "body": {
+                "v0": {
+                  "topics": [
+                    {
+                      "symbol": "transfer"
+                    },
+                    {
+                      "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                    },
+                    {
+                      "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                    },
+                    {
+                      "string": "TEUR:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                    }
+                  ],
+                  "data": {
+                    "i128": "919963201"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "tx_changes_after": [],
+      "soroban_meta": null,
+      "events": [
+        {
+          "stage": "before_all_txs",
+          "event": {
+            "ext": "v0",
+            "contract_id": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+            "type": "contract",
+            "body": {
+              "v0": {
+                "topics": [
+                  {
+                    "symbol": "fee"
+                  },
+                  {
+                    "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                  }
+                ],
+                "data": {
+                  "i128": "100"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "diagnostic_events": []
+    }
+  },
+  "events": {
+    "contract_events": [
+      [
+        {
+          "ext": "v0",
+          "contract_id": "CD5RGJNOYDS4CY6KUDJWTGVSZYN3OXJCBJMV3OWG6N2Z7LEBV7IE6CKK",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "transfer"
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                },
+                {
+                  "address": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX"
+                },
+                {
+                  "string": "TUSD:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                }
+              ],
+              "data": {
+                "i128": "1000000000"
+              }
+            }
+          }
+        },
+        {
+          "ext": "v0",
+          "contract_id": "CAUGQB2TTOVKEMUB7ZNC4B25J3YWBTRQTJJS3YLSJJFPVVFNWGIQAXDH",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "transfer"
+                },
+                {
+                  "address": "GDWIAOWQMMPZFXXN4ZXKYVMELXY2FHP6BREWJKRWX7WF4ZQXF42JJWXX"
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                },
+                {
+                  "string": "TEUR:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                }
+              ],
+              "data": {
+                "i128": "919963201"
+              }
+            }
+          }
+        },
+        {
+          "ext": "v0",
+          "contract_id": "CAUGQB2TTOVKEMUB7ZNC4B25J3YWBTRQTJJS3YLSJJFPVVFNWGIQAXDH",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "transfer"
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                },
+                {
+                  "string": "TEUR:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"
+                }
+              ],
+              "data": {
+                "i128": "919963201"
+              }
+            }
+          }
+        }
+      ]
+    ],
+    "diagnostic_events": [],
+    "transaction_events": [
+      {
+        "stage": "before_all_txs",
+        "event": {
+          "ext": "v0",
+          "contract_id": "CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC",
+          "type": "contract",
+          "body": {
+            "v0": {
+              "topics": [
+                {
+                  "symbol": "fee"
+                },
+                {
+                  "address": "GAXDOQCWUI6AJFBSDIEFLGL2DXP2KYTJPWEHCTFS7SDXI32PQOVPNBHB"
+                }
+              ],
+              "data": {
+                "i128": "100"
+              }
+            }
+          }
+        }
+      }
+    ]
+  }
+}

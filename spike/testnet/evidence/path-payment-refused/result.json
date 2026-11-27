@@ -1,0 +1,13 @@
+{
+  "fee_charged": "100",
+  "result": {
+    "tx_failed": [
+      {
+        "op_inner": {
+          "path_payment_strict_send": "under_destmin"
+        }
+      }
+    ]
+  },
+  "ext": "v0"
+}

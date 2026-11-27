@@ -1,0 +1,19 @@
+ℹ️  Transaction hash is 503eac1c4fa8cfc24f9429fe772a9d43a1258f1b0d3e0a273e1e8ae40fdd92f1
+🔗 https://stellar.expert/explorer/testnet/tx/503eac1c4fa8cfc24f9429fe772a9d43a1258f1b0d3e0a273e1e8ae40fdd92f1
+❌ error: transaction submission failed: Some(
+    TransactionResult {
+        fee_charged: 100,
+        result: TxFailed(
+            VecM(
+                [
+                    OpInner(
+                        PathPaymentStrictSend(
+                            UnderDestmin,
+                        ),
+                    ),
+                ],
+            ),
+        ),
+        ext: V0,
+    },
+)

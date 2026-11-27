@@ -1,0 +1,13 @@
+{
+  "fee_charged": "15347",
+  "result": {
+    "tx_failed": [
+      {
+        "op_inner": {
+          "invoke_host_function": "trapped"
+        }
+      }
+    ]
+  },
+  "ext": "v0"
+}

@@ -1,0 +1,11 @@
+ℹ️  Simulating transaction…
+ℹ️  Signing transaction: c5b87df711a284bd3b6e5fc9ffa0386667fb84a04119b46a9b056b24e33b2fbc
+🌎 Sending transaction…
+✅ Transaction submitted successfully!
+🔗 https://stellar.expert/explorer/testnet/tx/c5b87df711a284bd3b6e5fc9ffa0386667fb84a04119b46a9b056b24e33b2fbc
+📅 CD5RGJNOYDS4CY6KUDJWTGVSZYN3OXJCBJMV3OWG6N2Z7LEBV7IE6CKK - Success - Event: [{"symbol":"transfer"},{"address":"GCV4N3I5PUJAOQP6SETWMBNSPRR425UPWWTCJ7W3YQEXRQDQHTLZ6LAE"},{"address":"CADLVG5ZBSBJCZ6JAMWBWUHXDJLJRU6REOQY6XYFLL2MMK34GA4KZBSL"},{"string":"TUSD:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"}] = {"i128":"10000000000"}
+📅 CAUGQB2TTOVKEMUB7ZNC4B25J3YWBTRQTJJS3YLSJJFPVVFNWGIQAXDH - Success - Event: [{"symbol":"transfer"},{"address":"CADLVG5ZBSBJCZ6JAMWBWUHXDJLJRU6REOQY6XYFLL2MMK34GA4KZBSL"},{"address":"GCV4N3I5PUJAOQP6SETWMBNSPRR425UPWWTCJ7W3YQEXRQDQHTLZ6LAE"},{"string":"TEUR:GAM4TMYUYIIISCLPDA7VPXNNIF7NCZ4C5MZ6DRIB4LA6RXIBMMHNRB4O"}] = {"i128":"9063833966"}
+📅 CADLVG5ZBSBJCZ6JAMWBWUHXDJLJRU6REOQY6XYFLL2MMK34GA4KZBSL - Success - Event: [{"string":"SoroswapPair"},{"symbol":"sync"}] = {"map":[{"key":{"symbol":"new_reserve_0"},"val":{"i128":"910019839612"}},{"key":{"symbol":"new_reserve_1"},"val":{"i128":"1011000000000"}}]}
+📅 CADLVG5ZBSBJCZ6JAMWBWUHXDJLJRU6REOQY6XYFLL2MMK34GA4KZBSL - Success - Event: [{"string":"SoroswapPair"},{"symbol":"swap"}] = {"map":[{"key":{"symbol":"amount_0_in"},"val":{"i128":"0"}},{"key":{"symbol":"amount_0_out"},"val":{"i128":"9063833966"}},{"key":{"symbol":"amount_1_in"},"val":{"i128":"10000000000"}},{"key":{"symbol":"amount_1_out"},"val":{"i128":"0"}},{"key":{"symbol":"to"},"val":{"address":"GCV4N3I5PUJAOQP6SETWMBNSPRR425UPWWTCJ7W3YQEXRQDQHTLZ6LAE"}}]}
+📅 CCJUD55AG6W5HAI5LRVNKAE5WDP5XGZBUDS5WNTIVDU7O264UZZE7BRD - Success - Event: [{"string":"SoroswapRouter"},{"symbol":"swap"}] = {"map":[{"key":{"symbol":"amounts"},"val":{"vec":[{"i128":"10000000000"},{"i128":"9063833966"}]}},{"key":{"symbol":"path"},"val":{"vec":[{"address":"CD5RGJNOYDS4CY6KUDJWTGVSZYN3OXJCBJMV3OWG6N2Z7LEBV7IE6CKK"},{"address":"CAUGQB2TTOVKEMUB7ZNC4B25J3YWBTRQTJJS3YLSJJFPVVFNWGIQAXDH"}]}},{"key":{"symbol":"to"},"val":{"address":"GCV4N3I5PUJAOQP6SETWMBNSPRR425UPWWTCJ7W3YQEXRQDQHTLZ6LAE"}}]}
+["10000000000","9063833966"]

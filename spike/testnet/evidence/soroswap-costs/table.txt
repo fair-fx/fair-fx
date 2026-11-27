@@ -1,0 +1,8 @@
+                                direct       guarded
+instructions                 2,513,499     3,095,467
+disk_read_bytes                    232           232
+write_bytes                      1,188         1,188
+read_only_entries                    5             7
+read_write_entries                   5             5
+envelope_bytes                   1,473         2,385
+resource_fee_stroops            21,755        24,006
