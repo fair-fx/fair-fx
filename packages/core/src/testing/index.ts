@@ -1,4 +1,5 @@
 export { EURC, EURCV_IMPERSONATOR, USDC } from '../asset/asset.factory.ts';
+export { buildLedgerSource, LATEST_LEDGER_ANSWER } from '../ledger/ledger.factory.ts';
 export { WEEKEND_WINDOW } from '../market/market.factory.ts';
 export { buildNetworkConfig, buildNetworksFile } from '../network/network.factory.ts';
 export { writeConfigDir } from '../node/config.factory.ts';
