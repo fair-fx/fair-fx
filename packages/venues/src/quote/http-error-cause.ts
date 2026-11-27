@@ -1,5 +1,5 @@
 import { QuoteErrorCause } from '@fair-fx/core';
-import { HTTP_SERVER_ERROR, HTTP_TOO_MANY_REQUESTS } from './http.constants.ts';
+import { HTTP_SERVER_ERROR, HTTP_TOO_MANY_REQUESTS } from '../http/index.ts';
 
 /**
  * What an HTTP status other than 200 says about a failed request: 429 and 5xx mean the venue cannot

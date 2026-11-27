@@ -2,7 +2,7 @@ import { NoRouteCause, type Quote, QuoteErrorCause, QuoteStatus } from '@fair-fx
 import type { SimulatedRead } from '@fair-fx/core/stellar';
 import { Address, Contract, nativeToScVal, xdr } from '@stellar/stellar-sdk';
 import { z } from 'zod';
-import { errorQuote, noRouteQuote } from '../shared/index.ts';
+import { errorQuote, noRouteQuote } from '../quote/index.ts';
 import { GET_AMOUNTS_OUT } from './soroswap.constants.ts';
 import { directAmountsSchema } from './soroswap.schema.ts';
 import type { SoroswapRoute } from './soroswap.types.ts';

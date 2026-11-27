@@ -1,5 +1,5 @@
 import { inTransaction, type Database, type DatabaseSession } from '../database/index.ts';
-import { storableJson } from '../shared/index.ts';
+import { storableJson } from './storable.ts';
 import { toQuoteRow } from './quote-row.ts';
 import { toReferenceRow } from './reference-row.ts';
 import { WriteRunOutcome, type FinishedRun } from './run.types.ts';
