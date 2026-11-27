@@ -29,9 +29,38 @@ Early. The collector can run once by hand; nothing starts it on a schedule yet.
 | Guard | The `fx_guard` Soroban contract, which makes a swap fail past a limit | Not built |
 | API, dashboard, SDK, CLI | How an app or a person reads the measurements | Not built |
 
+## Try it with Docker only
+
+Nothing to install but Docker. One command starts a Postgres server, applies the migrations, and does
+one collector run on mainnet:
+
+```sh
+docker compose run --rm --build --quiet-build collector
+```
+
+- It prints one JSON line. `"outcome":"written"` means the run is stored, with 60 quotes when every
+  venue answers. It reads mainnet only and sends no transaction.
+- Run it again in the same 5 minute slot and it reports `slot_taken`: a slot is stored once.
+- The first run downloads two images and builds a third, so it is the slow one. A later run reuses them.
+
+Look at what was stored, then remove the server and its data:
+
+```sh
+docker compose exec postgres psql --username postgres --dbname fairfx \
+  --command 'SELECT slot, reference_state, ledger FROM run ORDER BY slot' \
+  --command 'SELECT venue, direction, amount_in, amount_out, shortfall_bps FROM quote_sample LIMIT 12'
+docker compose down --volumes
+```
+
+- The server listens on `127.0.0.1:5433`, so `psql` or a database tool on this machine can read it at
+  `postgres://postgres:local@127.0.0.1:5433/fairfx`. The password is for this throwaway server only.
+- `--build` rebuilds the image when the code changed, so the run is always the code that is checked out.
+- With pnpm installed, the same three steps are `pnpm local:collect`, `pnpm local:psql` and
+  `pnpm local:down`.
+
 ## Setup
 
-Needs Node 26 and pnpm 12 (Rust 1.99 later, for contracts).
+To work on the code: Node 26 and pnpm 12 (Rust 1.99 later, for contracts).
 
 ```sh
 pnpm install
@@ -60,6 +89,9 @@ pnpm test:smoke                                # live read-only calls to mainnet
 pnpm db:migrate                                # apply the migrations to the database at DATABASE_URL
 pnpm build                                     # compile every package to dist/, needed before pnpm collect
 pnpm collect                                   # one collector run on mainnet, stored at DATABASE_URL
+pnpm local:collect                             # the same run in Docker, with its own Postgres server
+pnpm local:psql                                # psql in that server
+pnpm local:down                                # remove that server and its data
 ```
 
 Add `--reporter=verbose` to a test command to see each test by name. The smoke tests call public
@@ -103,6 +135,7 @@ docker run --rm -e DATABASE_URL=postgres://... fairfx-collector
 
 ```text
 fair-fx/
+├── compose.yaml             the collector and a Postgres server on this machine, with Docker only
 ├── config/                  networks, endpoints, contracts and pairs: code reads addresses from here
 ├── apps/
 │   └── collector/           the worker, private: one run per start, `pnpm collect`

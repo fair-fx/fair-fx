@@ -46,6 +46,9 @@ jobs:
           cat run.log
           grep --quiet '"event":"run_failed".*DATABASE_URL' run.log
 
+      - name: compose.yaml is valid
+        run: docker compose config --quiet
+
   ci:
     if: always()
     needs: [secrets, repo, test, image]
