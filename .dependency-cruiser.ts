@@ -7,9 +7,9 @@ const allowed: Record<string, string[]> = {
   'packages/db': ['packages/core'],
   'packages/api-schema': ['packages/core'],
   'packages/ui': [],
-  'packages/sdk': ['packages/venues', 'packages/api-schema'],
+  'packages/sdk': ['packages/core', 'packages/venues', 'packages/api-schema'],
   'packages/cli': ['packages/sdk'],
-  'apps/collector': ['packages/venues', 'packages/db'],
+  'apps/collector': ['packages/core', 'packages/venues', 'packages/db'],
   'apps/api': ['packages/db', 'packages/api-schema'],
   'apps/dashboard': ['packages/api-schema', 'packages/core', 'packages/ui'],
 };
