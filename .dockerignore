@@ -1,0 +1,19 @@
+# Nothing goes into a build context unless it is named here, so a .env file or a local note never
+# reaches an image.
+*
+
+!package.json
+!pnpm-lock.yaml
+!pnpm-workspace.yaml
+!tsconfig.base.json
+!config
+!packages
+!apps
+
+**/node_modules
+**/dist
+**/coverage
+**/.env
+**/.env.*
+**/CLAUDE.md
+**/*.tsbuildinfo
