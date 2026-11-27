@@ -23,6 +23,7 @@ export {
   baseReference,
   referenceAgeSeconds,
   ReferenceSource,
+  referenceState,
   ReferenceState,
   ReferenceStatus,
   toReferenceReading,

@@ -1,4 +1,5 @@
 export { REFERENCE_BASE } from './reference.constants.ts';
+export { referenceState } from './reference-state.ts';
 export { baseReference, referenceAgeSeconds, toReferenceReading } from './reference.ts';
 export {
   ReferenceSource,

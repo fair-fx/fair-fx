@@ -13,11 +13,11 @@ export enum ReferenceStatus {
 
 /** What a run could say about its reference price when it was written. */
 export enum ReferenceState {
-  /** A price was read and it is recent enough to compare a quote against. */
+  /** Every price was read and is recent enough to compare a quote against, in open hours. */
   Fresh = 'fresh',
-  /** The market the price comes from is closed. */
+  /** The same, in the hours the market is taken to be closed: the price is usable but not moving. */
   Closed = 'closed',
-  /** There is no usable price: not read, or too old. */
+  /** There is no usable price, at any hour: not read, or too old. */
   Unknown = 'unknown',
 }
 
