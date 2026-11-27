@@ -31,9 +31,24 @@ jobs:
     with:
       run: pnpm --filter @fair-fx/${{ matrix.package }} test
 
+  image:
+    name: collector image
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - run: docker build --file deploy/collector/Dockerfile --tag fairfx-collector .
+
+      - name: the image starts and refuses to run without a database
+        run: |
+          docker run --rm fairfx-collector 2> run.log || true
+          cat run.log
+          grep --quiet '"event":"run_failed".*DATABASE_URL' run.log
+
   ci:
     if: always()
-    needs: [secrets, repo, test]
+    needs: [secrets, repo, test, image]
     uses: ./.github/workflows/gate.yml
     with:
       results: ${{ toJSON(needs) }}

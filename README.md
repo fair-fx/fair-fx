@@ -40,8 +40,8 @@ pnpm check
 
 `pnpm check` runs audit, lint, typecheck, the dependency rules and the tests. CI runs the same on every
 pull request, split into one job for the checks of the whole repo and one test job per package, next to
-a scan for secrets. The tests of `packages/db` and `apps/collector` start a Postgres server in a
-container, so Docker has to be running.
+a scan for secrets and a build of the collector image. The tests of `packages/db` and `apps/collector`
+start a Postgres server in a container, so Docker has to be running.
 
 ## Commands
 
@@ -85,6 +85,18 @@ pnpm collect
 - This machine's clock must be kept in time (NTP): a run whose clock is more than 30 seconds from the
   ledger's is stored as `unknown`.
 
+### The collector image
+
+```sh
+docker build --platform linux/amd64 --file deploy/collector/Dockerfile --tag fairfx-collector .
+docker run --rm -e DATABASE_URL=postgres://... fairfx-collector
+```
+
+- The image holds the compiled collector and `config/`, and does one run per start, like `pnpm collect`.
+  It reads no `.env` file: the settings come from the container's environment.
+- Build it from the repo root. `.dockerignore` lets in only the files it names.
+- It does not apply migrations. Run `pnpm db:migrate` against the database first.
+
 ## Layout
 
 ```text
@@ -101,13 +113,15 @@ fair-fx/
 │   └── db/                  all Postgres access, private and not published
 │       ├── migrations/      the schema, as SQL files
 │       └── src/writes/      the write of one collector run
+├── deploy/
+│   └── collector/           the Dockerfile of the collector image
 ├── contracts/               Soroban contracts, an empty Cargo workspace for now
 ├── spec/
 │   └── vectors/             rate math cases with expected results, for TypeScript and later Rust
 ├── tests/
 │   └── fixtures/            answers recorded from the real venues, replayed by the unit tests
 └── .github/
-    └── workflows/           CI: repo checks, one test job per package and a scan for secrets
+    └── workflows/           CI: repo checks, one test job per package, the collector image and a scan for secrets
 ```
 
 Packages may only import in the allowed direction: `venues` and `db` use `core`, and `core` uses
