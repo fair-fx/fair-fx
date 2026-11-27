@@ -5,4 +5,5 @@ export { writeConfigDir } from '../node/config.factory.ts';
 export { buildPair, buildPairsConfig, buildPairsFile, LADDER_UNITS } from '../pair/pair.factory.ts';
 export { buildReferenceFeed, buildReferencePrice, EUR_FEED_PRICE } from '../reference/reference.factory.ts';
 export { rateMathError } from './matchers.ts';
+export { hoursOpenInNewYorkWeekend } from './new-york-weekend.ts';
 export { legsOf, parseRateVectors } from './rate-vectors.ts';
