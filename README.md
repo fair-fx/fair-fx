@@ -64,6 +64,8 @@ pnpm collect                                   # one collector run on mainnet, s
 
 Add `--reporter=verbose` to a test command to see each test by name. The smoke tests call public
 third-party endpoints, so one failure can mean an endpoint is down: run them again before trusting it.
+The `smoke` workflow runs them every night at 02:23 UTC, with one collector run on mainnet from the
+image into a throwaway database.
 [`packages/db/README.md`](packages/db/README.md) has the steps for a local database.
 
 ### One collector run
@@ -121,7 +123,7 @@ fair-fx/
 ├── tests/
 │   └── fixtures/            answers recorded from the real venues, replayed by the unit tests
 └── .github/
-    └── workflows/           CI: repo checks, one test job per package, the collector image and a scan for secrets
+    └── workflows/           CI: repo checks, one test job per package, the collector image and a scan for secrets; a nightly smoke run
 ```
 
 Packages may only import in the allowed direction: `venues` and `db` use `core`, and `core` uses
