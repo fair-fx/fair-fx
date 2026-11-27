@@ -1,7 +1,7 @@
 import { NoRouteCause, type Quote } from '@fair-fx/core';
 import { SimulationError } from '@fair-fx/core/stellar';
 import type { rpc } from '@stellar/stellar-sdk';
-import { noRouteQuote } from '../shared/index.ts';
+import { noRouteQuote } from '../quote/index.ts';
 import { requireRouter } from './router.ts';
 import { EMPTY_POOL, MISSING_CONTRACT } from './soroswap.constants.ts';
 import type { SoroswapNetwork, SoroswapRoute } from './soroswap.types.ts';

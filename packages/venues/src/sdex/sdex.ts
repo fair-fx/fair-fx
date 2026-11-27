@@ -7,7 +7,8 @@ import {
   type SwapAssets,
 } from '@fair-fx/core';
 import { z } from 'zod';
-import { errorQuote, HTTP_OK, httpErrorCause, noRouteQuote, urlUnder, type JsonResponse } from '../shared/index.ts';
+import { HTTP_OK, type JsonResponse, urlUnder } from '../http/index.ts';
+import { errorQuote, httpErrorCause, noRouteQuote } from '../quote/index.ts';
 import { bestPath, horizonAssetType, horizonFailure, latestLedger } from './horizon.ts';
 import { CLASSIC_DECIMALS, STRICT_SEND_PATH } from './sdex.constants.ts';
 import { strictSendPathsSchema } from './sdex.schema.ts';

@@ -6,7 +6,7 @@ export {
   type AquariusRoute,
   type FindPathRequest,
 } from './aquarius/index.ts';
-export { GUARD_MODE } from './guard-mode.constants.ts';
+export { GUARD_MODE } from './guard-mode/index.ts';
 export {
   sdexAdapter,
   strictSendUrl,
@@ -15,7 +15,7 @@ export {
   type SdexNetwork,
   type SdexRoute,
 } from './sdex/index.ts';
-export type { Fetch, HttpOptions, JsonResponse } from './shared/index.ts';
+export type { Fetch, HttpOptions, JsonResponse } from './http/index.ts';
 export {
   getAmountsOutCall,
   soroswapAdapter,
