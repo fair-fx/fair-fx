@@ -52,6 +52,15 @@ describe('writeRun, one run per slot', () => {
     });
   });
 
+  it('gives up on a run that holds the slot for longer than the statement limit', async () => {
+    const writing = await holdSlot(testDatabase.database, SLOT);
+
+    const outcome = writeRun(testDatabase.database, buildFinishedRun(), 50);
+
+    await expect(outcome).rejects.toMatchObject({ code: '57014' });
+    await commitHeldSlot(writing);
+  });
+
   it('stores nothing of a run when the database refuses one of its rows', async () => {
     const run = buildFinishedRun({ quotes: [buildPricedQuoteSample(), buildPricedQuoteSample()] });
 

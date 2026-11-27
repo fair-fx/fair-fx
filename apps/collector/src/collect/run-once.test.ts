@@ -1,6 +1,5 @@
 import { runOnce } from '@fair-fx/collector';
-import { buildCollectorPlan, buildCollectorPorts, buildVenueAdapter } from '@fair-fx/collector/testing';
-import { NoRouteCause, QuoteErrorCause, QuoteStatus, VenueId } from '@fair-fx/core';
+import { buildCollectorPlan, buildCollectorPorts, portsWritingTo } from '@fair-fx/collector/testing';
 import { buildLedgerSource, buildReferenceFeed, LADDER_UNITS, LATEST_LEDGER_ANSWER } from '@fair-fx/core/testing';
 import { openMigratedDatabase, readStored, type TestDatabase } from '@fair-fx/db/testing';
 import { writeRun } from '@fair-fx/db/writes';
@@ -14,27 +13,11 @@ describe('runOnce on Postgres', () => {
 
   afterEach(() => testDatabase.database.end());
 
-  // SDEX pays, Soroswap times out on every quote, Aquarius has no route: 1 pair, 2 ways, 10 rungs.
-  const portsWritingTo = (target: TestDatabase) =>
-    buildCollectorPorts({
-      venues: [
-        buildVenueAdapter(),
-        buildVenueAdapter({
-          id: VenueId.Soroswap,
-          quote: () =>
-            Promise.resolve({ status: QuoteStatus.Error, cause: QuoteErrorCause.Timeout, reason: 'no answer' }),
-        }),
-        buildVenueAdapter({
-          id: VenueId.Aquarius,
-          quote: () => Promise.resolve({ status: QuoteStatus.NoRoute, cause: NoRouteCause.NoPath }),
-        }),
-      ],
-      store: (run) => writeRun(target.database, run),
-    });
+  // `portsWritingTo` has 3 venues, so with 1 pair, 2 ways and 10 rungs a run takes 60 quotes.
   const plan = buildCollectorPlan({ ladder: LADDER_UNITS.map(BigInt) });
 
   it('stores a run with its ledger, one EUR price and 60 quotes, when one venue fails every quote', async () => {
-    const report = await runOnce(portsWritingTo(testDatabase), plan);
+    const report = await runOnce(portsWritingTo(testDatabase.database), plan);
 
     const stored = await readStored(testDatabase.database);
     const statuses = stored.quotes.map((row) => {
@@ -81,10 +64,10 @@ describe('runOnce on Postgres', () => {
   });
 
   it('stores nothing more when a second run starts in the same slot', async () => {
-    await runOnce(portsWritingTo(testDatabase), plan);
+    await runOnce(portsWritingTo(testDatabase.database), plan);
     const first = await readStored(testDatabase.database);
 
-    const second = await runOnce(portsWritingTo(testDatabase), plan);
+    const second = await runOnce(portsWritingTo(testDatabase.database), plan);
 
     expect(second.outcome).toBe('slot_taken');
     expect(await readStored(testDatabase.database)).toEqual(first);

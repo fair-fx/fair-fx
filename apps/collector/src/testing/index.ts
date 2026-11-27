@@ -2,4 +2,6 @@ export { buildCollectorPlan, buildCollectorPorts, buildVenueAdapter } from '../c
 export { buildReferenceSet, buildTakenQuote } from '../quotes/quotes.factory.ts';
 export { buildLedgerClock, buildRunReadings } from '../run/run.factory.ts';
 export { ledgerSourceAnswering } from './ledger-source-answering.ts';
+export { openRequestCounter, type OpenRequestCounter, type OpenRequestPeaks } from './open-request-counter.ts';
+export { portsWritingTo } from './ports-writing-to.ts';
 export { tickingClock } from './ticking-clock.ts';

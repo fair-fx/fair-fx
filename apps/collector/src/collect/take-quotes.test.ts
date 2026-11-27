@@ -1,6 +1,6 @@
 import { takeQuotes } from '@fair-fx/collector';
-import { buildVenueAdapter, tickingClock } from '@fair-fx/collector/testing';
-import { Direction, QuoteErrorCause, QuoteStatus, VenueId, type VenueAdapter } from '@fair-fx/core';
+import { buildVenueAdapter, openRequestCounter, tickingClock } from '@fair-fx/collector/testing';
+import { QuoteErrorCause, QuoteStatus, VenueId } from '@fair-fx/core';
 import { buildPair, EURC, USDC } from '@fair-fx/core/testing';
 
 const pair = buildPair({ base: { ...USDC, decimals: 7 }, quote: { ...EURC, decimals: 2 } });
@@ -40,34 +40,15 @@ describe('takeQuotes', () => {
   });
 
   it('has one request open per ladder at a time, and every ladder open at once', async () => {
-    const open = new Map<string, number>();
-    let openAtOnce = 0;
-    let mostOpenInALadder = 0;
-    const counting = (id: VenueId): VenueAdapter => {
-      const venue = buildVenueAdapter({ id });
-
-      return {
-        ...venue,
-        quote: async (quotedPair, direction: Direction, amountIn) => {
-          const ladder = `${id} ${direction}`;
-          open.set(ladder, (open.get(ladder) ?? 0) + 1);
-          mostOpenInALadder = Math.max(mostOpenInALadder, ...open.values());
-          openAtOnce = Math.max(openAtOnce, [...open.values()].reduce((sum, count) => sum + count, 0));
-          await new Promise((resolve) => setImmediate(resolve));
-          open.set(ladder, (open.get(ladder) ?? 0) - 1);
-
-          return venue.quote(quotedPair, direction, amountIn);
-        },
-      };
-    };
+    const counter = openRequestCounter();
 
     await takeQuotes(
-      [counting(VenueId.Sdex), counting(VenueId.Soroswap), counting(VenueId.Aquarius)],
+      [counter.venue(VenueId.Sdex), counter.venue(VenueId.Soroswap), counter.venue(VenueId.Aquarius)],
       [pair],
       [100n, 250n, 500n],
       tickingClock('2026-11-27T04:43:38.000Z'),
     );
 
-    expect({ mostOpenInALadder, openAtOnce }).toEqual({ mostOpenInALadder: 1, openAtOnce: 6 });
+    expect(counter.peaks()).toEqual({ mostOpenInALadder: 1, openAtOnce: 6 });
   });
 });
