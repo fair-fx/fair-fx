@@ -34,18 +34,20 @@ def wasm_hashes(entries: list[dict], kind: str) -> set[str]:
     return hashes
 
 
-def read_code_entry(rpc_url: str, wasm_hash: str) -> dict:
-    key = stellar_xdr(["encode", "--type", "LedgerKey"], json.dumps({"contract_code": {"hash": wasm_hash}}))
-    body = {"jsonrpc": "2.0", "id": 1, "method": "getLedgerEntries", "params": {"keys": [key]}}
+def read_entry(rpc_url: str, key: dict) -> dict:
+    """One ledger entry as it is on the RPC now, in the shape a snapshot file holds."""
+    encoded = stellar_xdr(["encode", "--type", "LedgerKey"], json.dumps(key))
+    body = {"jsonrpc": "2.0", "id": 1, "method": "getLedgerEntries", "params": {"keys": [encoded]}}
     request = urllib.request.Request(rpc_url, json.dumps(body).encode(), REQUEST_HEADERS)
     with urllib.request.urlopen(request, timeout=30) as response:
         found = json.load(response)["result"]["entries"]
     if len(found) != 1:
-        raise SystemExit(f"the RPC has no wasm entry for {wasm_hash}")
+        raise SystemExit(f"the RPC has no entry for {json.dumps(key)}")
     data = json.loads(stellar_xdr(["decode", "--type", "LedgerEntryData", "--output", "json"], found[0]["xdr"]))
     return {
         "entry": {"last_modified_ledger_seq": found[0]["lastModifiedLedgerSeq"], "data": data, "ext": "v0"},
-        "live_until": found[0]["liveUntilLedgerSeq"],
+        # An account or a trustline has no expiry ledger.
+        "live_until": found[0].get("liveUntilLedgerSeq"),
     }
 
 
@@ -55,7 +57,7 @@ def main(snapshot_path: str, rpc_url: str) -> None:
     entries = snapshot["ledger_entries"]
     missing = sorted(wasm_hashes(entries, "instance") - wasm_hashes(entries, "code"))
     for wasm_hash in missing:
-        entries.append(read_code_entry(rpc_url, wasm_hash))
+        entries.append(read_entry(rpc_url, {"contract_code": {"hash": wasm_hash}}))
         print("added wasm", wasm_hash)
     with open(snapshot_path, "w", encoding="utf-8") as file:
         json.dump(snapshot, file)
