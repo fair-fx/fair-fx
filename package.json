@@ -11,9 +11,11 @@
   "scripts": {
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.tools.json && pnpm -r run typecheck",
+    "build": "pnpm -r run build",
     "test": "pnpm -r run test",
     "test:smoke": "FAIRFX_SMOKE=1 pnpm --filter @fair-fx/core --filter @fair-fx/venues run test smoke",
     "db:migrate": "pnpm --filter @fair-fx/db run migrate",
+    "collect": "node --env-file-if-exists=.env apps/collector/dist/main.js",
     "deps": "depcruise '{packages,apps}/*/src'",
     "check:repo": "pnpm audit --audit-level high && pnpm lint && pnpm typecheck && pnpm deps",
     "check": "pnpm check:repo && pnpm test"
